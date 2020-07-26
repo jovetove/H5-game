@@ -9,15 +9,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 var game;
 (function (game) {
-    let EnemyType;
-    (function (EnemyType) {
-        EnemyType[EnemyType["Hole"] = 0] = "Hole";
-        EnemyType[EnemyType["Mask"] = 1] = "Mask";
-        EnemyType[EnemyType["Boom"] = 2] = "Boom";
-        EnemyType[EnemyType["Batman"] = 3] = "Batman";
-        EnemyType[EnemyType["BatmanKing"] = 4] = "BatmanKing";
-        EnemyType[EnemyType["Logo"] = 5] = "Logo";
-    })(EnemyType || (EnemyType = {}));
+    var RAD = 180 / Math.PI;
+    const PlayerRadius = 30;
+    var player;
+    var launchResovle = null;
     var lines = [
         [0, 70, 490, 70],
         [490, 70, 710, 205],
@@ -65,11 +60,9 @@ var game;
         var y = (A * A * p0.y - A * B * p0.x - B * C) * D;
         var nx = p0.x - x;
         var ny = p0.y - y;
-        console.log(x, y);
         var r = 1 / Math.sqrt(nx * nx + ny * ny);
         nx *= r;
         ny *= r;
-        console.log(nx, ny);
         var d = dx * nx + dy * ny;
         var vx = dx - 2 * nx * d;
         var vy = dy - 2 * ny * d;
@@ -160,7 +153,6 @@ var game;
         var y = Math.floor(Math.random() * (1280 - border)) + border;
         var data = new Array(1);
         var temp = { type: EnemyType.Batman, x: x, y: y };
-        console.log("黑洞数据： （", x, " ", y, ")");
         data[0] = temp;
         return data;
     }
@@ -206,10 +198,6 @@ var game;
         }
         return data;
     }
-    const PlayerRadius = 30;
-    var player;
-    var launchResovle = null;
-    var score = 0;
     function shulffle(arr) {
         var seed = Date.now();
         function rand(max) {
@@ -253,6 +241,7 @@ var game;
                 });
             }
             var enemies = [];
+            ajax(url + `/openapi/statistics/add?openid=${PlayerInfo.openid}&fps=${ez.fps}`, function () { });
             var getMask = false;
             var enemiesData = createEnemyData();
             for (let i = 0; i < enemiesData.length; i++) {
@@ -289,8 +278,8 @@ var game;
                 }
                 n.chance.text = `机会 ${chance}`;
                 launchResovle = null;
-                let dx = r[0] * 0.25;
-                let dy = r[1] * 0.5;
+                let dx = r[0] * rate;
+                let dy = r[1] * rate;
                 while (true) {
                     player.x += dx;
                     player.y += dy;
@@ -299,9 +288,11 @@ var game;
                     for (let i = 0; i < enemies.length; i++) {
                         let e = enemies[i];
                         let data = e.data;
-                        let dx = e.x - player.x;
-                        let dy = e.y - player.y;
-                        if (dx * dx + dy * dy < (30 + data.radius) * (30 + data.radius)) {
+                        let dx1 = e.x - player.x;
+                        let dy1 = e.y - player.y;
+                        if (dx1 * dx1 + dy1 * dy1 < (30 + data.radius) * (30 + data.radius)) {
+                            dx = dx >= 10 ? dx : dx * 1.05;
+                            dy = dy >= 10 ? dy : dy * 1.05;
                             let score = data.score;
                             let s = new ez.LabelSprite(stage);
                             s.align = ez.AlignMode.Center;
@@ -357,8 +348,8 @@ var game;
                             player.x -= dx;
                             player.y -= dy;
                             let r = reflect(line[0], line[1], player, dx, dy);
-                            dx = r[0] * 0.9;
-                            dy = r[1] * 0.9;
+                            dx = r[0] * alpha;
+                            dy = r[1] * alpha;
                             break;
                         }
                     }
@@ -408,7 +399,7 @@ var game;
                     var key = "zxdqw";
                     var timestamp = Date.now();
                     var sign = md5.hex(`${key}openid${PlayerInfo.openid}score${score}${timestamp}`);
-                    ajax(`https://xwfintech.qingke.io/openapi/pinball/add/measy?key=${key}&sign=${sign}&openid=${PlayerInfo.openid}&score=${score}&timestamp=${timestamp}`, function (e, r) {
+                    ajax(url + `/openapi/pinball/add/measy?key=${key}&sign=${sign}&openid=${PlayerInfo.openid}&score=${score}&timestamp=${timestamp}`, function (e, r) {
                         if (r.code) {
                             alert(r.msg);
                             reject();
@@ -435,6 +426,7 @@ var game;
                         page.dispose();
                         break;
                     case "result":
+                        ajax(url + `/openapi/statistics/add?openid=${PlayerInfo.openid}&playTime=${Date.now() - startTime}`, function () { });
                         var share = page.parent.createChild(game.SharePage);
                         page.dispose();
                         var n1 = share.namedChilds;
@@ -447,6 +439,13 @@ var game;
                             var png = canvas.toDataURL("image/png");
                             window.parent.postMessage({ msg: "show", src: png }, "*");
                         });
+                        share.addEventHandler("click", function (e) {
+                            switch (e.sender.id) {
+                                case "closeRank":
+                                    n.result.visible = false;
+                                    break;
+                            }
+                        });
                         break;
                 }
             });
@@ -458,7 +457,6 @@ var game;
         var dy = sprite.y - y;
         return Math.sqrt(dx * dx + dy * dy);
     }
-    var RAD = 180 / Math.PI;
     class GamePage extends game._GamePage {
         constructor(parent) {
             super(parent);
@@ -525,9 +523,7 @@ var game;
                 if (launchResovle)
                     launchResovle([-dx * len / r, -dy * len / r]);
             };
-            startGame(stage, n, function () {
-                showResult(ctx);
-            });
+            startGame(stage, n, function () { showResult(ctx); });
             this.addEventHandler("click", function (e) {
                 switch (e.sender.id) {
                     case "help":

@@ -36,8 +36,16 @@ var game;
             soundEnable(sound == "1");
             getRank(n.rankPage);
             ez.playMusic(0, "sound/bgm", true);
-            new ez.Tween(n.stage.stage.find("猪")).move({ x: [38, 42], y: [120, 108] }, 1000).to({ x: 38, y: 120 }, 1000).config({ loop: true }).play();
-            new ez.Tween(n.stage.stage.find("蝙蝠侠")).move({ y: [760, 770], angle: [-5, 6], scale: [0.95, 1.05] }, 1200, ez.Ease.sineInOut).to({ y: 760, angle: -5, scale: 0.95 }, 1200, ez.Ease.sineInOut).config({ loop: true }).play();
+            new ez.Tween(n.stage.stage.find("猪"))
+                .move({ x: [38, 42], y: [120, 108] }, 1000)
+                .to({ x: 38, y: 120 }, 1000)
+                .config({ loop: true })
+                .play();
+            new ez.Tween(n.stage.stage.find("蝙蝠侠"))
+                .move({ y: [760, 770], angle: [-5, 6], scale: [0.95, 1.05] }, 1200, ez.Ease.sineInOut)
+                .to({ y: 760, angle: -5, scale: 0.95 }, 1200, ez.Ease.sineInOut)
+                .config({ loop: true })
+                .play();
             ez.effect.highlight(n.start.namedChilds.bk, new ez.Color(128, 100, 50), 0.1, 10, 1000, 2000, 0, [-0.3, 1.2]);
             ez.setTimer(1000, function () {
                 if (ctx.disposed)

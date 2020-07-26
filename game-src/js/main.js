@@ -7,7 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var PlayerInfo = {};
+var url = "http://127.0.0.1:7000";
 function ajax(url, cb) {
     var x = new XMLHttpRequest();
     x.open("GET", url);
@@ -17,8 +17,9 @@ function ajax(url, cb) {
             alert(`failed: ${x.status} ${x.responseText}`);
             cb(false);
         }
-        else
+        else {
             cb(true, JSON.parse(x.responseText));
+        }
     };
     try {
         x.send();
@@ -27,6 +28,7 @@ function ajax(url, cb) {
         cb(false);
     }
 }
+var PlayerInfo = {};
 var mainFrame;
 window.onmessage = function (ev) {
     console.log(ev.data);
@@ -52,23 +54,31 @@ function main() {
         });
         ez.loadEZMDecoder(typeof (WebAssembly) === "undefined" ? "ezm.asm.js" : "ezm.wasm.js", 1);
         if (PUBLISH) {
+            console.log("发布模式");
             ez.loadResPackage(game.resData, "res/", game.resGroups);
             ez.loadGroup(["ui", "start", "image/bg"], function (progress, total) {
                 if (progress >= total) {
                     var t = Date.now() - startTime;
+                    console.log("URL: " + url + `/openapi/statistics/add?openid=${PlayerInfo.openid}&loadTime=${t}`);
+                    ajax(url + `/openapi/statistics/add?openid=${PlayerInfo.openid}&loadTime=${t}`, function () { });
                     mainFrame = ez.getRoot().createChild(game.MainFrame);
                     var loading = document.getElementById("loading");
                     if (loading)
                         document.body.removeChild(loading);
                     ez.loadGroup(["game", "image/活动规则", "image/说明", "share"]);
                 }
+                else {
+                    console.log("progress<tatal");
+                }
             });
         }
         else {
+            console.log("线下");
             yield ez.loadJSONPackageAsync("assets/resource.json", "assets/res/");
             ez.loadGroup(["ui", "start", "image/bg"], function (progress, total) {
                 if (progress >= total) {
                     var t = Date.now() - startTime;
+                    ajax(url + `/openapi/statistics/add?openid=${PlayerInfo.openid}&loadTime=${t}`, function () { });
                     mainFrame = ez.getRoot().createChild(game.MainFrame);
                     var loading = document.getElementById("loading");
                     if (loading)

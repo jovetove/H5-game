@@ -1,20 +1,10 @@
 namespace game {
 	import ui = ez.ui;
 
-	enum EnemyType {
-		/**黑洞*/
-		Hole,
-		/**口罩*/
-		Mask,
-		/**炸弹*/
-		Boom,
-		/**小兵*/
-		Batman,
-		/**大王*/
-		BatmanKing,
-		/**新网银行logo*/
-		Logo
-	}
+	var RAD = 180 / Math.PI;
+	const PlayerRadius = 30;
+	var player;
+	var launchResovle = null;
 
 	var lines = [
 		[0,  70, 490, 70],
@@ -66,11 +56,9 @@ namespace game {
 		var y = (A * A * p0.y - A * B * p0.x - B * C) * D;
 		var nx = p0.x - x;
 		var ny = p0.y - y;
-		console.log(x, y);
 		var r = 1 / Math.sqrt(nx*nx+ny*ny);
 		nx *= r;
 		ny *= r;
-		console.log(nx, ny);
 		var d = dx * nx + dy * ny;
 		var vx = dx - 2 * nx * d;
 		var vy = dy - 2 * ny * d;
@@ -172,7 +160,7 @@ namespace game {
 		// data[0] = x;
 		// data[1] = y;
 		var temp = { type: EnemyType.Batman, x: x, y: y };
-		console.log("黑洞数据： （", x," " ,y, ")");
+		// console.log("黑洞数据： （", x," " ,y, ")");
 		data[0] =temp;
 		return data;
 	}
@@ -225,12 +213,6 @@ namespace game {
 		return data;
 	}
 
-
-	const PlayerRadius = 30;
-	var player;
-	var launchResovle = null;
-	var score = 0;
-
 	function shulffle(arr) {
 		var seed = Date.now();
 		function rand(max: number) {
@@ -273,7 +255,9 @@ namespace game {
 		}
 
 		var enemies = [];
-		//ajax(`http://chenshuwei.free.idcfengye.com/openapi/statistics/add?openid=${PlayerInfo.openid}&fps=${ez.fps}`, function(){});
+
+		ajax(url+`/openapi/statistics/add?openid=${PlayerInfo.openid}&fps=${ez.fps}`, function(){});
+
 		// 判断是否撞到口罩
 		var getMask = false;
 
@@ -286,16 +270,17 @@ namespace game {
 
 		let hole: number[] = [hole1[0].x, hole1[0].y];
 
+		// 创建玩家
 		player = createPlayer(stage);
 		player.x = 104;
 		player.y = 144;
 
+		// 玩家光环
 		var circle = new ez.ImageSprite(stage);
 		circle.src = "game/circle";
 		circle.anchorX = circle.anchorY = 0.5;
 		circle.x = 104;
 		circle.y = 144;
-
 		new ez.Tween(circle)
 			.move({scale:[0.4, 1.2], opacity:[0.1, 0.6]}, 800)
 			.config({loop:true})
@@ -319,22 +304,29 @@ namespace game {
 			n.chance.text = `机会 ${chance}`;
 			launchResovle = null;
 
-			let dx = r[0] * 0.25;
-			let dy = r[1] * 0.5;
+			// console.log("r值为：" + r.toString())
+			// 变化率像素
+			let dx = r[0] * rate;
+			let dy = r[1] * rate;
 
 			while(true){
 				player.x += dx;
 				player.y += dy;
+				// 速度过小时，停之
 				if (Math.abs(dx) < 1 && Math.abs(dy) < 1)
 					break;
+				// 碰撞检测
 				for(let i = 0; i < enemies.length; i++){
 					let e = enemies[i];
 					let data = e.data;
-					let dx = e.x - player.x;
-					let dy = e.y - player.y;
+					let dx1 = e.x - player.x;
+					let dy1 = e.y - player.y;
 
 					// 碰撞检测
-					if (dx * dx + dy * dy < (30 + data.radius) * (30 + data.radius)) {
+					if (dx1 * dx1 + dy1 * dy1 < (30 + data.radius) * (30 + data.radius)) {
+						// 没碰到一个球
+						dx = dx >= 10 ? dx : dx*1.05;
+						dy = dy >= 10 ? dy : dy*1.05;
 						let score = data.score;
 						let s = new ez.LabelSprite(stage);
 						s.align = ez.AlignMode.Center;
@@ -344,6 +336,7 @@ namespace game {
 						s.height = 30;
 						s.x = e.x;
 						s.font = "Arial 30px";
+
 						if (data.type == EnemyType.BatmanKing && !getMask)
 							score = 30;
 
@@ -388,18 +381,19 @@ namespace game {
 						break;
 					}
 				}
-
+				// 砖碰撞
 				for(let i = 0; i < lines.length; i++){
 					let line = lines[i];
 					if(intersect(line[0], line[1], player, 30)){
 						player.x -= dx;
 						player.y -= dy;
 						let r = reflect(line[0], line[1], player, dx, dy);
-						dx = r[0] * 0.9;
-						dy = r[1] * 0.9;
+						dx = r[0] * alpha;
+						dy = r[1] * alpha;
 						break;
 					}
 				}
+
 				let hx = hole[0] - player.x;
 				let hy = hole[1] - player.y;
 				let dr = hx * hx + hy * hy;
@@ -420,7 +414,7 @@ namespace game {
 					}
 				}
 				else if(dr < 50000) {
-					//黑洞引力
+					// 黑洞引力
 					dr = 1 / dr;
 					hx = hx * Math.sqrt(dr);
 					hy = hy * Math.sqrt(dr);
@@ -436,6 +430,7 @@ namespace game {
 					dy -= 0.1;
 				else if (dy < 0.15)
 					dy += 0.1;
+				// console.log("当前速度"+ dx+" "+dy);
 				await ez.nextFrame();
 			}
 		}
@@ -443,12 +438,13 @@ namespace game {
 	}
 	
 	async function showResult(ctx: GamePage) {
+		// 提交分数
 		function commitScore(score) {
 			return new Promise((resolver, reject) =>{
 				var key = "zxdqw";
 				var timestamp = Date.now();
 				var sign = md5.hex(`${key}openid${PlayerInfo.openid}score${score}${timestamp}`);
-				ajax(`https://xwfintech.qingke.io/openapi/pinball/add/measy?key=${key}&sign=${sign}&openid=${PlayerInfo.openid}&score=${score}&timestamp=${timestamp}`, function (e, r) {
+				ajax(url+`/openapi/pinball/add/measy?key=${key}&sign=${sign}&openid=${PlayerInfo.openid}&score=${score}&timestamp=${timestamp}`, function (e, r) {
 					if (r.code) {
 						alert(r.msg);
 						reject();
@@ -477,8 +473,9 @@ namespace game {
 					page.parent.createChild(game.MainFrame);
 					page.dispose();
 					break;
+				//	生成分享链接
 				case "result":
-					//ajax(`http://chenshuwei.free.idcfengye.com/openapi/statistics/add?openid=${PlayerInfo.openid}&playTime=${Date.now() - startTime}`, function () { });
+					ajax(url + `/openapi/statistics/add?openid=${PlayerInfo.openid}&playTime=${Date.now() - startTime}`, function () { });
 					var share = page.parent.createChild(game.SharePage);
 					page.dispose();
 					var n1 = share.namedChilds;
@@ -509,6 +506,13 @@ namespace game {
 						document.body.appendChild(image);*/
 						window.parent.postMessage({ msg: "show", src: png }, "*");
 					});
+					share.addEventHandler("click", function (e) {
+						switch (e.sender.id) {
+							case "closeRank":
+								n.result.visible = false;
+								break;
+						}
+					});
 					break;
 			}
 
@@ -523,8 +527,6 @@ namespace game {
 		return Math.sqrt(dx*dx + dy*dy);
 	}
 
-	var RAD = 180 / Math.PI;
-
 	export class GamePage extends _GamePage {
 
 		constructor(parent: ui.Container) {
@@ -533,12 +535,15 @@ namespace game {
 			var lastLine = lines[lines.length - 1];
 			lastLine[0].y = lastLine[1].y = parent.getBound().height - 0;
 			const n = this.namedChilds;
+
 			var sound = localStorage.getItem("sound");
 			if (sound == null)
 				sound = "1";
 			n.sound.state = sound == "1" ? "check" : "uncheck";
+
 			var stage = n.game.stage;
 			n.touch.hitTest = function(){ return true; }
+			// 箭头
 			var arrow = new ez.ImageSprite(stage);
 			arrow.src = "game/arrow";
 			arrow.anchorY = 0.5;
@@ -546,6 +551,7 @@ namespace game {
 			arrow.zIndex = 1;
 			var arrowWidth = arrow.width;
 			var ctx = this;
+			// 触摸点
 			var lastPt;
 			//ez.loadGroup("share/二维码");
 			if (PlayerInfo){
@@ -553,7 +559,7 @@ namespace game {
 				n.avatar.src = PlayerInfo.headimgurl;
 			}
 
-			n.touch.onTouchBegin = function(e:ez.TouchData){
+			n.touch.onTouchBegin = function(e: ez.TouchData){
 				if (!launchResovle)
 					return;
 				var x = e.screenX;
@@ -566,6 +572,7 @@ namespace game {
 				e.capture();
 				//}
 			}
+
 			n.touch.onTouchMove = function (e: ez.TouchData) {
 				if(!lastPt)
 					return;
@@ -583,6 +590,7 @@ namespace game {
 				else
 					arrow.angle = 180 - Math.acos(dx / r) * RAD;
 			}
+
 			n.touch.onTouchEnd = function (e: ez.TouchData) {
 				if (!lastPt)
 					return;
@@ -598,13 +606,11 @@ namespace game {
 					launchResovle([-dx * len / r, -dy * len / r]);
 			}
 
-			startGame(stage, n, function () {
-				showResult(ctx);
-			});
+			startGame(stage, n, function () {showResult(ctx); });
 
 			this.addEventHandler("click", function (e) {
 				switch (e.sender.id) {
-					case "help":
+					case "help":// 说明
 						n.helpPage.visible = true;
 						break;
 					case "okBtn":
