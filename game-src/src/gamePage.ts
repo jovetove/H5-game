@@ -16,50 +16,6 @@ namespace game {
 		Logo
 	}
 
-	/**
-	 * 生成敌人数据
-	 */
-	function createEnemyData() {
-		// 数组大小
-		var size:number = 30;
-		var data = new Array(size);
-		var i:number = 0;
-		// 边界 防止生成的敌人越界
-		var border:number = 25;
-		while (i < 20){
-			var x = Math.floor(Math.random() * (700-border)) + border;
-			var y = Math.floor(Math.random() * (1280-border)) + border;
-			var temp = { type: EnemyType.Batman, x: x, y: y };
-			data[i] =temp;
-			i++;
-		}
-		while (i < 22){
-			var x = Math.floor(Math.random() * (700-border)) + border;
-			var y = Math.floor(Math.random() * (1280-border)) + border;
-			var temp = { type: EnemyType.BatmanKing, x: x, y: y };
-			data[i] =temp;
-			i++;
-		}
-		while (i < 27){
-			var x = Math.floor(Math.random() * (700-border)) + border;
-			var y = Math.floor(Math.random() * (1280-border)) + border;
-			var temp = { type: EnemyType.Logo, x: x, y: y };
-			data[i] =temp;
-			i++;
-		}
-		while (i < size){
-			var x = Math.floor(Math.random() * (700-border)) + border;
-			var y = Math.floor(Math.random() * (1280-border)) + border;
-			var temp = { type: EnemyType.Boom, x: x, y: y };
-			data[i] =temp;
-			i++;
-		}
-		console.log("数据  ", data.toString());
-		return data;
-	}
-
-	var hole = [318, 578];
-
 	var lines = [
 		[0,  70, 490, 70],
 		[490,70, 710, 205],
@@ -141,6 +97,19 @@ namespace game {
 		return sprite;
 	}
 
+	function createHole(e, stage: ez.Stage){
+		var s = new ez.ImageSprite(stage);
+		s.anchorX = 0.5;
+		s.anchorY = 0.5;
+		s.x = e.x;
+		s.y = e.y;
+		let data:any = {};
+		s["data"] = data;
+		data.type = e.type;
+		s.src = "game/hole";
+		data.radius = 60;
+	}
+
 	function createEnemy(e, stage: ez.Stage) {
 		var s = new ez.ImageSprite(stage);
 		s.anchorX = 0.5;
@@ -156,6 +125,7 @@ namespace game {
 				s.src = "game/hole";
 				data.radius = 60;
 				break;
+
 			case EnemyType.Mask:
 				s.src = "game/mask";
 				data.score = 30;
@@ -191,6 +161,69 @@ namespace game {
 		return s;
 	}
 
+	/**
+	 * 生成黑洞数据
+	 */
+	function createHoleData() {
+		var border:number = 25;
+		var x = Math.floor(Math.random() * (700-border)) + border;
+		var y = Math.floor(Math.random() * (1280-border)) + border;
+		var data = new Array(1);
+		// data[0] = x;
+		// data[1] = y;
+		var temp = { type: EnemyType.Batman, x: x, y: y };
+		console.log("黑洞数据： （", x," " ,y, ")");
+		data[0] =temp;
+		return data;
+	}
+
+	/**
+	 * 生成敌人数据
+	 */
+	function createEnemyData() {
+		// 数组大小
+		var size:number = 30;
+		var data = new Array(size);
+		var i:number = 0;
+		// 边界 防止生成的敌人越界
+		var border:number = 25;
+		while (i < 20){
+			var x = Math.floor(Math.random() * (700-border)) + border;
+			var y = Math.floor(Math.random() * (1280-border)) + border;
+			var temp = { type: EnemyType.Batman, x: x, y: y };
+			data[i] =temp;
+			i++;
+		}
+		while (i < 22){
+			var x = Math.floor(Math.random() * (700-border)) + border;
+			var y = Math.floor(Math.random() * (1280-border)) + border;
+			var temp = { type: EnemyType.BatmanKing, x: x, y: y };
+			data[i] =temp;
+			i++;
+		}
+		while (i < 27){
+			var x = Math.floor(Math.random() * (700-border)) + border;
+			var y = Math.floor(Math.random() * (1280-border)) + border;
+			var temp = { type: EnemyType.Logo, x: x, y: y };
+			data[i] =temp;
+			i++;
+		}
+		while (i < 29){
+			var x = Math.floor(Math.random() * (700-border)) + border;
+			var y = Math.floor(Math.random() * (1280-border)) + border;
+			var temp = { type: EnemyType.Boom, x: x, y: y };
+			data[i] =temp;
+			i++;
+		}
+		while (i < size){
+			var x = Math.floor(Math.random() * (700-border)) + border;
+			var y = Math.floor(Math.random() * (1280-border)) + border;
+			var temp = { type: EnemyType.Mask, x: x, y: y };
+			data[i] =temp;
+			i++;
+		}
+		return data;
+	}
 
 
 	const PlayerRadius = 30;
@@ -225,6 +258,7 @@ namespace game {
 	}
 
 	async function startGame(stage: ez.Stage, n, gameOver) {
+
 		async function showClock() {
 			n.clock.visible = true;
 			var time = 10;
@@ -234,18 +268,24 @@ namespace game {
 				await ez.delay(1000);
 				time--;
 			}
-
 			n.clock.visible = false;
 			getMask = false;
 		}
+
 		var enemies = [];
 		//ajax(`http://chenshuwei.free.idcfengye.com/openapi/statistics/add?openid=${PlayerInfo.openid}&fps=${ez.fps}`, function(){});
+		// 判断是否撞到口罩
 		var getMask = false;
 
 		var enemiesData = createEnemyData();
 		for (let i = 0; i < enemiesData.length; i++) {
 			enemies[i] = createEnemy(enemiesData[i], stage);
 		}
+		var hole1 = createHoleData();
+		createHole(hole1[0], stage);
+
+		let hole: number[] = [hole1[0].x, hole1[0].y];
+
 		player = createPlayer(stage);
 		player.x = 104;
 		player.y = 144;
@@ -263,6 +303,7 @@ namespace game {
 
 		var lastPos = [104, 144];
 		var chance = 5;
+
 		while(true) {
 			if (chance-- <= 0)
 				break;
@@ -277,8 +318,10 @@ namespace game {
 			}
 			n.chance.text = `机会 ${chance}`;
 			launchResovle = null;
+
 			let dx = r[0] * 0.25;
-			let dy = r[1] * 0.25;
+			let dy = r[1] * 0.5;
+
 			while(true){
 				player.x += dx;
 				player.y += dy;
@@ -289,6 +332,8 @@ namespace game {
 					let data = e.data;
 					let dx = e.x - player.x;
 					let dy = e.y - player.y;
+
+					// 碰撞检测
 					if (dx * dx + dy * dy < (30 + data.radius) * (30 + data.radius)) {
 						let score = data.score;
 						let s = new ez.LabelSprite(stage);
@@ -301,7 +346,7 @@ namespace game {
 						s.font = "Arial 30px";
 						if (data.type == EnemyType.BatmanKing && !getMask)
 							score = 30;
-							
+
 						if(score > 0){
 							s.text = "+" + score;
 							s.gradient = {y1:30, colors:["#ff8", "#fa8"]};
@@ -310,14 +355,24 @@ namespace game {
 							s.text = "" + score;
 							s.gradient = { y1: 30, colors: ["#8ff", "#8af"] };
 						}
-						ez.Tween.add(s).move({y:[e.y, e.y - 30], opacity: [0.5, 1]}, 300, ez.Ease.bounceOut).move({opacity:[1, 0]}, 2000).disposeTarget().play();
+						if (data.type == EnemyType.Logo && !getMask){
+							chance += 1;
+							n.chance.text = `机会 ${chance}`;
+						}
+						ez.Tween.add(s)
+							.move({y:[e.y, e.y - 30], opacity: [0.5, 1]}, 300, ez.Ease.bounceOut)
+							.move({opacity:[1, 0]}, 2000)
+							.disposeTarget()
+							.play();
+
 						addScore(score, n);
+
 						ez.playSFX(score > 0 ? "sound/add" : "sound/lose");
 						e.dispose();
 						enemies.splice(i, 1);
 						if (data.type == EnemyType.Mask){
 							getMask = true;
-							//吃掉口罩随机消灭2个小蝙蝠
+							// 吃掉口罩随机消灭2个小蝙蝠
 							var arr = enemies.concat();
 							shulffle(arr);
 							for(let j = 0; j < 2; j++){
@@ -333,6 +388,7 @@ namespace game {
 						break;
 					}
 				}
+
 				for(let i = 0; i < lines.length; i++){
 					let line = lines[i];
 					if(intersect(line[0], line[1], player, 30)){
