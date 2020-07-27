@@ -148,50 +148,60 @@ var game;
         return s;
     }
     function createHoleData() {
-        var border = 25;
-        var x = Math.floor(Math.random() * (700 - border)) + border;
-        var y = Math.floor(Math.random() * (1280 - border)) + border;
+        var arr = createXY();
+        var x = arr[0];
+        var y = arr[1];
         var data = new Array(1);
         var temp = { type: EnemyType.Batman, x: x, y: y };
         data[0] = temp;
         return data;
     }
+    function createXY() {
+        var border = 25;
+        var x = Math.floor(Math.random() * (700 - border)) + border;
+        var y = Math.floor(Math.random() * (1280 - border)) + border;
+        return [x, y];
+    }
     function createEnemyData() {
-        var size = 30;
+        var size = 50;
         var data = new Array(size);
         var i = 0;
-        var border = 25;
-        while (i < 20) {
-            var x = Math.floor(Math.random() * (700 - border)) + border;
-            var y = Math.floor(Math.random() * (1280 - border)) + border;
+        while (i < 35) {
+            var arr = createXY();
+            var x = arr[0];
+            var y = arr[1];
             var temp = { type: EnemyType.Batman, x: x, y: y };
             data[i] = temp;
             i++;
         }
-        while (i < 22) {
-            var x = Math.floor(Math.random() * (700 - border)) + border;
-            var y = Math.floor(Math.random() * (1280 - border)) + border;
+        while (i < 40) {
+            var arr = createXY();
+            var x = arr[0];
+            var y = arr[1];
             var temp = { type: EnemyType.BatmanKing, x: x, y: y };
             data[i] = temp;
             i++;
         }
-        while (i < 27) {
-            var x = Math.floor(Math.random() * (700 - border)) + border;
-            var y = Math.floor(Math.random() * (1280 - border)) + border;
+        while (i < 43) {
+            var arr = createXY();
+            var x = arr[0];
+            var y = arr[1];
             var temp = { type: EnemyType.Logo, x: x, y: y };
             data[i] = temp;
             i++;
         }
-        while (i < 29) {
-            var x = Math.floor(Math.random() * (700 - border)) + border;
-            var y = Math.floor(Math.random() * (1280 - border)) + border;
+        while (i < 55) {
+            var arr = createXY();
+            var x = arr[0];
+            var y = arr[1];
             var temp = { type: EnemyType.Boom, x: x, y: y };
             data[i] = temp;
             i++;
         }
         while (i < size) {
-            var x = Math.floor(Math.random() * (700 - border)) + border;
-            var y = Math.floor(Math.random() * (1280 - border)) + border;
+            var arr = createXY();
+            var x = arr[0];
+            var y = arr[1];
             var temp = { type: EnemyType.Mask, x: x, y: y };
             data[i] = temp;
             i++;

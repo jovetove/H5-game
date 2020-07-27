@@ -153,9 +153,9 @@ namespace game {
 	 * 生成黑洞数据
 	 */
 	function createHoleData() {
-		var border:number = 25;
-		var x = Math.floor(Math.random() * (700-border)) + border;
-		var y = Math.floor(Math.random() * (1280-border)) + border;
+		var arr = createXY();
+		var x = arr[0];
+		var y = arr[1];
 		var data = new Array(1);
 		// data[0] = x;
 		// data[1] = y;
@@ -166,46 +166,61 @@ namespace game {
 	}
 
 	/**
+	 * 产生xy数据
+	 */
+	function createXY() {
+		// 边界 防止生成的敌人越界
+		var border:number = 25;
+		var x = Math.floor(Math.random() * (700-border)) + border;
+		var y = Math.floor(Math.random() * (1280-border)) + border;
+		return [x, y];
+	}
+
+	/**
 	 * 生成敌人数据
 	 */
 	function createEnemyData() {
 		// 数组大小
-		var size:number = 30;
+		var size:number = 50;
 		var data = new Array(size);
 		var i:number = 0;
-		// 边界 防止生成的敌人越界
-		var border:number = 25;
-		while (i < 20){
-			var x = Math.floor(Math.random() * (700-border)) + border;
-			var y = Math.floor(Math.random() * (1280-border)) + border;
+
+		while (i < 35){
+			var arr = createXY();
+			var x = arr[0];
+			var y = arr[1];
 			var temp = { type: EnemyType.Batman, x: x, y: y };
 			data[i] =temp;
 			i++;
 		}
-		while (i < 22){
-			var x = Math.floor(Math.random() * (700-border)) + border;
-			var y = Math.floor(Math.random() * (1280-border)) + border;
+		while (i < 40){
+			var arr = createXY();
+			var x = arr[0];
+			var y = arr[1];
 			var temp = { type: EnemyType.BatmanKing, x: x, y: y };
 			data[i] =temp;
 			i++;
 		}
-		while (i < 27){
-			var x = Math.floor(Math.random() * (700-border)) + border;
-			var y = Math.floor(Math.random() * (1280-border)) + border;
+		while (i < 43){
+			var arr = createXY();
+			var x = arr[0];
+			var y = arr[1];
 			var temp = { type: EnemyType.Logo, x: x, y: y };
 			data[i] =temp;
 			i++;
 		}
-		while (i < 29){
-			var x = Math.floor(Math.random() * (700-border)) + border;
-			var y = Math.floor(Math.random() * (1280-border)) + border;
+		while (i < 55){
+			var arr = createXY();
+			var x = arr[0];
+			var y = arr[1];
 			var temp = { type: EnemyType.Boom, x: x, y: y };
 			data[i] =temp;
 			i++;
 		}
 		while (i < size){
-			var x = Math.floor(Math.random() * (700-border)) + border;
-			var y = Math.floor(Math.random() * (1280-border)) + border;
+			var arr = createXY();
+			var x = arr[0];
+			var y = arr[1];
 			var temp = { type: EnemyType.Mask, x: x, y: y };
 			data[i] =temp;
 			i++;

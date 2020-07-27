@@ -1,5 +1,7 @@
 namespace game {
 	import ui = ez.ui;
+	// 排行榜变量存储
+	export var ranks: number[] = [];
 
 	// 声音
 	export function soundEnable(enable) {
@@ -11,9 +13,6 @@ namespace game {
 		ez.setSFXVolume(val);
 		localStorage.setItem("sound", sound);
 	}
-
-	// 排行榜变量存储
-	export var ranks: number[] = [];
 
 	// 获取排行榜数据
 	export function getRank(rankPage){
@@ -40,7 +39,7 @@ namespace game {
 			var sound = localStorage.getItem("sound");
 			if(sound == null)
 				sound == "1";
-			n.sound.state = sound == "1" ? "check" : "uncheck";
+			n.sound.state = sound == "0" ? "check" : "uncheck";
 			soundEnable(sound == "1");
 			getRank(n.rankPage);
 			ez.playMusic(0, "sound/bgm", true);
@@ -60,15 +59,22 @@ namespace game {
 				.config({ loop: true })
 				.play();
 
-			ez.effect.highlight(n.start.namedChilds.bk, new ez.Color(128, 100, 50), 0.1, 10, 1000, 2000, 0, [-0.3, 1.2]);
+			ez.effect.highlight(n.start.namedChilds.bk,
+				new ez.Color(128, 100, 50),
+				0.1, 10, 1000,
+				2000, 0, [-0.3, 1.2]);
 
 			ez.setTimer(1000, function(){
 				if(ctx.disposed)
 					return;
-				ez.effect.highlight(n.help.namedChilds.bk, new ez.Color(50, 100, 128), 0.1, 10, 1000, 2000, 0, [-0.3, 1.2])
+				ez.effect.highlight(n.help.namedChilds.bk,
+					new ez.Color(50, 100, 128),
+					0.1, 10, 1000, 2000, 0, [-0.3, 1.2])
 			});
 
-			ez.effect.highlight(n.rank.namedChilds.label, new ez.Color(128, 100, 50), 0.3, 0, 1000, 1500, 0, [-0.3, 1]);
+			ez.effect.highlight(n.rank.namedChilds.label,
+				new ez.Color(128, 100, 50),
+				0.3, 0, 1000, 1500, 0, [-0.3, 1]);
 
 			this.addEventHandler("click", function(e){
 				switch (e.sender.id){

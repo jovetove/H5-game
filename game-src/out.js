@@ -11393,50 +11393,60 @@ var game;
         return s;
     }
     function createHoleData() {
-        var border = 25;
-        var x = Math.floor(Math.random() * (700 - border)) + border;
-        var y = Math.floor(Math.random() * (1280 - border)) + border;
+        var arr = createXY();
+        var x = arr[0];
+        var y = arr[1];
         var data = new Array(1);
         var temp = { type: EnemyType.Batman, x: x, y: y };
         data[0] = temp;
         return data;
     }
+    function createXY() {
+        var border = 25;
+        var x = Math.floor(Math.random() * (700 - border)) + border;
+        var y = Math.floor(Math.random() * (1280 - border)) + border;
+        return [x, y];
+    }
     function createEnemyData() {
-        var size = 30;
+        var size = 50;
         var data = new Array(size);
         var i = 0;
-        var border = 25;
-        while (i < 20) {
-            var x = Math.floor(Math.random() * (700 - border)) + border;
-            var y = Math.floor(Math.random() * (1280 - border)) + border;
+        while (i < 35) {
+            var arr = createXY();
+            var x = arr[0];
+            var y = arr[1];
             var temp = { type: EnemyType.Batman, x: x, y: y };
             data[i] = temp;
             i++;
         }
-        while (i < 22) {
-            var x = Math.floor(Math.random() * (700 - border)) + border;
-            var y = Math.floor(Math.random() * (1280 - border)) + border;
+        while (i < 40) {
+            var arr = createXY();
+            var x = arr[0];
+            var y = arr[1];
             var temp = { type: EnemyType.BatmanKing, x: x, y: y };
             data[i] = temp;
             i++;
         }
-        while (i < 27) {
-            var x = Math.floor(Math.random() * (700 - border)) + border;
-            var y = Math.floor(Math.random() * (1280 - border)) + border;
+        while (i < 43) {
+            var arr = createXY();
+            var x = arr[0];
+            var y = arr[1];
             var temp = { type: EnemyType.Logo, x: x, y: y };
             data[i] = temp;
             i++;
         }
-        while (i < 29) {
-            var x = Math.floor(Math.random() * (700 - border)) + border;
-            var y = Math.floor(Math.random() * (1280 - border)) + border;
+        while (i < 55) {
+            var arr = createXY();
+            var x = arr[0];
+            var y = arr[1];
             var temp = { type: EnemyType.Boom, x: x, y: y };
             data[i] = temp;
             i++;
         }
         while (i < size) {
-            var x = Math.floor(Math.random() * (700 - border)) + border;
-            var y = Math.floor(Math.random() * (1280 - border)) + border;
+            var arr = createXY();
+            var x = arr[0];
+            var y = arr[1];
             var temp = { type: EnemyType.Mask, x: x, y: y };
             data[i] = temp;
             i++;
@@ -11870,8 +11880,9 @@ var EnemyType;
     EnemyType[EnemyType["BatmanKing"] = 4] = "BatmanKing";
     EnemyType[EnemyType["Logo"] = 5] = "Logo";
 })(EnemyType || (EnemyType = {}));
-var levelMax = 10;
+var levelMax = 5;
 var levelCurr = 1;
+var leveldata = [50, 80, 100, 120, 140];
 var score = 0;
 var rate = 0.5;
 var alpha = 0.9;
@@ -12273,6 +12284,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var game;
 (function (game) {
+    game.ranks = [];
     function soundEnable(enable) {
         var val = 0;
         var sound = "0";
@@ -12283,7 +12295,6 @@ var game;
         localStorage.setItem("sound", sound);
     }
     game.soundEnable = soundEnable;
-    game.ranks = [];
     function getRank(rankPage) {
         var startTime = Date.now();
         ajax("https://xwfintech.qingke.io/openapi/pinball/list?pageSize=100", function (e, r) {
@@ -12306,7 +12317,7 @@ var game;
             var sound = localStorage.getItem("sound");
             if (sound == null)
                 sound == "1";
-            n.sound.state = sound == "1" ? "check" : "uncheck";
+            n.sound.state = sound == "0" ? "check" : "uncheck";
             soundEnable(sound == "1");
             getRank(n.rankPage);
             ez.playMusic(0, "sound/bgm", true);

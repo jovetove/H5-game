@@ -1,5 +1,6 @@
 var game;
 (function (game) {
+    game.ranks = [];
     function soundEnable(enable) {
         var val = 0;
         var sound = "0";
@@ -10,7 +11,6 @@ var game;
         localStorage.setItem("sound", sound);
     }
     game.soundEnable = soundEnable;
-    game.ranks = [];
     function getRank(rankPage) {
         var startTime = Date.now();
         ajax("https://xwfintech.qingke.io/openapi/pinball/list?pageSize=100", function (e, r) {
@@ -32,7 +32,7 @@ var game;
             var sound = localStorage.getItem("sound");
             if (sound == null)
                 sound == "1";
-            n.sound.state = sound == "1" ? "check" : "uncheck";
+            n.sound.state = sound == "0" ? "check" : "uncheck";
             soundEnable(sound == "1");
             getRank(n.rankPage);
             ez.playMusic(0, "sound/bgm", true);
