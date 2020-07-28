@@ -8,7 +8,7 @@
 	"outDir": "./js",                         /* Redirect output structure to the directory. */
 	"removeComments": true,                /* Do not emit comments to output. */
 	"importHelpers": false,                 /* Import emit helpers from 'tslib'. */
-	"strict": false,                           /* Enable all strict type-checking options. */
+	"strict": false                           /* Enable all strict type-checking options. */
   },
   "include": [
 	"types/ez.core.d.ts",

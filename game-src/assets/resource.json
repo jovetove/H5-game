@@ -44,7 +44,7 @@
 	{ "name":"ui/btn/喇叭check", "type":"subimage", "parent":"ui","width":56,"height":59,"margin":"36,12,12,16","region":"404,103,8,31"},
 	{ "name":"ui", "type":"ezm", "width":413,"height":326,"url":"ui.ezm"},
 	{ "name":"image/bg", "type":"ezm", "width":710,"height":1280,"url":"image/bg.ezm"},
-	{ "name":"image/活动规则", "type":"ezm", "width":545,"height":823,"url":"image/活动规则.ezm"},
+	{ "name":"image/活动规则", "type":"image", "width":545,"height":823,"url":"image/活动规则.png"},
 	{ "name":"image/说明", "type":"ezm", "width":534,"height":389,"url":"image/说明.ezm"},
 	{ "name":"sound/add", "type":"sound", "url":"sound/add.mp3"},
 	{ "name":"sound/bgm", "type":"sound", "url":"sound/bgm.mp3"},
