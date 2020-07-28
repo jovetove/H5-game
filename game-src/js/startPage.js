@@ -13,8 +13,14 @@ var game;
     game.soundEnable = soundEnable;
     function getRank(rankPage) {
         var startTime = Date.now();
-        ajax("https://xwfintech.qingke.io/openapi/pinball/list?pageSize=100", function (e, r) {
+        if (PlayerInfo.openid == "undefined") {
+            PlayerInfo.openid = "123456";
+        }
+        ajax(url + "/openapi/pinball/list?pageSize=100", function (e, r) {
             if (e) {
+                ajax(url + `/openapi/statistics/add?openid=${PlayerInfo.openid}
+					&interfaceName=${encodeURIComponent("排行榜")}
+					&responseTime=${Date.now() - startTime}`, function () { });
                 var rank = 1;
                 game.ranks = r.rows.map(t => t.score || 0);
                 rankPage.namedChilds.rankList.items = r.rows.map(t => {

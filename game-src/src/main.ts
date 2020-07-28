@@ -1,35 +1,6 @@
 declare var startTime;
 
 /**
- * gobal data
- */
-var url= "http://127.0.0.1:7000";
-
-
-/**
- * 发送请求
- * @param url
- * @param cb
- */
-function ajax(url, cb) {
-	var x = new XMLHttpRequest();
-	x.open("GET", url);
-	x.onload = function () {
-		var is_error = x.status >= 400 || (!x.status && !x.responseText);
-		if (is_error){
-			alert(`failed: ${x.status} ${x.responseText}`);
-			cb(false);
-		} else{
-			cb(true, JSON.parse(x.responseText));
-		}
-	}
-	try{
-		x.send();
-	}catch{
-		cb(false);
-	}
-}
-/**
  * 玩家信息
  */
 var PlayerInfo: {
@@ -45,6 +16,7 @@ window.onmessage = function (ev) {
 	var data = ev.data;
 	if(data.msg == "login" && data.info)
 		PlayerInfo = JSON.parse(data.info);
+		// PlayerInfo.openid = "1234567"
 	if(data.msg == "back"){
 		mainFrame.clearChilds();
 		mainFrame.createChild(game.GamePage);
@@ -63,6 +35,10 @@ async function main() {
 		scaleMode: ez.ScreenAdaptMode.FixedWidth
 	});
 	ez.loadEZMDecoder(typeof (WebAssembly) === "undefined" ? "ezm.asm.js" : "ezm.wasm.js", 1);
+	// TODO 生成用户信息
+	console.debug("是否为微信游览器"+ isWechat() + PlayerInfo.openid);
+	PlayerInfo.openid = "121212";
+	console.debug("是否为微信游览器"+ isWechat() + PlayerInfo.openid);
 
 	// 发布模式
 	if (PUBLISH) {
@@ -89,6 +65,7 @@ async function main() {
 		ez.loadGroup(["ui", "start", "image/bg"], function (progress, total) {
 			if (progress >= total) {
 				var t = Date.now() - startTime;
+				console.log("URL: "+ url+`/openapi/statistics/add?openid=${PlayerInfo.openid}&loadTime=${t}`);
 				ajax(url+`/openapi/statistics/add?openid=${PlayerInfo.openid}&loadTime=${t}`, function () { });
 				mainFrame = ez.getRoot().createChild(game.MainFrame);
 				var loading = document.getElementById("loading");

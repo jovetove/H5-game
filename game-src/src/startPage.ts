@@ -17,11 +17,16 @@ namespace game {
 	// 获取排行榜数据
 	export function getRank(rankPage){
 		var startTime = Date.now();
-		ajax("https://xwfintech.qingke.io/openapi/pinball/list?pageSize=100", function(e,r){
+		if(PlayerInfo.openid == "undefined"){
+			PlayerInfo.openid = "123456";
+		}
+		ajax(url+"/openapi/pinball/list?pageSize=100", function(e,r){
 			//alert(JSON.stringify(r));
 			//console.log(r);
 			if(e){
-				//ajax(`http://chenshuwei.free.idcfengye.com/openapi/statistics/add?openid=${PlayerInfo.openid}&interfaceName=${encodeURIComponent("排行榜")}&responseTime=${Date.now() - startTime}`, function () { });
+				ajax(url + `/openapi/statistics/add?openid=${PlayerInfo.openid}
+					&interfaceName=${encodeURIComponent("排行榜")}
+					&responseTime=${Date.now() - startTime}`, function () { });
 				var rank = 1;
 				ranks = r.rows.map(t => t.score||0);
 				rankPage.namedChilds.rankList.items = r.rows.map(t => {

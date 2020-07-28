@@ -14,3 +14,5 @@ ez-cli run -w
 ```
 ez-cli publish wx
 ```
+
+nohup java -jar segmentfault-admin.jar &

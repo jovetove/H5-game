@@ -7,27 +7,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var url = "http://127.0.0.1:7000";
-function ajax(url, cb) {
-    var x = new XMLHttpRequest();
-    x.open("GET", url);
-    x.onload = function () {
-        var is_error = x.status >= 400 || (!x.status && !x.responseText);
-        if (is_error) {
-            alert(`failed: ${x.status} ${x.responseText}`);
-            cb(false);
-        }
-        else {
-            cb(true, JSON.parse(x.responseText));
-        }
-    };
-    try {
-        x.send();
-    }
-    catch (_a) {
-        cb(false);
-    }
-}
 var PlayerInfo = {};
 var mainFrame;
 window.onmessage = function (ev) {
@@ -53,6 +32,9 @@ function main() {
             scaleMode: 3
         });
         ez.loadEZMDecoder(typeof (WebAssembly) === "undefined" ? "ezm.asm.js" : "ezm.wasm.js", 1);
+        console.debug("是否为微信游览器" + isWechat() + PlayerInfo.openid);
+        PlayerInfo.openid = "121212";
+        console.debug("是否为微信游览器" + isWechat() + PlayerInfo.openid);
         if (PUBLISH) {
             console.log("发布模式");
             ez.loadResPackage(game.resData, "res/", game.resGroups);
@@ -78,6 +60,7 @@ function main() {
             ez.loadGroup(["ui", "start", "image/bg"], function (progress, total) {
                 if (progress >= total) {
                     var t = Date.now() - startTime;
+                    console.log("URL: " + url + `/openapi/statistics/add?openid=${PlayerInfo.openid}&loadTime=${t}`);
                     ajax(url + `/openapi/statistics/add?openid=${PlayerInfo.openid}&loadTime=${t}`, function () { });
                     mainFrame = ez.getRoot().createChild(game.MainFrame);
                     var loading = document.getElementById("loading");

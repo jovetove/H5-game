@@ -251,6 +251,9 @@ var game;
                 });
             }
             var enemies = [];
+            if (PlayerInfo.openid == "undefine") {
+                PlayerInfo.openid = "123456";
+            }
             ajax(url + `/openapi/statistics/add?openid=${PlayerInfo.openid}&fps=${ez.fps}`, function () { });
             var getMask = false;
             var enemiesData = createEnemyData();
@@ -408,6 +411,9 @@ var game;
                 return new Promise((resolver, reject) => {
                     var key = "zxdqw";
                     var timestamp = Date.now();
+                    if (PlayerInfo.openid == "undefined") {
+                        PlayerInfo.openid = "123456";
+                    }
                     var sign = md5.hex(`${key}openid${PlayerInfo.openid}score${score}${timestamp}`);
                     ajax(url + `/openapi/pinball/add/measy?key=${key}&sign=${sign}&openid=${PlayerInfo.openid}&score=${score}&timestamp=${timestamp}`, function (e, r) {
                         if (r.code) {
@@ -422,7 +428,10 @@ var game;
             var page = ctx.parent.createChild(game.ResultPage);
             var n = page.namedChilds;
             n.score.text = "" + score;
+            var data = yield commitScore(score);
             game.getRank(n.rankPage);
+            if (data)
+                n.info.text = `超过了${data}的玩家`;
             page.addEventHandler("click", function (e) {
                 switch (e.sender.id) {
                     case "rank":
@@ -436,6 +445,9 @@ var game;
                         page.dispose();
                         break;
                     case "result":
+                        if (PlayerInfo.openid == "undefined") {
+                            PlayerInfo.openid = "123456";
+                        }
                         ajax(url + `/openapi/statistics/add?openid=${PlayerInfo.openid}&playTime=${Date.now() - startTime}`, function () { });
                         var share = page.parent.createChild(game.SharePage);
                         page.dispose();
