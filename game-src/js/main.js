@@ -7,10 +7,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var PlayerInfo = {};
 var mainFrame;
 window.onmessage = function (ev) {
-    console.log(ev.data);
     var data = ev.data;
     if (data.msg == "login" && data.info)
         PlayerInfo = JSON.parse(data.info);
@@ -32,16 +30,16 @@ function main() {
             scaleMode: 3
         });
         ez.loadEZMDecoder(typeof (WebAssembly) === "undefined" ? "ezm.asm.js" : "ezm.wasm.js", 1);
-        console.debug("是否为微信游览器" + isWechat() + PlayerInfo.openid);
-        PlayerInfo.openid = "121212";
-        console.debug("是否为微信游览器" + isWechat() + PlayerInfo.openid);
+        if (!isWechat()) {
+            createPlayerInfo();
+        }
         if (PUBLISH) {
             console.log("发布模式");
             ez.loadResPackage(game.resData, "res/", game.resGroups);
             ez.loadGroup(["ui", "start", "image/bg"], function (progress, total) {
                 if (progress >= total) {
                     var t = Date.now() - startTime;
-                    console.log("URL: " + url + `/openapi/statistics/add?openid=${PlayerInfo.openid}&loadTime=${t}`);
+                    url = url_online;
                     ajax(url + `/openapi/statistics/add?openid=${PlayerInfo.openid}&loadTime=${t}`, function () { });
                     mainFrame = ez.getRoot().createChild(game.MainFrame);
                     var loading = document.getElementById("loading");
@@ -55,12 +53,13 @@ function main() {
             });
         }
         else {
-            console.log("线下");
+            console.log("线下模式");
             yield ez.loadJSONPackageAsync("assets/resource.json", "assets/res/");
             ez.loadGroup(["ui", "start", "image/bg"], function (progress, total) {
                 if (progress >= total) {
                     var t = Date.now() - startTime;
-                    console.log("URL: " + url + `/openapi/statistics/add?openid=${PlayerInfo.openid}&loadTime=${t}`);
+                    url = url_debug;
+                    console.log("发送用户信息 --> URL: " + url + `/openapi/statistics/add?openid=${PlayerInfo.openid}&loadTime=${t}`);
                     ajax(url + `/openapi/statistics/add?openid=${PlayerInfo.openid}&loadTime=${t}`, function () { });
                     mainFrame = ez.getRoot().createChild(game.MainFrame);
                     var loading = document.getElementById("loading");

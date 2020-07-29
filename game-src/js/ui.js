@@ -36,18 +36,18 @@ var game;
                     ] },
                 { class: "Group", id: "clock", width: 66, height: 66, x: 611, y: 127, visible: false, _childs: [
                         { class: "Image", src: "game/clock" },
-                        { class: "Label", id: "time", font: "34px", color: "#fff", width: "100%", height: "100%", align: 5 },
+                        { class: "Label", id: "time", font: "34px", color: "#fff", width: "100%", height: "100%", align: 5, text: "0" },
                     ] },
                 { class: "Image", id: "disk", src: "game/disk", visible: false },
                 { class: "Group", width: "100%", height: 70, textStyle: "gameHead", _childs: [
                         { class: "RectFill", width: "100%", height: 70, color: "#2c296e" },
                         { class: "RectFill", width: "100%", top: 70, height: 2, color: "#6854aa" },
-                        { class: "Image", id: "avatar", left: 28, width: 50, top: 13, height: 50 },
-                        { class: "Label", id: "name", left: 87, width: 200, top: 24, height: 27, format: 8 },
-                        { class: "Label", id: "score", left: 290, width: 140, top: 24, height: 27, text: "得分 0" },
-                        { class: "Label", id: "chance", left: 430, width: 120, top: 24, height: 27, text: "机会 5" },
-                        { class: "game.Button", id: "help", left: 510, width: 130, top: 24, height: 30, label: "说明", childsProperty: { bk: { src: "" }, label: { color: "#5186ff" } } },
-                        { class: "game.Checkbox", id: "sound", left: 630, width: 56, top: 8, childsProperty: { icon: { src: "ui/btn/喇叭" }, checkImg: { src: "ui/btn/喇叭check" } } },
+                        { class: "Image", id: "avatar", left: 10, width: 50, top: 13, height: 50 },
+                        { class: "Label", id: "level", left: 70, width: 100, top: 24, height: 27, text: "关卡 0" },
+                        { class: "Label", id: "score", left: 180, width: 220, top: 24, height: 27, text: "得分 0" },
+                        { class: "Label", id: "chance", left: 400, width: 120, top: 24, height: 27, text: "机会 5" },
+                        { class: "game.Button", id: "help", left: 520, width: 120, top: 24, height: 30, label: "说明", childsProperty: { bk: { src: "" }, label: { color: "#5186ff" } } },
+                        { class: "game.Checkbox", id: "sound", left: 650, width: 56, top: 8, childsProperty: { icon: { src: "ui/btn/喇叭" }, checkImg: { src: "ui/btn/喇叭check" } } },
                     ] },
             ]
         },
@@ -171,18 +171,18 @@ var game;
             ] },
         { class: "Group", id: "clock", width: 66, height: 66, x: 611, y: 127, visible: false, _childs: [
                 { class: "Image", src: "game/clock" },
-                { class: "Label", id: "time", font: "34px", color: "#fff", width: "100%", height: "100%", align: 5 },
+                { class: "Label", id: "time", font: "34px", color: "#fff", width: "100%", height: "100%", align: 5, text: "0" },
             ] },
         { class: "Image", id: "disk", src: "game/disk", visible: false },
         { class: "Group", width: "100%", height: 70, textStyle: "gameHead", _childs: [
                 { class: "RectFill", width: "100%", height: 70, color: "#2c296e" },
                 { class: "RectFill", width: "100%", top: 70, height: 2, color: "#6854aa" },
-                { class: "Image", id: "avatar", left: 28, width: 50, top: 13, height: 50 },
-                { class: "Label", id: "name", left: 87, width: 200, top: 24, height: 27, format: 8 },
-                { class: "Label", id: "score", left: 290, width: 140, top: 24, height: 27, text: "得分 0" },
-                { class: "Label", id: "chance", left: 430, width: 120, top: 24, height: 27, text: "机会 5" },
-                { class: "game.Button", id: "help", left: 510, width: 130, top: 24, height: 30, label: "说明", childsProperty: { bk: { src: "" }, label: { color: "#5186ff" } } },
-                { class: "game.Checkbox", id: "sound", left: 630, width: 56, top: 8, childsProperty: { icon: { src: "ui/btn/喇叭" }, checkImg: { src: "ui/btn/喇叭check" } } },
+                { class: "Image", id: "avatar", left: 10, width: 50, top: 13, height: 50 },
+                { class: "Label", id: "level", left: 70, width: 100, top: 24, height: 27, text: "关卡 0" },
+                { class: "Label", id: "score", left: 180, width: 220, top: 24, height: 27, text: "得分 0" },
+                { class: "Label", id: "chance", left: 400, width: 120, top: 24, height: 27, text: "机会 5" },
+                { class: "game.Button", id: "help", left: 520, width: 120, top: 24, height: 30, label: "说明", childsProperty: { bk: { src: "" }, label: { color: "#5186ff" } } },
+                { class: "game.Checkbox", id: "sound", left: 650, width: 56, top: 8, childsProperty: { icon: { src: "ui/btn/喇叭" }, checkImg: { src: "ui/btn/喇叭check" } } },
             ] }
     ];
     game._GamePage = _GamePage;
@@ -229,7 +229,8 @@ var game;
     }
     ResultPage.ClassName = "game.ResultPage";
     ResultPage._childs = [
-        { class: "Image", src: "ui/img/奖杯", left: 198, width: 336, top: 77, height: 322 },
+        { class: "Image", id: "picSucc", src: "ui/img/奖杯", left: 198, width: 336, top: 77, height: 322, visible: true },
+        { class: "Image", id: "picFail", src: "ui/img/失败", left: 198, width: 296, top: 77, height: 200, visible: false },
         { class: "Label", text: "本局得分", x: "50%", align: 1, width: 119, top: 462, height: 29 },
         { class: "Label", id: "score", text: "1000", x: "50%", strokeWidth: 4, strokeColor: "#9b8ddd", width: 280, top: 395, height: 58, font: "50px", gradient: { y1: 50, colors: ['#a995ff', '#8670f4'] } },
         { class: "Label", id: "info", x: "50%", width: 283, top: 530, height: 32 },
@@ -237,8 +238,8 @@ var game;
         { class: "Image", src: "ui/img/line", left: 177, width: 360, top: 579, height: 2 },
         { class: "game.Button", id: "rank", label: "查看排行榜", style: "blue", x: "50%", width: 195, top: 669, height: 70 },
         { class: "game.Button", id: "result", label: "生成成绩单", style: "blue", x: "50%", width: 195, top: 769, height: 70 },
-        { class: "Group", top: 840, bottom: 0, width: "100%", _childs: [
-                { class: "game.Button", id: "replay", label: "再玩一次", style: "purple", x: "50%", width: 195, y: "50%", height: 70 },
+        { class: "Group", top: 900, bottom: 0, width: "100%", _childs: [
+                { class: "game.Button", id: "replay", label: "再次挑战", style: "purple", x: "50%", width: 195, y: "50%", height: 70 },
             ] },
         { class: "game.RankPage", id: "rankPage", visible: false }
     ];
@@ -269,6 +270,7 @@ var game;
         { class: "Label", id: "name", left: 114, width: 383, top: 337, height: 37, text: "姓名：" },
         { class: "Label", id: "score", left: 114, width: 383, top: 387, height: 37, text: "成绩：10000" },
         { class: "Label", id: "info", left: 114, width: 383, top: 439, height: 37 },
+        { class: "game.Button", id: "closeShare", left: 650, width: 39, top: 40, height: 38, childsProperty: { bk: { src: "ui/btn/close" } } },
         { class: "Image", src: "share/text猪望仔大战蝙蝠侠", left: 65, top: 165 },
         { class: "Label", font: "28px", color: "#bbadfb", lineHeight: 48, format: 2, left: 68, width: 585, top: 575, height: 137, text: "2020“创青春 交子杯”新网银行金融科技挑战赛\n47万奖金池，最高 10 万奖金等你来拿！\n是时候展现你真正的技术了！" },
         { class: "Group", width: 300, top: 700, bottom: 0, x: "50%", _childs: [

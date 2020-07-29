@@ -10,64 +10,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 var game;
 (function (game) {
     var RAD = 180 / Math.PI;
-    const PlayerRadius = 30;
     var player;
     var launchResovle = null;
-    var lines = [
-        [0, 70, 490, 70],
-        [490, 70, 710, 205],
-        [490, 70, 710, 205],
-        [710, 205, 710, 524],
-        [710, 524, 446, 695],
-        [446, 695, 466, 723],
-        [466, 723, 710, 564],
-        [710, 564, 710, 1280],
-        [0, 70, 0, 1280],
-        [120, 902, 361, 902],
-        [361, 902, 361, 934],
-        [361, 934, 120, 939],
-        [120, 902, 120, 939],
-        [710, 1280, 0, 1280]
-    ].map(l => [{ x: l[0], y: l[1] }, { x: l[2], y: l[3] }]);
-    function intersect(p1, p2, c, r) {
-        var flag1 = (p1.x - c.x) * (p1.x - c.x) + (p1.y - c.y) * (p1.y - c.y) <= r * r;
-        var flag2 = (p2.x - c.x) * (p2.x - c.x) + (p2.y - c.y) * (p2.y - c.y) <= r * r;
-        if (flag1 && flag2)
-            return false;
-        else if (flag1 || flag2)
-            return true;
-        else {
-            var A, B, C, dist1, dist2, angle1, angle2;
-            A = p1.y - p2.y;
-            B = p2.x - p1.x;
-            C = p1.x * p2.y - p2.x * p1.y;
-            dist1 = A * c.x + B * c.y + C;
-            dist1 *= dist1;
-            dist2 = (A * A + B * B) * r * r;
-            if (dist1 > dist2)
-                return false;
-            angle1 = (c.x - p1.x) * (p2.x - p1.x) + (c.y - p1.y) * (p2.y - p1.y);
-            angle2 = (c.x - p2.x) * (p1.x - p2.x) + (c.y - p2.y) * (p1.y - p2.y);
-            return (angle1 > 0 && angle2 > 0);
-        }
-    }
-    function reflect(p1, p2, p0, dx, dy) {
-        var A = p2.y - p1.y;
-        var B = p1.x - p2.x;
-        var C = p2.x * p1.y - p1.x * p2.y;
-        var D = 1 / (A * A + B * B);
-        var x = (B * B * p0.x - A * B * p0.y - A * C) * D;
-        var y = (A * A * p0.y - A * B * p0.x - B * C) * D;
-        var nx = p0.x - x;
-        var ny = p0.y - y;
-        var r = 1 / Math.sqrt(nx * nx + ny * ny);
-        nx *= r;
-        ny *= r;
-        var d = dx * nx + dy * ny;
-        var vx = dx - 2 * nx * d;
-        var vy = dy - 2 * ny * d;
-        return [vx, vy];
-    }
     function createPlayer(stage) {
         var sprite = new ez.SubStageSprite(stage);
         var p1 = new ez.ImageSprite(sprite);
@@ -163,7 +107,7 @@ var game;
         return [x, y];
     }
     function createEnemyData() {
-        var size = 50;
+        var size = 100;
         var data = new Array(size);
         var i = 0;
         while (i < 35) {
@@ -208,52 +152,101 @@ var game;
         }
         return data;
     }
-    function shulffle(arr) {
-        var seed = Date.now();
-        function rand(max) {
-            seed = (seed * 22695477 + 1) & 0x7ffffff;
-            return (seed >> 16) % (max + 1);
-        }
-        for (var i = 0; i < arr.length; i++) {
-            var idx = rand(arr.length - 1);
-            var t = arr[i];
-            arr[i] = arr[idx];
-            arr[idx] = t;
-        }
-    }
-    function addScore(s, n) {
+    function showResult(ctx) {
         return __awaiter(this, void 0, void 0, function* () {
-            var s1 = score;
-            score += s;
-            var d = (s / 10) | 0;
-            for (let i = 0; i < 10; i++) {
-                s1 += d;
-                n.score.text = `得分 ${s1}`;
-                yield ez.delay(30);
+            var page = ctx.parent.createChild(game.ResultPage);
+            var n = page.namedChilds;
+            if (isSuccessful()) {
+                console.log("成功");
+                n.replay.label = "下一局";
             }
-            n.score.text = `得分 ${score}`;
+            else {
+                console.log("失败");
+                n.picSucc.visible = false;
+                n.picFail.visible = true;
+            }
+            n.score.text = "" + score;
+            var data = yield commitScore(score);
+            game.getRank(n.rankPage);
+            if (data) {
+                n.info.text = `超过了${data}的玩家`;
+            }
+            page.addEventHandler("click", function (e) {
+                switch (e.sender.id) {
+                    case "rank":
+                        n.rankPage.visible = true;
+                        break;
+                    case "closeRank":
+                        n.rankPage.visible = false;
+                        break;
+                    case "replay":
+                        if (isSuccessful()) {
+                            level += 1;
+                            score = 0;
+                            page.parent.createChild(game.GamePage);
+                            page.dispose();
+                        }
+                        else {
+                            page.parent.createChild(game.MainFrame);
+                            page.dispose();
+                        }
+                        break;
+                    case "result":
+                        ajax(url + `/openapi/statistics/add?openid=${PlayerInfo.openid}&playTime=${Date.now() - startTime}`, function () { });
+                        var share = page.parent.createChild(game.SharePage);
+                        page.visible = false;
+                        var n1 = share.namedChilds;
+                        if (data) {
+                            n1.info.text = `超过了${data}的玩家`;
+                        }
+                        n1.name.text = "姓名：" + PlayerInfo.nickname;
+                        n1.score.text = "成绩：" + score;
+                        ez.setTimer(100, function () {
+                            var isiOS = !!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
+                            var div = document.getElementById("game");
+                            var canvas = div.getElementsByTagName("canvas")[0];
+                            var png = canvas.toDataURL("image/png");
+                            window.parent.postMessage({ msg: "show", src: png }, "*");
+                        });
+                        share.addEventHandler("click", function (e) {
+                            switch (e.sender.id) {
+                                case "closeShare":
+                                    share.dispose();
+                                    page.visible = true;
+                                    break;
+                            }
+                        });
+                        break;
+                }
+            });
+            ctx.dispose();
         });
     }
     function startGame(stage, n, gameOver) {
         return __awaiter(this, void 0, void 0, function* () {
+            var isEndOfTime = true;
+            var time1 = maxTime;
             function showClock() {
                 return __awaiter(this, void 0, void 0, function* () {
-                    n.clock.visible = true;
-                    var time = 10;
-                    n.time.text = `${time}s`;
-                    while (time > 0) {
-                        n.time.text = `${time}s`;
-                        yield ez.delay(1000);
-                        time--;
+                    if (!isEndOfTime) {
+                        time1 = maxTime;
+                        return;
                     }
+                    isEndOfTime = false;
+                    n.clock.visible = true;
+                    time1 = maxTime;
+                    n.time.text = `${time1}`;
+                    while (time1 > 0) {
+                        n.time.text = `${time1}`;
+                        yield ez.delay(100);
+                        time1 -= 1;
+                    }
+                    isEndOfTime = true;
                     n.clock.visible = false;
                     getMask = false;
                 });
             }
             var enemies = [];
-            if (PlayerInfo.openid == "undefine") {
-                PlayerInfo.openid = "123456";
-            }
             ajax(url + `/openapi/statistics/add?openid=${PlayerInfo.openid}&fps=${ez.fps}`, function () { });
             var getMask = false;
             var enemiesData = createEnemyData();
@@ -276,7 +269,7 @@ var game;
                 .config({ loop: true })
                 .play();
             var lastPos = [104, 144];
-            var chance = 5;
+            var chance = chanceMax;
             while (true) {
                 if (chance-- <= 0)
                     break;
@@ -405,87 +398,16 @@ var game;
             gameOver();
         });
     }
-    function showResult(ctx) {
-        return __awaiter(this, void 0, void 0, function* () {
-            function commitScore(score) {
-                return new Promise((resolver, reject) => {
-                    var key = "zxdqw";
-                    var timestamp = Date.now();
-                    if (PlayerInfo.openid == "undefined") {
-                        PlayerInfo.openid = "123456";
-                    }
-                    var sign = md5.hex(`${key}openid${PlayerInfo.openid}score${score}${timestamp}`);
-                    ajax(url + `/openapi/pinball/add/measy?key=${key}&sign=${sign}&openid=${PlayerInfo.openid}&score=${score}&timestamp=${timestamp}`, function (e, r) {
-                        if (r.code) {
-                            alert(r.msg);
-                            reject();
-                        }
-                        else
-                            resolver(r.data);
-                    });
-                });
-            }
-            var page = ctx.parent.createChild(game.ResultPage);
-            var n = page.namedChilds;
-            n.score.text = "" + score;
-            var data = yield commitScore(score);
-            game.getRank(n.rankPage);
-            if (data)
-                n.info.text = `超过了${data}的玩家`;
-            page.addEventHandler("click", function (e) {
-                switch (e.sender.id) {
-                    case "rank":
-                        n.rankPage.visible = true;
-                        break;
-                    case "closeRank":
-                        n.rankPage.visible = false;
-                        break;
-                    case "replay":
-                        page.parent.createChild(game.MainFrame);
-                        page.dispose();
-                        break;
-                    case "result":
-                        if (PlayerInfo.openid == "undefined") {
-                            PlayerInfo.openid = "123456";
-                        }
-                        ajax(url + `/openapi/statistics/add?openid=${PlayerInfo.openid}&playTime=${Date.now() - startTime}`, function () { });
-                        var share = page.parent.createChild(game.SharePage);
-                        page.dispose();
-                        var n1 = share.namedChilds;
-                        n1.name.text = "姓名：" + PlayerInfo.nickname;
-                        n1.score.text = "成绩：" + score;
-                        ez.setTimer(100, function () {
-                            var isiOS = !!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
-                            var div = document.getElementById("game");
-                            var canvas = div.getElementsByTagName("canvas")[0];
-                            var png = canvas.toDataURL("image/png");
-                            window.parent.postMessage({ msg: "show", src: png }, "*");
-                        });
-                        share.addEventHandler("click", function (e) {
-                            switch (e.sender.id) {
-                                case "closeRank":
-                                    n.result.visible = false;
-                                    break;
-                            }
-                        });
-                        break;
-                }
-            });
-            ctx.dispose();
-        });
-    }
-    function length(sprite, x, y) {
-        var dx = sprite.x - x;
-        var dy = sprite.y - y;
-        return Math.sqrt(dx * dx + dy * dy);
-    }
     class GamePage extends game._GamePage {
         constructor(parent) {
             super(parent);
-            score = 0;
             var lastLine = lines[lines.length - 1];
             lastLine[0].y = lastLine[1].y = parent.getBound().height - 0;
             const n = this.namedChilds;
+            score = 0;
+            n.level.text = `关卡 ${level}`;
+            var s = score + " / " + target;
+            n.score.text = `得分 ${s}`;
             var sound = localStorage.getItem("sound");
             if (sound == null)
                 sound = "1";
@@ -501,9 +423,9 @@ var game;
             var ctx = this;
             var lastPt;
             if (PlayerInfo) {
-                n.name.text = PlayerInfo.nickname;
                 n.avatar.src = PlayerInfo.headimgurl;
             }
+            n.chance.text = chanceMax.toString();
             n.touch.onTouchBegin = function (e) {
                 if (!launchResovle)
                     return;
@@ -545,7 +467,9 @@ var game;
                 if (launchResovle)
                     launchResovle([-dx * len / r, -dy * len / r]);
             };
-            startGame(stage, n, function () { showResult(ctx); });
+            startGame(stage, n, function () {
+                showResult(ctx);
+            });
             this.addEventHandler("click", function (e) {
                 switch (e.sender.id) {
                     case "help":

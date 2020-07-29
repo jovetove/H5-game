@@ -27,25 +27,25 @@
 				</Group>
 				<Group id=clock width=66 height=66 x=611 y=127 visible=false >
 					<Image src=game/clock />
-					<Label id=time font=34px color=#fff width=100% height=100% align=Center|VCenter />
+					<Label id=time font=34px color=#fff width=100% height=100% align=Center|VCenter text="0"/>
 				</Group>
 				<Image id=disk src=game/disk visible=false />
 				<Group width=100% height=70 textStyle=gameHead >
 					<RectFill width=100% height=70 color=#2c296e />
 					<RectFill width=100% top=70 height=2 color=#6854aa />
-					<Image id=avatar left=28 width=50 top=13 height=50 />
-					<Label id=name left=87 width=200 top=24 height=27 format=Shrink />
-					<Label id=score left=290 width=140 top=24 height=27 text="得分 0"  />
-					<Label id=chance left=430 width=120 top=24 height=27 text="机会 5"  />
-					<Button id=help bk.src="" label.color=#5186ff left=510 width=130 top=24 height=30 label=说明 />
-					<Checkbox id=sound icon.src="ui/btn/喇叭" checkImg.src="ui/btn/喇叭check"  left=630 width=56 top=8  />
+					<Image id=avatar left=10 width=50 top=13 height=50 />
+					<Label id=level left=70 width=100 top=24 height=27 text="关卡 0"  />
+					<Label id=score left=180 width=220 top=24 height=27 text="得分 0"  />
+					<Label id=chance left=400 width=120 top=24 height=27 text="机会 5"  />
+					<Button id=help bk.src="" label.color=#5186ff left=520 width=120 top=24 height=30 label=说明 />
+					<Checkbox id=sound icon.src="ui/btn/喇叭" checkImg.src="ui/btn/喇叭check"  left=650 width=56 top=8  />
 				</Group>
 			</children>						
 		</GamePage>	
 	</templates>
+	
 	<GamePage width=100% height=100% customExt=true template=GamePage>
-		<methods><![CDATA[		
-		]]></methods>
+		<methods><![CDATA[]]></methods>
 		<children>
 			<UIStage id=game left=0 width=710 top=0 height=1280>
 				<Image src="image/bg" />
@@ -71,18 +71,18 @@
 			</Group>
 			<Group id=clock width=66 height=66 x=611 y=127 visible=false >
 				<Image src=game/clock />
-				<Label id=time font=34px color=#fff width=100% height=100% align=Center|VCenter />
+				<Label id=time font=34px color=#fff width=100% height=100% align=Center|VCenter text="0"/>
 			</Group>
 			<Image id=disk src=game/disk visible=false />
 			<Group width=100% height=70 textStyle=gameHead >
 				<RectFill width=100% height=70 color=#2c296e />
 				<RectFill width=100% top=70 height=2 color=#6854aa />
-				<Image id=avatar left=28 width=50 top=13 height=50 />
-				<Label id=name left=87 width=200 top=24 height=27 format=Shrink />
-				<Label id=score left=290 width=140 top=24 height=27 text="得分 0"  />
-				<Label id=chance left=430 width=120 top=24 height=27 text="机会 5"  />
-				<Button id=help bk.src="" label.color=#5186ff left=510 width=130 top=24 height=30 label=说明 />
-				<Checkbox id=sound icon.src="ui/btn/喇叭" checkImg.src="ui/btn/喇叭check"  left=630 width=56 top=8  />
+				<Image id=avatar left=10 width=50 top=13 height=50 />
+				<Label id=level left=70 width=100 top=24 height=27 text="关卡 0"  />
+				<Label id=score left=180 width=220 top=24 height=27 text="得分 0"  />
+				<Label id=chance left=400 width=120 top=24 height=27 text="机会 5"  />
+				<Button id=help bk.src="" label.color=#5186ff left=520 width=120 top=24 height=30 label=说明 />
+				<Checkbox id=sound icon.src="ui/btn/喇叭" checkImg.src="ui/btn/喇叭check"  left=650 width=56 top=8  />
 			</Group>
 		</children>						
 	</GamePage>

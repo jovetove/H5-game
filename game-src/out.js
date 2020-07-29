@@ -10226,18 +10226,18 @@ var game;
                     ] },
                 { class: "Group", id: "clock", width: 66, height: 66, x: 611, y: 127, visible: false, _childs: [
                         { class: "Image", src: "game/clock" },
-                        { class: "Label", id: "time", font: "34px", color: "#fff", width: "100%", height: "100%", align: 5 },
+                        { class: "Label", id: "time", font: "34px", color: "#fff", width: "100%", height: "100%", align: 5, text: "0" },
                     ] },
                 { class: "Image", id: "disk", src: "game/disk", visible: false },
                 { class: "Group", width: "100%", height: 70, textStyle: "gameHead", _childs: [
                         { class: "RectFill", width: "100%", height: 70, color: "#2c296e" },
                         { class: "RectFill", width: "100%", top: 70, height: 2, color: "#6854aa" },
-                        { class: "Image", id: "avatar", left: 28, width: 50, top: 13, height: 50 },
-                        { class: "Label", id: "name", left: 87, width: 200, top: 24, height: 27, format: 8 },
-                        { class: "Label", id: "score", left: 290, width: 140, top: 24, height: 27, text: "得分 0" },
-                        { class: "Label", id: "chance", left: 430, width: 120, top: 24, height: 27, text: "机会 5" },
-                        { class: "game.Button", id: "help", left: 510, width: 130, top: 24, height: 30, label: "说明", childsProperty: { bk: { src: "" }, label: { color: "#5186ff" } } },
-                        { class: "game.Checkbox", id: "sound", left: 630, width: 56, top: 8, childsProperty: { icon: { src: "ui/btn/喇叭" }, checkImg: { src: "ui/btn/喇叭check" } } },
+                        { class: "Image", id: "avatar", left: 10, width: 50, top: 13, height: 50 },
+                        { class: "Label", id: "level", left: 70, width: 100, top: 24, height: 27, text: "关卡 0" },
+                        { class: "Label", id: "score", left: 180, width: 220, top: 24, height: 27, text: "得分 0" },
+                        { class: "Label", id: "chance", left: 400, width: 120, top: 24, height: 27, text: "机会 5" },
+                        { class: "game.Button", id: "help", left: 520, width: 120, top: 24, height: 30, label: "说明", childsProperty: { bk: { src: "" }, label: { color: "#5186ff" } } },
+                        { class: "game.Checkbox", id: "sound", left: 650, width: 56, top: 8, childsProperty: { icon: { src: "ui/btn/喇叭" }, checkImg: { src: "ui/btn/喇叭check" } } },
                     ] },
             ]
         },
@@ -10361,18 +10361,18 @@ var game;
             ] },
         { class: "Group", id: "clock", width: 66, height: 66, x: 611, y: 127, visible: false, _childs: [
                 { class: "Image", src: "game/clock" },
-                { class: "Label", id: "time", font: "34px", color: "#fff", width: "100%", height: "100%", align: 5 },
+                { class: "Label", id: "time", font: "34px", color: "#fff", width: "100%", height: "100%", align: 5, text: "0" },
             ] },
         { class: "Image", id: "disk", src: "game/disk", visible: false },
         { class: "Group", width: "100%", height: 70, textStyle: "gameHead", _childs: [
                 { class: "RectFill", width: "100%", height: 70, color: "#2c296e" },
                 { class: "RectFill", width: "100%", top: 70, height: 2, color: "#6854aa" },
-                { class: "Image", id: "avatar", left: 28, width: 50, top: 13, height: 50 },
-                { class: "Label", id: "name", left: 87, width: 200, top: 24, height: 27, format: 8 },
-                { class: "Label", id: "score", left: 290, width: 140, top: 24, height: 27, text: "得分 0" },
-                { class: "Label", id: "chance", left: 430, width: 120, top: 24, height: 27, text: "机会 5" },
-                { class: "game.Button", id: "help", left: 510, width: 130, top: 24, height: 30, label: "说明", childsProperty: { bk: { src: "" }, label: { color: "#5186ff" } } },
-                { class: "game.Checkbox", id: "sound", left: 630, width: 56, top: 8, childsProperty: { icon: { src: "ui/btn/喇叭" }, checkImg: { src: "ui/btn/喇叭check" } } },
+                { class: "Image", id: "avatar", left: 10, width: 50, top: 13, height: 50 },
+                { class: "Label", id: "level", left: 70, width: 100, top: 24, height: 27, text: "关卡 0" },
+                { class: "Label", id: "score", left: 180, width: 220, top: 24, height: 27, text: "得分 0" },
+                { class: "Label", id: "chance", left: 400, width: 120, top: 24, height: 27, text: "机会 5" },
+                { class: "game.Button", id: "help", left: 520, width: 120, top: 24, height: 30, label: "说明", childsProperty: { bk: { src: "" }, label: { color: "#5186ff" } } },
+                { class: "game.Checkbox", id: "sound", left: 650, width: 56, top: 8, childsProperty: { icon: { src: "ui/btn/喇叭" }, checkImg: { src: "ui/btn/喇叭check" } } },
             ] }
     ];
     game._GamePage = _GamePage;
@@ -10419,7 +10419,8 @@ var game;
     }
     ResultPage.ClassName = "game.ResultPage";
     ResultPage._childs = [
-        { class: "Image", src: "ui/img/奖杯", left: 198, width: 336, top: 77, height: 322 },
+        { class: "Image", id: "picSucc", src: "ui/img/奖杯", left: 198, width: 336, top: 77, height: 322, visible: true },
+        { class: "Image", id: "picFail", src: "ui/img/失败", left: 198, width: 296, top: 77, height: 200, visible: false },
         { class: "Label", text: "本局得分", x: "50%", align: 1, width: 119, top: 462, height: 29 },
         { class: "Label", id: "score", text: "1000", x: "50%", strokeWidth: 4, strokeColor: "#9b8ddd", width: 280, top: 395, height: 58, font: "50px", gradient: { y1: 50, colors: ['#a995ff', '#8670f4'] } },
         { class: "Label", id: "info", x: "50%", width: 283, top: 530, height: 32 },
@@ -10427,8 +10428,8 @@ var game;
         { class: "Image", src: "ui/img/line", left: 177, width: 360, top: 579, height: 2 },
         { class: "game.Button", id: "rank", label: "查看排行榜", style: "blue", x: "50%", width: 195, top: 669, height: 70 },
         { class: "game.Button", id: "result", label: "生成成绩单", style: "blue", x: "50%", width: 195, top: 769, height: 70 },
-        { class: "Group", top: 840, bottom: 0, width: "100%", _childs: [
-                { class: "game.Button", id: "replay", label: "再玩一次", style: "purple", x: "50%", width: 195, y: "50%", height: 70 },
+        { class: "Group", top: 900, bottom: 0, width: "100%", _childs: [
+                { class: "game.Button", id: "replay", label: "再次挑战", style: "purple", x: "50%", width: 195, y: "50%", height: 70 },
             ] },
         { class: "game.RankPage", id: "rankPage", visible: false }
     ];
@@ -10459,6 +10460,7 @@ var game;
         { class: "Label", id: "name", left: 114, width: 383, top: 337, height: 37, text: "姓名：" },
         { class: "Label", id: "score", left: 114, width: 383, top: 387, height: 37, text: "成绩：10000" },
         { class: "Label", id: "info", left: 114, width: 383, top: 439, height: 37 },
+        { class: "game.Button", id: "closeShare", left: 650, width: 39, top: 40, height: 38, childsProperty: { bk: { src: "ui/btn/close" } } },
         { class: "Image", src: "share/text猪望仔大战蝙蝠侠", left: 65, top: 165 },
         { class: "Label", font: "28px", color: "#bbadfb", lineHeight: 48, format: 2, left: 68, width: 585, top: 575, height: 137, text: "2020“创青春 交子杯”新网银行金融科技挑战赛\n47万奖金池，最高 10 万奖金等你来拿！\n是时候展现你真正的技术了！" },
         { class: "Group", width: 300, top: 700, bottom: 0, x: "50%", _childs: [
@@ -10592,7 +10594,18 @@ var game;
     game._StartPage = _StartPage;
     ez.initCall(() => { ui.initUIClass(game.StartPage, ui.Container); });
 })(game || (game = {}));
-var url = "http://127.0.0.1:7000";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var url_online = "https://xwfintech.qingke.io/5f172e0de25bdc002d9a5abf/api";
+var url_debug = "http://127.0.0.1:7000";
+var url = "";
 function ajax(url, cb) {
     var x = new XMLHttpRequest();
     x.open("GET", url);
@@ -10613,9 +10626,118 @@ function ajax(url, cb) {
         cb(false);
     }
 }
+var PlayerInfo = {};
 function isWechat() {
     var ua = navigator.userAgent.toLowerCase();
     return /micromessenger/i.test(ua) || /windows phone/i.test(ua);
+}
+function createPlayerInfo() {
+    PlayerInfo.openid = "A" + parseInt(Math.random().toString());
+    PlayerInfo.nickname = "Tom";
+    PlayerInfo.sex = "whoMan";
+    PlayerInfo.headimgurl = "https://lg-4y405dn2-1256251417.cos.ap-shanghai.myqcloud.com/111222.png";
+}
+var EnemyType;
+(function (EnemyType) {
+    EnemyType[EnemyType["Hole"] = 0] = "Hole";
+    EnemyType[EnemyType["Mask"] = 1] = "Mask";
+    EnemyType[EnemyType["Boom"] = 2] = "Boom";
+    EnemyType[EnemyType["Batman"] = 3] = "Batman";
+    EnemyType[EnemyType["BatmanKing"] = 4] = "BatmanKing";
+    EnemyType[EnemyType["Logo"] = 5] = "Logo";
+})(EnemyType || (EnemyType = {}));
+function isSuccessful() {
+    return score >= target;
+}
+function commitScore(score) {
+    return new Promise((resolver, reject) => {
+        var key = "zxdqw";
+        var timestamp = Date.now();
+        if (PlayerInfo.openid == "undefined") {
+            PlayerInfo.openid = "123456";
+        }
+        var sign = md5.hex(`${key}openid${PlayerInfo.openid}score${score}${timestamp}`);
+        ajax(url + `/openapi/pinball/add/measy?key=${key}&sign=${sign}&openid=${PlayerInfo.openid}&score=${score}&timestamp=${timestamp}`, function (e, r) {
+            if (r.code) {
+                alert(r.msg);
+                reject();
+            }
+            else
+                resolver(r.data);
+        });
+    });
+}
+function length1(sprite, x, y) {
+    var dx = sprite.x - x;
+    var dy = sprite.y - y;
+    return Math.sqrt(dx * dx + dy * dy);
+}
+function intersect(p1, p2, c, r) {
+    var flag1 = (p1.x - c.x) * (p1.x - c.x) + (p1.y - c.y) * (p1.y - c.y) <= r * r;
+    var flag2 = (p2.x - c.x) * (p2.x - c.x) + (p2.y - c.y) * (p2.y - c.y) <= r * r;
+    if (flag1 && flag2)
+        return false;
+    else if (flag1 || flag2)
+        return true;
+    else {
+        var A, B, C, dist1, dist2, angle1, angle2;
+        A = p1.y - p2.y;
+        B = p2.x - p1.x;
+        C = p1.x * p2.y - p2.x * p1.y;
+        dist1 = A * c.x + B * c.y + C;
+        dist1 *= dist1;
+        dist2 = (A * A + B * B) * r * r;
+        if (dist1 > dist2)
+            return false;
+        angle1 = (c.x - p1.x) * (p2.x - p1.x) + (c.y - p1.y) * (p2.y - p1.y);
+        angle2 = (c.x - p2.x) * (p1.x - p2.x) + (c.y - p2.y) * (p1.y - p2.y);
+        return (angle1 > 0 && angle2 > 0);
+    }
+}
+function reflect(p1, p2, p0, dx, dy) {
+    var A = p2.y - p1.y;
+    var B = p1.x - p2.x;
+    var C = p2.x * p1.y - p1.x * p2.y;
+    var D = 1 / (A * A + B * B);
+    var x = (B * B * p0.x - A * B * p0.y - A * C) * D;
+    var y = (A * A * p0.y - A * B * p0.x - B * C) * D;
+    var nx = p0.x - x;
+    var ny = p0.y - y;
+    var r = 1 / Math.sqrt(nx * nx + ny * ny);
+    nx *= r;
+    ny *= r;
+    var d = dx * nx + dy * ny;
+    var vx = dx - 2 * nx * d;
+    var vy = dy - 2 * ny * d;
+    return [vx, vy];
+}
+function addScore(s, n) {
+    return __awaiter(this, void 0, void 0, function* () {
+        var s1 = score;
+        score += s;
+        var d = (s / 10) | 0;
+        for (let i = 0; i < 10; i++) {
+            s1 += d;
+            var ss = s1 + " / " + target;
+            n.score.text = `得分 ${ss}`;
+            yield ez.delay(30);
+        }
+        var ss = score + " / " + target;
+        n.score.text = `得分 ${ss}`;
+    });
+}
+function shulffle(arr) {
+    var seed = Date.now();
+    function rand(max) {
+        seed = (seed * 22695477 + 1) & 0x7ffffff;
+        return (seed >> 16) % (max + 1);
+    }
+    for (var i = 0; i < arr.length; i++) {
+        var idx = rand(arr.length - 1);
+        var t = arr[i];
+        arr[i] = arr[idx];
+        arr[idx] = t;
+    }
 }
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -10629,64 +10751,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 var game;
 (function (game) {
     var RAD = 180 / Math.PI;
-    const PlayerRadius = 30;
     var player;
     var launchResovle = null;
-    var lines = [
-        [0, 70, 490, 70],
-        [490, 70, 710, 205],
-        [490, 70, 710, 205],
-        [710, 205, 710, 524],
-        [710, 524, 446, 695],
-        [446, 695, 466, 723],
-        [466, 723, 710, 564],
-        [710, 564, 710, 1280],
-        [0, 70, 0, 1280],
-        [120, 902, 361, 902],
-        [361, 902, 361, 934],
-        [361, 934, 120, 939],
-        [120, 902, 120, 939],
-        [710, 1280, 0, 1280]
-    ].map(l => [{ x: l[0], y: l[1] }, { x: l[2], y: l[3] }]);
-    function intersect(p1, p2, c, r) {
-        var flag1 = (p1.x - c.x) * (p1.x - c.x) + (p1.y - c.y) * (p1.y - c.y) <= r * r;
-        var flag2 = (p2.x - c.x) * (p2.x - c.x) + (p2.y - c.y) * (p2.y - c.y) <= r * r;
-        if (flag1 && flag2)
-            return false;
-        else if (flag1 || flag2)
-            return true;
-        else {
-            var A, B, C, dist1, dist2, angle1, angle2;
-            A = p1.y - p2.y;
-            B = p2.x - p1.x;
-            C = p1.x * p2.y - p2.x * p1.y;
-            dist1 = A * c.x + B * c.y + C;
-            dist1 *= dist1;
-            dist2 = (A * A + B * B) * r * r;
-            if (dist1 > dist2)
-                return false;
-            angle1 = (c.x - p1.x) * (p2.x - p1.x) + (c.y - p1.y) * (p2.y - p1.y);
-            angle2 = (c.x - p2.x) * (p1.x - p2.x) + (c.y - p2.y) * (p1.y - p2.y);
-            return (angle1 > 0 && angle2 > 0);
-        }
-    }
-    function reflect(p1, p2, p0, dx, dy) {
-        var A = p2.y - p1.y;
-        var B = p1.x - p2.x;
-        var C = p2.x * p1.y - p1.x * p2.y;
-        var D = 1 / (A * A + B * B);
-        var x = (B * B * p0.x - A * B * p0.y - A * C) * D;
-        var y = (A * A * p0.y - A * B * p0.x - B * C) * D;
-        var nx = p0.x - x;
-        var ny = p0.y - y;
-        var r = 1 / Math.sqrt(nx * nx + ny * ny);
-        nx *= r;
-        ny *= r;
-        var d = dx * nx + dy * ny;
-        var vx = dx - 2 * nx * d;
-        var vy = dy - 2 * ny * d;
-        return [vx, vy];
-    }
     function createPlayer(stage) {
         var sprite = new ez.SubStageSprite(stage);
         var p1 = new ez.ImageSprite(sprite);
@@ -10782,7 +10848,7 @@ var game;
         return [x, y];
     }
     function createEnemyData() {
-        var size = 50;
+        var size = 100;
         var data = new Array(size);
         var i = 0;
         while (i < 35) {
@@ -10827,52 +10893,101 @@ var game;
         }
         return data;
     }
-    function shulffle(arr) {
-        var seed = Date.now();
-        function rand(max) {
-            seed = (seed * 22695477 + 1) & 0x7ffffff;
-            return (seed >> 16) % (max + 1);
-        }
-        for (var i = 0; i < arr.length; i++) {
-            var idx = rand(arr.length - 1);
-            var t = arr[i];
-            arr[i] = arr[idx];
-            arr[idx] = t;
-        }
-    }
-    function addScore(s, n) {
+    function showResult(ctx) {
         return __awaiter(this, void 0, void 0, function* () {
-            var s1 = score;
-            score += s;
-            var d = (s / 10) | 0;
-            for (let i = 0; i < 10; i++) {
-                s1 += d;
-                n.score.text = `得分 ${s1}`;
-                yield ez.delay(30);
+            var page = ctx.parent.createChild(game.ResultPage);
+            var n = page.namedChilds;
+            if (isSuccessful()) {
+                console.log("成功");
+                n.replay.label = "下一局";
             }
-            n.score.text = `得分 ${score}`;
+            else {
+                console.log("失败");
+                n.picSucc.visible = false;
+                n.picFail.visible = true;
+            }
+            n.score.text = "" + score;
+            var data = yield commitScore(score);
+            game.getRank(n.rankPage);
+            if (data) {
+                n.info.text = `超过了${data}的玩家`;
+            }
+            page.addEventHandler("click", function (e) {
+                switch (e.sender.id) {
+                    case "rank":
+                        n.rankPage.visible = true;
+                        break;
+                    case "closeRank":
+                        n.rankPage.visible = false;
+                        break;
+                    case "replay":
+                        if (isSuccessful()) {
+                            level += 1;
+                            score = 0;
+                            page.parent.createChild(game.GamePage);
+                            page.dispose();
+                        }
+                        else {
+                            page.parent.createChild(game.MainFrame);
+                            page.dispose();
+                        }
+                        break;
+                    case "result":
+                        ajax(url + `/openapi/statistics/add?openid=${PlayerInfo.openid}&playTime=${Date.now() - startTime}`, function () { });
+                        var share = page.parent.createChild(game.SharePage);
+                        page.visible = false;
+                        var n1 = share.namedChilds;
+                        if (data) {
+                            n1.info.text = `超过了${data}的玩家`;
+                        }
+                        n1.name.text = "姓名：" + PlayerInfo.nickname;
+                        n1.score.text = "成绩：" + score;
+                        ez.setTimer(100, function () {
+                            var isiOS = !!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
+                            var div = document.getElementById("game");
+                            var canvas = div.getElementsByTagName("canvas")[0];
+                            var png = canvas.toDataURL("image/png");
+                            window.parent.postMessage({ msg: "show", src: png }, "*");
+                        });
+                        share.addEventHandler("click", function (e) {
+                            switch (e.sender.id) {
+                                case "closeShare":
+                                    share.dispose();
+                                    page.visible = true;
+                                    break;
+                            }
+                        });
+                        break;
+                }
+            });
+            ctx.dispose();
         });
     }
     function startGame(stage, n, gameOver) {
         return __awaiter(this, void 0, void 0, function* () {
+            var isEndOfTime = true;
+            var time1 = maxTime;
             function showClock() {
                 return __awaiter(this, void 0, void 0, function* () {
-                    n.clock.visible = true;
-                    var time = 10;
-                    n.time.text = `${time}s`;
-                    while (time > 0) {
-                        n.time.text = `${time}s`;
-                        yield ez.delay(1000);
-                        time--;
+                    if (!isEndOfTime) {
+                        time1 = maxTime;
+                        return;
                     }
+                    isEndOfTime = false;
+                    n.clock.visible = true;
+                    time1 = maxTime;
+                    n.time.text = `${time1}`;
+                    while (time1 > 0) {
+                        n.time.text = `${time1}`;
+                        yield ez.delay(100);
+                        time1 -= 1;
+                    }
+                    isEndOfTime = true;
                     n.clock.visible = false;
                     getMask = false;
                 });
             }
             var enemies = [];
-            if (PlayerInfo.openid == "undefine") {
-                PlayerInfo.openid = "123456";
-            }
             ajax(url + `/openapi/statistics/add?openid=${PlayerInfo.openid}&fps=${ez.fps}`, function () { });
             var getMask = false;
             var enemiesData = createEnemyData();
@@ -10895,7 +11010,7 @@ var game;
                 .config({ loop: true })
                 .play();
             var lastPos = [104, 144];
-            var chance = 5;
+            var chance = chanceMax;
             while (true) {
                 if (chance-- <= 0)
                     break;
@@ -11024,87 +11139,16 @@ var game;
             gameOver();
         });
     }
-    function showResult(ctx) {
-        return __awaiter(this, void 0, void 0, function* () {
-            function commitScore(score) {
-                return new Promise((resolver, reject) => {
-                    var key = "zxdqw";
-                    var timestamp = Date.now();
-                    if (PlayerInfo.openid == "undefined") {
-                        PlayerInfo.openid = "123456";
-                    }
-                    var sign = md5.hex(`${key}openid${PlayerInfo.openid}score${score}${timestamp}`);
-                    ajax(url + `/openapi/pinball/add/measy?key=${key}&sign=${sign}&openid=${PlayerInfo.openid}&score=${score}&timestamp=${timestamp}`, function (e, r) {
-                        if (r.code) {
-                            alert(r.msg);
-                            reject();
-                        }
-                        else
-                            resolver(r.data);
-                    });
-                });
-            }
-            var page = ctx.parent.createChild(game.ResultPage);
-            var n = page.namedChilds;
-            n.score.text = "" + score;
-            var data = yield commitScore(score);
-            game.getRank(n.rankPage);
-            if (data)
-                n.info.text = `超过了${data}的玩家`;
-            page.addEventHandler("click", function (e) {
-                switch (e.sender.id) {
-                    case "rank":
-                        n.rankPage.visible = true;
-                        break;
-                    case "closeRank":
-                        n.rankPage.visible = false;
-                        break;
-                    case "replay":
-                        page.parent.createChild(game.MainFrame);
-                        page.dispose();
-                        break;
-                    case "result":
-                        if (PlayerInfo.openid == "undefined") {
-                            PlayerInfo.openid = "123456";
-                        }
-                        ajax(url + `/openapi/statistics/add?openid=${PlayerInfo.openid}&playTime=${Date.now() - startTime}`, function () { });
-                        var share = page.parent.createChild(game.SharePage);
-                        page.dispose();
-                        var n1 = share.namedChilds;
-                        n1.name.text = "姓名：" + PlayerInfo.nickname;
-                        n1.score.text = "成绩：" + score;
-                        ez.setTimer(100, function () {
-                            var isiOS = !!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
-                            var div = document.getElementById("game");
-                            var canvas = div.getElementsByTagName("canvas")[0];
-                            var png = canvas.toDataURL("image/png");
-                            window.parent.postMessage({ msg: "show", src: png }, "*");
-                        });
-                        share.addEventHandler("click", function (e) {
-                            switch (e.sender.id) {
-                                case "closeRank":
-                                    n.result.visible = false;
-                                    break;
-                            }
-                        });
-                        break;
-                }
-            });
-            ctx.dispose();
-        });
-    }
-    function length(sprite, x, y) {
-        var dx = sprite.x - x;
-        var dy = sprite.y - y;
-        return Math.sqrt(dx * dx + dy * dy);
-    }
     class GamePage extends game._GamePage {
         constructor(parent) {
             super(parent);
-            score = 0;
             var lastLine = lines[lines.length - 1];
             lastLine[0].y = lastLine[1].y = parent.getBound().height - 0;
             const n = this.namedChilds;
+            score = 0;
+            n.level.text = `关卡 ${level}`;
+            var s = score + " / " + target;
+            n.score.text = `得分 ${s}`;
             var sound = localStorage.getItem("sound");
             if (sound == null)
                 sound = "1";
@@ -11120,9 +11164,9 @@ var game;
             var ctx = this;
             var lastPt;
             if (PlayerInfo) {
-                n.name.text = PlayerInfo.nickname;
                 n.avatar.src = PlayerInfo.headimgurl;
             }
+            n.chance.text = chanceMax.toString();
             n.touch.onTouchBegin = function (e) {
                 if (!launchResovle)
                     return;
@@ -11164,7 +11208,9 @@ var game;
                 if (launchResovle)
                     launchResovle([-dx * len / r, -dy * len / r]);
             };
-            startGame(stage, n, function () { showResult(ctx); });
+            startGame(stage, n, function () {
+                showResult(ctx);
+            });
             this.addEventHandler("click", function (e) {
                 switch (e.sender.id) {
                     case "help":
@@ -11186,21 +11232,32 @@ var game;
     }
     game.GamePage = GamePage;
 })(game || (game = {}));
-var EnemyType;
-(function (EnemyType) {
-    EnemyType[EnemyType["Hole"] = 0] = "Hole";
-    EnemyType[EnemyType["Mask"] = 1] = "Mask";
-    EnemyType[EnemyType["Boom"] = 2] = "Boom";
-    EnemyType[EnemyType["Batman"] = 3] = "Batman";
-    EnemyType[EnemyType["BatmanKing"] = 4] = "BatmanKing";
-    EnemyType[EnemyType["Logo"] = 5] = "Logo";
-})(EnemyType || (EnemyType = {}));
-var levelMax = 5;
+var levelMax = 10;
 var levelCurr = 1;
 var leveldata = [50, 80, 100, 120, 140];
-var score = 0;
+var chanceMax = 2;
+var score = 1000;
+var level = 1;
+var target = 4000;
 var rate = 0.5;
 var alpha = 0.9;
+var maxTime = 20;
+var lines = [
+    [0, 70, 490, 70],
+    [490, 70, 710, 205],
+    [490, 70, 710, 205],
+    [710, 205, 710, 524],
+    [710, 524, 446, 695],
+    [446, 695, 466, 723],
+    [466, 723, 710, 564],
+    [710, 564, 710, 1280],
+    [0, 70, 0, 1280],
+    [120, 902, 361, 902],
+    [361, 902, 361, 934],
+    [361, 934, 120, 939],
+    [120, 902, 120, 939],
+    [710, 1280, 0, 1280]
+].map(l => [{ x: l[0], y: l[1] }, { x: l[2], y: l[3] }]);
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -11210,10 +11267,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var PlayerInfo = {};
 var mainFrame;
 window.onmessage = function (ev) {
-    console.log(ev.data);
     var data = ev.data;
     if (data.msg == "login" && data.info)
         PlayerInfo = JSON.parse(data.info);
@@ -11235,16 +11290,16 @@ function main() {
             scaleMode: 3
         });
         ez.loadEZMDecoder(typeof (WebAssembly) === "undefined" ? "ezm.asm.js" : "ezm.wasm.js", 1);
-        console.debug("是否为微信游览器" + isWechat() + PlayerInfo.openid);
-        PlayerInfo.openid = "121212";
-        console.debug("是否为微信游览器" + isWechat() + PlayerInfo.openid);
+        if (!isWechat()) {
+            createPlayerInfo();
+        }
         if (PUBLISH) {
             console.log("发布模式");
             ez.loadResPackage(game.resData, "res/", game.resGroups);
             ez.loadGroup(["ui", "start", "image/bg"], function (progress, total) {
                 if (progress >= total) {
                     var t = Date.now() - startTime;
-                    console.log("URL: " + url + `/openapi/statistics/add?openid=${PlayerInfo.openid}&loadTime=${t}`);
+                    url = url_online;
                     ajax(url + `/openapi/statistics/add?openid=${PlayerInfo.openid}&loadTime=${t}`, function () { });
                     mainFrame = ez.getRoot().createChild(game.MainFrame);
                     var loading = document.getElementById("loading");
@@ -11258,12 +11313,13 @@ function main() {
             });
         }
         else {
-            console.log("线下");
+            console.log("线下模式");
             yield ez.loadJSONPackageAsync("assets/resource.json", "assets/res/");
             ez.loadGroup(["ui", "start", "image/bg"], function (progress, total) {
                 if (progress >= total) {
                     var t = Date.now() - startTime;
-                    console.log("URL: " + url + `/openapi/statistics/add?openid=${PlayerInfo.openid}&loadTime=${t}`);
+                    url = url_debug;
+                    console.log("发送用户信息 --> URL: " + url + `/openapi/statistics/add?openid=${PlayerInfo.openid}&loadTime=${t}`);
                     ajax(url + `/openapi/statistics/add?openid=${PlayerInfo.openid}&loadTime=${t}`, function () { });
                     mainFrame = ez.getRoot().createChild(game.MainFrame);
                     var loading = document.getElementById("loading");
@@ -11529,7 +11585,7 @@ var md5;
 })(md5 || (md5 = {}));
 var game;
 (function (game) {
-    game.resData = "4LVSPIK3B203|p|2JS362HMIVJ6|EZ,A,FU,FU||||||;HA8GLOB3BT28|p|2JS362HMIVJ6|KO,CM,HW,DX||||||;1EF948RMIQRD|p|2JS362HMIVJ6|CA,Ha,VD,BG||||||;56UQPADE1Q3L|p|2JS362HMIVJ6|SS,A,FD,DZ|Bb|BM||||;CD2USR5HDCIB|p|2JS362HMIVJ6|KO,A,ID,CL|Ce|c||||;ER7C5K9MCR91|p|2JS362HMIVJ6|SF,Da,FJ,DG|CW|BU||||;674HLN92PH6C|p|2JS362HMIVJ6|A,Cb,EV,DQ|CE|BT||||;STU2ANJ65A4I|p|2JS362HMIVJ6|A,A,EY,Ca|Ba|BC||||;B0LVRU4VENJS|p|2JS362HMIVJ6|JU,GE,HU,BF||||||;U3D0VPUF90K5|p|2JS362HMIVJ6|EW,FV,Ca,CE|EP|De||||;LAO8Q29LE1TO|p|2JS362HMIVJ6|HR,FV,CC,CC||||||;384C1JUD8MIS|p|2JS362HMIVJ6|A,GM,Bf,Bf|CA|CA||A,A,B,B||;Q3IOEMMM9HV3|p|2JS362HMIVJ6|CA,GM,BW,BI||||||;2JS362HMIVJ6|w|BEI5ATEOKD8IRL3K|XW|JB||||;4TR3NPOOD9FC|w|SJZTVNDSHTCSEN0K|CK|CK||||;RGDNTIFOJEJ1|p|3430TB8UBRS5|A,A,JM,KL||KM||A,B,A,A||;85GD560O0A62|p|3430TB8UBRS5|A,KL,Od,BZ||||||;307B8VJHSQ38|p|3430TB8UBRS5|A,ME,KD,BO||||||;O18PU18DTSMO|p|3430TB8UBRS5|JM,A,CF,Bf|||W,Y,X,X|||;3430TB8UBRS5|w|YAR4IF5QCFBT3P0Y|Od|NS||||;F45FD2M7NRMS|p|M33L9BH2LKJ4|A,A,Ja,Kd||||||;EN6PH70VD7LV|p|M33L9BH2LKJ4|Ja,A,MB,HZ||||||;MFP4S2F9MF7F|p|M33L9BH2LKJ4|Vb,A,KF,IM||||||;M3F90V7UJL03|p|M33L9BH2LKJ4|QU,IM,NQ,FI||||||;LMIPDLENLMJG|p|M33L9BH2LKJ4|Ja,HZ,Ga,CV||||||;VCP8LGVCL71S|p|M33L9BH2LKJ4|Ja,KO,Ga,CV||||||;EJRRQ2IU0JS0|p|M33L9BH2LKJ4|A,Kd,HN,BC||||||;M33L9BH2LKJ4|w|33A5CZI9WIQLPWC5|BAA|NU||||;U7VJ9SGIHTNO|p|EB50KH7ATNKU|A,A,KQ,KC||||||;S9IQLHG3U700|p|EB50KH7ATNKU|KR,GF,BY,Bb||||||;52OMU7AEFJE8|p|EB50KH7ATNKU|KR,A,BM,BR||||||;5A1F5RDNRR3D|p|EB50KH7ATNKU|KR,EU,BM,BQ||||||;PI6ME5HEHD40|p|EB50KH7ATNKU|KR,DD,BM,BQ||||||;MR7EA6RAGT5R|p|EB50KH7ATNKU|KR,BS,BM,BQ||||||;UFGMTQLP3H5J|p|EB50KH7ATNKU|KR,IB,BH,BG||||||;CTDCID13AB9F|p|EB50KH7ATNKU|KR,JI,BS,Z|||J,J,K,N|||;G503ILGF8S28|p|EB50KH7ATNKU|Le,BE,e,BD|||I,N,J,P|||;O123T11GLFK9|p|EB50KH7ATNKU|Le,A,e,BD|||I,N,J,P|||;DQ8AU90MGHMI|p|EB50KH7ATNKU|Le,CI,e,e||||||;P637DGG88RRB|p|EB50KH7ATNKU|A,KD,LI,C||||||;SPMG8J9324MB|p|EB50KH7ATNKU|Le,DH,V,Z|||F,G,F,G|||;6VBE1JLANTMV|p|EB50KH7ATNKU|Le,EB,V,Z|||F,G,F,G|||;INH1T34JAHE4|p|EB50KH7ATNKU|MU,DH,I,f|BY|Bb||BE,M,M,Q||;EB50KH7ATNKU|w|CCUH93QNYUMF4OQ7|Md|KG||||;JCF2OQOGMT7O|w|DCXNROQW5H6N4QVK|WG|BIA||||;QJ204MMAGROF|w|9FEVB8H5QOD2EINN|RB|ZX||||;4PGJIM7IPCOV|w|GKBV7HI7HJNVC69E|QW|MF||||;1QO2CBOCQIBD|s|JA0G81AQV8EXMINP;UVOHVF14P3C8|s|NK0L2XPG4EDO1XAQ;JS4KKPVSP9K1|s|QMN8L7P4QXAI5M47";
+    game.resData = "4LVSPIK3B203|p|2JS362HMIVJ6|EZ,A,FU,FU||||||;HA8GLOB3BT28|p|2JS362HMIVJ6|KO,CM,HW,DX||||||;1EF948RMIQRD|p|2JS362HMIVJ6|CA,Ha,VD,BG||||||;56UQPADE1Q3L|p|2JS362HMIVJ6|SS,A,FD,DZ|Bb|BM||||;CD2USR5HDCIB|p|2JS362HMIVJ6|KO,A,ID,CL|Ce|c||||;ER7C5K9MCR91|p|2JS362HMIVJ6|SF,Da,FJ,DG|CW|BU||||;674HLN92PH6C|p|2JS362HMIVJ6|A,Cb,EV,DQ|CE|BT||||;STU2ANJ65A4I|p|2JS362HMIVJ6|A,A,EY,Ca|Ba|BC||||;B0LVRU4VENJS|p|2JS362HMIVJ6|JU,GE,HU,BF||||||;U3D0VPUF90K5|p|2JS362HMIVJ6|EW,FV,Ca,CE|EP|De||||;LAO8Q29LE1TO|p|2JS362HMIVJ6|HR,FV,CC,CC||||||;384C1JUD8MIS|p|2JS362HMIVJ6|A,GM,Bf,Bf|CA|CA||A,A,B,B||;Q3IOEMMM9HV3|p|2JS362HMIVJ6|CA,GM,BW,BI||||||;2JS362HMIVJ6|w|BEI5ATEOKD8IRL3K|XW|JB||||;4TR3NPOOD9FC|w|SJZTVNDSHTCSEN0K|CK|CK||||;RGDNTIFOJEJ1|p|3430TB8UBRS5|A,A,JM,KL||KM||A,B,A,A||;85GD560O0A62|p|3430TB8UBRS5|A,KL,Od,BZ||||||;307B8VJHSQ38|p|3430TB8UBRS5|A,ME,KD,BO||||||;O18PU18DTSMO|p|3430TB8UBRS5|JM,A,CF,Bf|||W,Y,X,X|||;3430TB8UBRS5|w|YAR4IF5QCFBT3P0Y|Od|NS||||;F45FD2M7NRMS|p|M33L9BH2LKJ4|A,A,Ja,Kd||||||;EN6PH70VD7LV|p|M33L9BH2LKJ4|Ja,A,MB,HZ||||||;MFP4S2F9MF7F|p|M33L9BH2LKJ4|Vb,A,KF,IM||||||;M3F90V7UJL03|p|M33L9BH2LKJ4|QU,IM,NQ,FI||||||;LMIPDLENLMJG|p|M33L9BH2LKJ4|Ja,HZ,Ga,CV||||||;VCP8LGVCL71S|p|M33L9BH2LKJ4|Ja,KO,Ga,CV||||||;EJRRQ2IU0JS0|p|M33L9BH2LKJ4|A,Kd,HN,BC||||||;M33L9BH2LKJ4|w|33A5CZI9WIQLPWC5|BAA|NU||||;FOTVN4BTL6M7|p|MJLSJ03RLQKM|A,A,KQ,KC||||||;S9IQLHG3U700|p|EB50KH7ATNKU|KR,GF,BY,Bb||||||;52OMU7AEFJE8|p|EB50KH7ATNKU|KR,A,BM,BR||||||;5A1F5RDNRR3D|p|EB50KH7ATNKU|KR,EU,BM,BQ||||||;PI6ME5HEHD40|p|EB50KH7ATNKU|KR,DD,BM,BQ||||||;MR7EA6RAGT5R|p|EB50KH7ATNKU|KR,BS,BM,BQ||||||;UFGMTQLP3H5J|p|EB50KH7ATNKU|KR,IB,BH,BG||||||;CTDCID13AB9F|p|EB50KH7ATNKU|KR,JI,BS,Z|||J,J,K,N|||;G503ILGF8S28|p|EB50KH7ATNKU|Le,BE,e,BD|||I,N,J,P|||;O123T11GLFK9|p|EB50KH7ATNKU|Le,A,e,BD|||I,N,J,P|||;DQ8AU90MGHMI|p|EB50KH7ATNKU|Le,CI,e,e||||||;P637DGG88RRB|p|EB50KH7ATNKU|A,KD,LI,C||||||;SPMG8J9324MB|p|EB50KH7ATNKU|Le,DH,V,Z|||F,G,F,G|||;6VBE1JLANTMV|p|EB50KH7ATNKU|Le,EB,V,Z|||F,G,F,G|||;INH1T34JAHE4|p|EB50KH7ATNKU|MU,DH,I,f|BY|Bb||BE,M,M,Q||;EB50KH7ATNKU|w|CCUH93QNYUMF4OQ7|Md|KG||||;JCF2OQOGMT7O|w|DCXNROQW5H6N4QVK|WG|BIA||||;QJ204MMAGROF|i|QJMT8BJ3L8J327XN.0|RB|ZX||||;4PGJIM7IPCOV|w|GKBV7HI7HJNVC69E|QW|MF||||;1QO2CBOCQIBD|s|JA0G81AQV8EXMINP;UVOHVF14P3C8|s|NK0L2XPG4EDO1XAQ;JS4KKPVSP9K1|s|QMN8L7P4QXAI5M47";
     game.resGroups = [];
 })(game || (game = {}));
 var game;
@@ -11547,14 +11603,12 @@ var game;
     game.soundEnable = soundEnable;
     function getRank(rankPage) {
         var startTime = Date.now();
-        if (PlayerInfo.openid == "undefined") {
-            PlayerInfo.openid = "123456";
-        }
         ajax(url + "/openapi/pinball/list?pageSize=100", function (e, r) {
             if (e) {
                 ajax(url + `/openapi/statistics/add?openid=${PlayerInfo.openid}
 					&interfaceName=${encodeURIComponent("排行榜")}
-					&responseTime=${Date.now() - startTime}`, function () { });
+					&responseTime=${Date.now() - startTime}`, function () {
+                });
                 var rank = 1;
                 game.ranks = r.rows.map(t => t.score || 0);
                 rankPage.namedChilds.rankList.items = r.rows.map(t => {

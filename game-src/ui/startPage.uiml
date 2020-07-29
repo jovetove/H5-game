@@ -6,6 +6,7 @@
 		<rankPage font=28px color=#757981 />
 		<gameHead font=28px color=#fff />
 	</TextStyles>
+
 	<RankItem width=530 height=88 baseclass=Container customExt=true >
 		<children>
 			<Label id=name color=#42464d left=217 width=180 top=24 height=25 align="Center" format=Shrink />
@@ -16,6 +17,7 @@
 			<Image id=rankIcon left=27 width=44 top=15 height=48 src=ui/icon/1st />
 		</children>
 	</RankItem>
+
 	<RankPage width=640 height=1300 left=33 top=0 textStyle=rankPage baseclass=Container >
 		<children>
 			<Image src=ui/img/rectbk left=0 width=640 top=0 height=1300 />

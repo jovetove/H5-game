@@ -1,16 +1,27 @@
-var EnemyType;
-(function (EnemyType) {
-    EnemyType[EnemyType["Hole"] = 0] = "Hole";
-    EnemyType[EnemyType["Mask"] = 1] = "Mask";
-    EnemyType[EnemyType["Boom"] = 2] = "Boom";
-    EnemyType[EnemyType["Batman"] = 3] = "Batman";
-    EnemyType[EnemyType["BatmanKing"] = 4] = "BatmanKing";
-    EnemyType[EnemyType["Logo"] = 5] = "Logo";
-})(EnemyType || (EnemyType = {}));
-var levelMax = 5;
+var levelMax = 10;
 var levelCurr = 1;
 var leveldata = [50, 80, 100, 120, 140];
-var score = 0;
+var chanceMax = 2;
+var score = 1000;
+var level = 1;
+var target = 4000;
 var rate = 0.5;
 var alpha = 0.9;
+var maxTime = 20;
+var lines = [
+    [0, 70, 490, 70],
+    [490, 70, 710, 205],
+    [490, 70, 710, 205],
+    [710, 205, 710, 524],
+    [710, 524, 446, 695],
+    [446, 695, 466, 723],
+    [466, 723, 710, 564],
+    [710, 564, 710, 1280],
+    [0, 70, 0, 1280],
+    [120, 902, 361, 902],
+    [361, 902, 361, 934],
+    [361, 934, 120, 939],
+    [120, 902, 120, 939],
+    [710, 1280, 0, 1280]
+].map(l => [{ x: l[0], y: l[1] }, { x: l[2], y: l[3] }]);
 //# sourceMappingURL=levelData.js.map

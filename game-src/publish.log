@@ -26,7 +26,7 @@ subimage start/活动规则 id:LMIPDLENLMJG
 subimage start/开始游戏 id:VCP8LGVCL71S
 subimage start/logo id:EJRRQ2IU0JS0
 ezm start id:M33L9BH2LKJ4 url: 33A5CZI9WIQLPWC5
-subimage ui/img/奖杯 id:U7VJ9SGIHTNO
+subimage ui/img/失败 id:FOTVN4BTL6M7
 subimage ui/btn/喇叭 id:S9IQLHG3U700
 subimage ui/icon/cup id:52OMU7AEFJE8
 subimage ui/icon/1st id:5A1F5RDNRR3D
@@ -43,7 +43,7 @@ subimage ui/img/rectwh id:6VBE1JLANTMV
 subimage ui/btn/喇叭check id:INH1T34JAHE4
 ezm ui id:EB50KH7ATNKU url: CCUH93QNYUMF4OQ7
 ezm image/bg id:JCF2OQOGMT7O url: DCXNROQW5H6N4QVK
-ezm image/活动规则 id:QJ204MMAGROF url: 9FEVB8H5QOD2EINN
+image image/活动规则 id:QJ204MMAGROF url: QJMT8BJ3L8J327XN.0
 ezm image/说明 id:4PGJIM7IPCOV url: GKBV7HI7HJNVC69E
 sound sound/add id:1QO2CBOCQIBD url: JA0G81AQV8EXMINP
 sound sound/bgm id:UVOHVF14P3C8 url: NK0L2XPG4EDO1XAQ
