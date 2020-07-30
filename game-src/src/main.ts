@@ -53,7 +53,7 @@ async function main() {
 		ez.loadGroup(["ui", "start", "image/bg"], function (progress, total) {
 			if (progress >= total) {
 				var t = Date.now() - startTime;
-				url = url_debug;
+				// url = url_debug;
 				console.log("发送用户信息 --> URL: "+ url+`/openapi/statistics/add?openid=${PlayerInfo.openid}&loadTime=${t}`);
 				ajax(url + `/openapi/statistics/add?openid=${PlayerInfo.openid}&loadTime=${t}`, function () { });
 				mainFrame = ez.getRoot().createChild(game.MainFrame);

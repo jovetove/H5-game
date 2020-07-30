@@ -1,5 +1,7 @@
 namespace game{
 	import ui = ez.ui;
+	var UI = ["UIStage", "Control", "Group", "RectFill", "Image", "game.Button", "Label", "game.Checkbox", "game.StartPage", "game.RankPage", "ScrollView", "ListView"];
+	var RES = ["R:JCF2OQOGMT7O","R:B0LVRU4VENJS","R:1EF948RMIQRD","R:4PGJIM7IPCOV","R:QJ204MMAGROF","R:LAO8Q29LE1TO","R:4LVSPIK3B203","R:S9IQLHG3U700","R:INH1T34JAHE4","R:G503ILGF8S28","R:O123T11GLFK9","R:CTDCID13AB9F","R:U7VJ9SGIHTNO","R:FOTVN4BTL6M7","R:P637DGG88RRB","R:307B8VJHSQ38","R:O18PU18DTSMO","R:UFGMTQLP3H5J","R:85GD560O0A62","R:RGDNTIFOJEJ1","R:PQF1C511M1BQ","R:5A1F5RDNRR3D","R:SPMG8J9324MB","R:6VBE1JLANTMV","R:52OMU7AEFJE8","R:MFP4S2F9MF7F","R:F45FD2M7NRMS","R:EN6PH70VD7LV","R:M3F90V7UJL03","R:EJRRQ2IU0JS0","R:LMIPDLENLMJG","R:VCP8LGVCL71S"];
 	
 	ui.registerTextStyle([
 		{ id:"normal", font:"28px", color:"#bbadfb" },
@@ -15,42 +17,42 @@ namespace game{
 				
 			},
 			childs:[
-				{ class: "UIStage", id: "game", left:0, width:710, top:0, height:1280, _childs:[
-					{ type: "Image", src:"image/bg" },
-					{ type: "Image", src:"game/wall2", anchorX:0.5, anchorY:0.5, x:242, y:920.5 },
-					{ type: "Image", src:"game/wall", angle:-33, x:738, y:535, anchorX:0.5, anchorY:0.5 },
-					{ type: "Image", src:"game/wall", angle:32, x:562, y:95, anchorX:0.5, anchorY:0.5 },
-				] },
-				{ class: "Control", id: "touch", width:"100%", height:"100%" },
-				{ class: "Group", id: "intro", width:"100%", height:"100%", _childs:[
-					{ class: "RectFill", color:"#000", opacity:0.3, width:"100%", height:"100%" },
-					{ class: "Group", width:"100%", height:600, y:"50%", _childs:[
-						{ class: "Image", src:"image/说明", x:"50%" },
-						{ class: "game.Button", id: "ok2Btn", label:"确定", x:"50%", width:195, height:70, top:400 },
-					] },
-				] },
-				{ class: "Group", id: "helpPage", width:"100%", height:"100%", visible:false, _childs:[
-					{ class: "RectFill", color:"#000", opacity:0.3, width:"100%", height:"100%" },
-					{ class: "Image", src:"image/活动规则", x:"50%", top:160 },
-					{ class: "Group", width:"100%", top:900, bottom:0, _childs:[
-						{ class: "game.Button", id: "okBtn", label:"已知晓", x:"50%", width:195, height:70, top:"30%" },
-					] },
-				] },
-				{ class: "Group", id: "clock", width:66, height:66, x:611, y:127, visible:false, _childs:[
-					{ class: "Image", src:"game/clock" },
-					{ class: "Label", id: "time", font:"34px", color:"#fff", width:"100%", height:"100%", align:5, text:"0" },
-				] },
-				{ class: "Image", id: "disk", src:"game/disk", visible:false },
-				{ class: "Group", width:"100%", height:70, textStyle:"gameHead", _childs:[
-					{ class: "RectFill", width:"100%", height:70, color:"#2c296e" },
-					{ class: "RectFill", width:"100%", top:70, height:2, color:"#6854aa" },
-					{ class: "Image", id: "avatar", left:10, width:50, top:13, height:50 },
-					{ class: "Label", id: "level", left:70, width:100, top:24, height:27, text:"关卡 0" },
-					{ class: "Label", id: "score", left:180, width:220, top:24, height:27, text:"得分 0" },
-					{ class: "Label", id: "chance", left:400, width:120, top:24, height:27, text:"机会 5" },
-					{ class: "game.Button", id: "help", left:520, width:120, top:24, height:30, label:"说明", childsProperty:{ bk:{ src: "" },label:{ color: "#5186ff" } } },
-					{ class: "game.Checkbox", id: "sound", left:650, width:56, top:8, childsProperty:{ icon:{ src: "ui/btn/喇叭" },checkImg:{ src: "ui/btn/喇叭check" } } },
-				] },
+				[/*UIStage*/UI[0],, /*id:*/ "game", /*left:*/ 0, /*top:*/ 0,,, /*width:*/ 710, /*height:*/ 1280,,,,,,,,,,,,,/*childs*/ [
+					{ type: "Image", src:/*image/bg*/ RES[0] },
+					{ type: "Image", src:/*game/wall2*/ RES[1], anchorX:0.5, anchorY:0.5, x:242, y:920.5 },
+					{ type: "Image", src:/*game/wall*/ RES[2], angle:-33, x:738, y:535, anchorX:0.5, anchorY:0.5 },
+					{ type: "Image", src:/*game/wall*/ RES[2], angle:32, x:562, y:95, anchorX:0.5, anchorY:0.5 },
+				]],
+				[/*Control*/UI[1],, /*id:*/ "touch",,,,, /*width:*/ "100%", /*height:*/ "100%"],
+				[/*Group*/UI[2],, /*id:*/ "intro",,,,, /*width:*/ "100%", /*height:*/ "100%",,,,,,,,,,,,,/*childs*/ [
+					[/*RectFill*/UI[3], /*props:*/ {color: "#000"},,,,,, /*width:*/ "100%", /*height:*/ "100%",,, /*opacity:*/ 0.3],
+					[/*Group*/UI[2],,,,,,, /*width:*/ "100%", /*height:*/ 600,, /*y:*/ "50%",,,,,,,,,,,/*childs*/ [
+						[/*Image*/UI[4], /*props:*/ {src: /*image/说明*/ RES[3]},,,,,,,, /*x:*/ "50%"],
+						[/*game.Button*/UI[5], /*props:*/ {label: "确定"}, /*id:*/ "ok2Btn",, /*top:*/ 400,,, /*width:*/ 195, /*height:*/ 70, /*x:*/ "50%"],
+					]],
+				]],
+				[/*Group*/UI[2],, /*id:*/ "helpPage",,,,, /*width:*/ "100%", /*height:*/ "100%",,,, /*visible:*/ false,,,,,,,,,/*childs*/ [
+					[/*RectFill*/UI[3], /*props:*/ {color: "#000"},,,,,, /*width:*/ "100%", /*height:*/ "100%",,, /*opacity:*/ 0.3],
+					[/*Image*/UI[4], /*props:*/ {src: /*image/活动规则*/ RES[4]},,, /*top:*/ 160,,,,, /*x:*/ "50%"],
+					[/*Group*/UI[2],,,, /*top:*/ 900,, /*bottom:*/ 0, /*width:*/ "100%",,,,,,,,,,,,,,/*childs*/ [
+						[/*game.Button*/UI[5], /*props:*/ {label: "已知晓"}, /*id:*/ "okBtn",, /*top:*/ "30%",,, /*width:*/ 195, /*height:*/ 70, /*x:*/ "50%"],
+					]],
+				]],
+				[/*Group*/UI[2],, /*id:*/ "clock",,,,, /*width:*/ 66, /*height:*/ 66, /*x:*/ 611, /*y:*/ 127,, /*visible:*/ false,,,,,,,,,/*childs*/ [
+					[/*Image*/UI[4], /*props:*/ {src: /*game/clock*/ RES[5]}],
+					[/*Label*/UI[6], /*props:*/ {font: "34px", color: "#fff", align: 5, text: "0"}, /*id:*/ "time",,,,, /*width:*/ "100%", /*height:*/ "100%"],
+				]],
+				[/*Image*/UI[4], /*props:*/ {src: /*game/disk*/ RES[6]}, /*id:*/ "disk",,,,,,,,,, /*visible:*/ false],
+				[/*Group*/UI[2], /*props:*/ {textStyle: "gameHead"},,,,,, /*width:*/ "100%", /*height:*/ 70,,,,,,,,,,,,,/*childs*/ [
+					[/*RectFill*/UI[3], /*props:*/ {color: "#2c296e"},,,,,, /*width:*/ "100%", /*height:*/ 70],
+					[/*RectFill*/UI[3], /*props:*/ {color: "#6854aa"},,, /*top:*/ 70,,, /*width:*/ "100%", /*height:*/ 2],
+					[/*Image*/UI[4],, /*id:*/ "avatar", /*left:*/ 10, /*top:*/ 13,,, /*width:*/ 50, /*height:*/ 50],
+					[/*Label*/UI[6], /*props:*/ {text: "关卡 0"}, /*id:*/ "level", /*left:*/ 70, /*top:*/ 24,,, /*width:*/ 100, /*height:*/ 27],
+					[/*Label*/UI[6], /*props:*/ {text: "得分 0"}, /*id:*/ "score", /*left:*/ 180, /*top:*/ 24,,, /*width:*/ 220, /*height:*/ 27],
+					[/*Label*/UI[6], /*props:*/ {text: "机会 5"}, /*id:*/ "chance", /*left:*/ 400, /*top:*/ 24,,, /*width:*/ 120, /*height:*/ 27],
+					[/*game.Button*/UI[5], /*props:*/ {label: "说明"}, /*id:*/ "help", /*left:*/ 520, /*top:*/ 24,,, /*width:*/ 120, /*height:*/ 30,,,,,,,,,,, /*childsProperty*/{bk: { src: "" }, label: { color: "#5186ff" }}],
+					[/*game.Checkbox*/UI[7],, /*id:*/ "sound", /*left:*/ 650, /*top:*/ 8,,, /*width:*/ 56,,,,,,,,,,,, /*childsProperty*/{icon: { src: /*ui/btn/喇叭*/ RES[7] }, checkImg: { src: /*ui/btn/喇叭check*/ RES[8] }}],
+				]],
 			]
 		},
 	}
@@ -59,9 +61,9 @@ namespace game{
 		static ClassName = "game.Button";
 		static instance: game.Button;
 		static Styles = {
-			blue:{ childsProperty:{ bk:{ src: "ui/btn/blue" } } },
-			purple:{ childsProperty:{ bk:{ src: "ui/btn/purple" } } },
-			yellow:{ childsProperty:{ bk:{ src: "ui/btn/yellow" },label:{ gradient: { y0:0, y1:30, colors: ['#a54800', '#ce7300'] } } } }
+			blue:{ childsProperty:{ bk:{ src: /*ui/btn/blue*/ RES[9] } } },
+			purple:{ childsProperty:{ bk:{ src: /*ui/btn/purple*/ RES[10] } } },
+			yellow:{ childsProperty:{ bk:{ src: /*ui/btn/yellow*/ RES[11] },label:{ gradient: { y0:0, y1:30, colors: ['#a54800', '#ce7300'] } } } }
 		};
 		static Properties: ui.PropDefine[] = [
 			{ name: "label", type: "string" },
@@ -72,8 +74,8 @@ namespace game{
 			down: {  }
 		};
 		private static _childs = [
-			{ class: "Image", id: "bk", src:"ui/btn/blue", width:"100%", height:"100%" },
-			{ class: "Label", id: "label", font:"30px", color:"#fff", width:"100%", height:30, y:"50%", align:1 }
+			[/*Image*/UI[4], /*props:*/ {src: /*ui/btn/blue*/ RES[9]}, /*id:*/ "bk",,,,, /*width:*/ "100%", /*height:*/ "100%"],
+			[/*Label*/UI[6], /*props:*/ {font: "30px", color: "#fff", align: 1}, /*id:*/ "label",,,,, /*width:*/ "100%", /*height:*/ 30,, /*y:*/ "50%"]
 		];
 		constructor(parent: ui.Container, template?:ui.Template){
 			super(parent);
@@ -108,8 +110,8 @@ namespace game{
 			uncheck: { props: { childsProperty:{ checkImg:{ visible: false } } } }
 		};
 		private static _childs = [
-			{ class: "Image", id: "icon", width:"100%", height:"100%" },
-			{ class: "Image", id: "checkImg", width:"100%", height:"100%" }
+			[/*Image*/UI[4],, /*id:*/ "icon",,,,, /*width:*/ "100%", /*height:*/ "100%"],
+			[/*Image*/UI[4],, /*id:*/ "checkImg",,,,, /*width:*/ "100%", /*height:*/ "100%"]
 		];
 		constructor(parent: ui.Container, template?:ui.Template){
 			super(parent);
@@ -147,42 +149,42 @@ namespace game{
 		static ClassName = "game.GamePage";
 		static instance: game.GamePage;
 		private static _childs = [
-			{ class: "UIStage", id: "game", left:0, width:710, top:0, height:1280, _childs:[
-				{ type: "Image", src:"image/bg" },
-				{ type: "Image", src:"game/wall2", anchorX:0.5, anchorY:0.5, x:242, y:920.5 },
-				{ type: "Image", src:"game/wall", angle:-33, x:738, y:535, anchorX:0.5, anchorY:0.5 },
-				{ type: "Image", src:"game/wall", angle:32, x:562, y:95, anchorX:0.5, anchorY:0.5 },
-			] },
-			{ class: "Control", id: "touch", width:"100%", height:"100%" },
-			{ class: "Group", id: "intro", width:"100%", height:"100%", _childs:[
-				{ class: "RectFill", color:"#000", opacity:0.3, width:"100%", height:"100%" },
-				{ class: "Group", width:"100%", height:600, y:"50%", _childs:[
-					{ class: "Image", src:"image/说明", x:"50%" },
-					{ class: "game.Button", id: "ok2Btn", label:"确定", x:"50%", width:195, height:70, top:400 },
-				] },
-			] },
-			{ class: "Group", id: "helpPage", width:"100%", height:"100%", visible:false, _childs:[
-				{ class: "RectFill", color:"#000", opacity:0.3, width:"100%", height:"100%" },
-				{ class: "Image", src:"image/活动规则", x:"50%", top:160 },
-				{ class: "Group", width:"100%", top:900, bottom:0, _childs:[
-					{ class: "game.Button", id: "okBtn", label:"已知晓", x:"50%", width:195, height:70, top:"30%" },
-				] },
-			] },
-			{ class: "Group", id: "clock", width:66, height:66, x:611, y:127, visible:false, _childs:[
-				{ class: "Image", src:"game/clock" },
-				{ class: "Label", id: "time", font:"34px", color:"#fff", width:"100%", height:"100%", align:5, text:"0" },
-			] },
-			{ class: "Image", id: "disk", src:"game/disk", visible:false },
-			{ class: "Group", width:"100%", height:70, textStyle:"gameHead", _childs:[
-				{ class: "RectFill", width:"100%", height:70, color:"#2c296e" },
-				{ class: "RectFill", width:"100%", top:70, height:2, color:"#6854aa" },
-				{ class: "Image", id: "avatar", left:10, width:50, top:13, height:50 },
-				{ class: "Label", id: "level", left:70, width:100, top:24, height:27, text:"关卡 0" },
-				{ class: "Label", id: "score", left:180, width:220, top:24, height:27, text:"得分 0" },
-				{ class: "Label", id: "chance", left:400, width:120, top:24, height:27, text:"机会 5" },
-				{ class: "game.Button", id: "help", left:520, width:120, top:24, height:30, label:"说明", childsProperty:{ bk:{ src: "" },label:{ color: "#5186ff" } } },
-				{ class: "game.Checkbox", id: "sound", left:650, width:56, top:8, childsProperty:{ icon:{ src: "ui/btn/喇叭" },checkImg:{ src: "ui/btn/喇叭check" } } },
-			] }
+			[/*UIStage*/UI[0],, /*id:*/ "game", /*left:*/ 0, /*top:*/ 0,,, /*width:*/ 710, /*height:*/ 1280,,,,,,,,,,,,,/*childs*/ [
+				{ type: "Image", src:/*image/bg*/ RES[0] },
+				{ type: "Image", src:/*game/wall2*/ RES[1], anchorX:0.5, anchorY:0.5, x:242, y:920.5 },
+				{ type: "Image", src:/*game/wall*/ RES[2], angle:-33, x:738, y:535, anchorX:0.5, anchorY:0.5 },
+				{ type: "Image", src:/*game/wall*/ RES[2], angle:32, x:562, y:95, anchorX:0.5, anchorY:0.5 },
+			]],
+			[/*Control*/UI[1],, /*id:*/ "touch",,,,, /*width:*/ "100%", /*height:*/ "100%"],
+			[/*Group*/UI[2],, /*id:*/ "intro",,,,, /*width:*/ "100%", /*height:*/ "100%",,,,,,,,,,,,,/*childs*/ [
+				[/*RectFill*/UI[3], /*props:*/ {color: "#000"},,,,,, /*width:*/ "100%", /*height:*/ "100%",,, /*opacity:*/ 0.3],
+				[/*Group*/UI[2],,,,,,, /*width:*/ "100%", /*height:*/ 600,, /*y:*/ "50%",,,,,,,,,,,/*childs*/ [
+					[/*Image*/UI[4], /*props:*/ {src: /*image/说明*/ RES[3]},,,,,,,, /*x:*/ "50%"],
+					[/*game.Button*/UI[5], /*props:*/ {label: "确定"}, /*id:*/ "ok2Btn",, /*top:*/ 400,,, /*width:*/ 195, /*height:*/ 70, /*x:*/ "50%"],
+				]],
+			]],
+			[/*Group*/UI[2],, /*id:*/ "helpPage",,,,, /*width:*/ "100%", /*height:*/ "100%",,,, /*visible:*/ false,,,,,,,,,/*childs*/ [
+				[/*RectFill*/UI[3], /*props:*/ {color: "#000"},,,,,, /*width:*/ "100%", /*height:*/ "100%",,, /*opacity:*/ 0.3],
+				[/*Image*/UI[4], /*props:*/ {src: /*image/活动规则*/ RES[4]},,, /*top:*/ 160,,,,, /*x:*/ "50%"],
+				[/*Group*/UI[2],,,, /*top:*/ 900,, /*bottom:*/ 0, /*width:*/ "100%",,,,,,,,,,,,,,/*childs*/ [
+					[/*game.Button*/UI[5], /*props:*/ {label: "已知晓"}, /*id:*/ "okBtn",, /*top:*/ "30%",,, /*width:*/ 195, /*height:*/ 70, /*x:*/ "50%"],
+				]],
+			]],
+			[/*Group*/UI[2],, /*id:*/ "clock",,,,, /*width:*/ 66, /*height:*/ 66, /*x:*/ 611, /*y:*/ 127,, /*visible:*/ false,,,,,,,,,/*childs*/ [
+				[/*Image*/UI[4], /*props:*/ {src: /*game/clock*/ RES[5]}],
+				[/*Label*/UI[6], /*props:*/ {font: "34px", color: "#fff", align: 5, text: "0"}, /*id:*/ "time",,,,, /*width:*/ "100%", /*height:*/ "100%"],
+			]],
+			[/*Image*/UI[4], /*props:*/ {src: /*game/disk*/ RES[6]}, /*id:*/ "disk",,,,,,,,,, /*visible:*/ false],
+			[/*Group*/UI[2], /*props:*/ {textStyle: "gameHead"},,,,,, /*width:*/ "100%", /*height:*/ 70,,,,,,,,,,,,,/*childs*/ [
+				[/*RectFill*/UI[3], /*props:*/ {color: "#2c296e"},,,,,, /*width:*/ "100%", /*height:*/ 70],
+				[/*RectFill*/UI[3], /*props:*/ {color: "#6854aa"},,, /*top:*/ 70,,, /*width:*/ "100%", /*height:*/ 2],
+				[/*Image*/UI[4],, /*id:*/ "avatar", /*left:*/ 10, /*top:*/ 13,,, /*width:*/ 50, /*height:*/ 50],
+				[/*Label*/UI[6], /*props:*/ {text: "关卡 0"}, /*id:*/ "level", /*left:*/ 70, /*top:*/ 24,,, /*width:*/ 100, /*height:*/ 27],
+				[/*Label*/UI[6], /*props:*/ {text: "得分 0"}, /*id:*/ "score", /*left:*/ 180, /*top:*/ 24,,, /*width:*/ 220, /*height:*/ 27],
+				[/*Label*/UI[6], /*props:*/ {text: "机会 5"}, /*id:*/ "chance", /*left:*/ 400, /*top:*/ 24,,, /*width:*/ 120, /*height:*/ 27],
+				[/*game.Button*/UI[5], /*props:*/ {label: "说明"}, /*id:*/ "help", /*left:*/ 520, /*top:*/ 24,,, /*width:*/ 120, /*height:*/ 30,,,,,,,,,,, /*childsProperty*/{bk: { src: "" }, label: { color: "#5186ff" }}],
+				[/*game.Checkbox*/UI[7],, /*id:*/ "sound", /*left:*/ 650, /*top:*/ 8,,, /*width:*/ 56,,,,,,,,,,,, /*childsProperty*/{icon: { src: /*ui/btn/喇叭*/ RES[7] }, checkImg: { src: /*ui/btn/喇叭check*/ RES[8] }}],
+			]]
 		];
 		constructor(parent: ui.Container, template?:ui.Template){
 			super(parent);
@@ -222,10 +224,10 @@ namespace game{
 		static ClassName = "game.MainFrame";
 		static instance: game.MainFrame;
 		private static _childs = [
-			{ class: "RectFill", id: "bg", gradient:{ y1: 1280, colors:['#010036', '#4e004f'] }, width:"100%", height:"100%" },
-			{ class: "Group", id: "frame", width:"100%", height:"100%", _childs:[
-				{ class: "game.StartPage" },
-			] }
+			[/*RectFill*/UI[3], /*props:*/ {gradient: { y1: 1280, colors:['#010036', '#4e004f'] }}, /*id:*/ "bg",,,,, /*width:*/ "100%", /*height:*/ "100%"],
+			[/*Group*/UI[2],, /*id:*/ "frame",,,,, /*width:*/ "100%", /*height:*/ "100%",,,,,,,,,,,,,/*childs*/ [
+				[/*game.StartPage*/UI[8]],
+			]]
 		];
 		constructor(parent: ui.Container, template?:ui.Template){
 			super(parent);
@@ -250,19 +252,19 @@ namespace game{
 		static ClassName = "game.ResultPage";
 		static instance: game.ResultPage;
 		private static _childs = [
-			{ class: "Image", id: "picSucc", src:"ui/img/奖杯", left:198, width:336, top:77, height:322, visible:true },
-			{ class: "Image", id: "picFail", src:"ui/img/失败", left:198, width:296, top:77, height:200, visible:false },
-			{ class: "Label", text:"本局得分", x:"50%", align:1, width:119, top:462, height:29 },
-			{ class: "Label", id: "score", text:"1000", x:"50%", strokeWidth:4, strokeColor:"#9b8ddd", width:280, top:395, height:58, font:"50px", gradient:{y1:50, colors:['#a995ff', '#8670f4']} },
-			{ class: "Label", id: "info", x:"50%", width:283, top:530, height:32 },
-			{ class: "Image", src:"ui/img/line", left:177, width:360, top:503, height:2 },
-			{ class: "Image", src:"ui/img/line", left:177, width:360, top:579, height:2 },
-			{ class: "game.Button", id: "rank", label:"查看排行榜", style:"blue", x:"50%", width:195, top:669, height:70 },
-			{ class: "game.Button", id: "result", label:"生成成绩单", style:"blue", x:"50%", width:195, top:769, height:70 },
-			{ class: "Group", top:900, bottom:0, width:"100%", _childs:[
-				{ class: "game.Button", id: "replay", label:"再次挑战", style:"purple", x:"50%", width:195, y:"50%", height:70 },
-			] },
-			{ class: "game.RankPage", id: "rankPage", visible:false }
+			[/*Image*/UI[4], /*props:*/ {src: /*ui/img/奖杯*/ RES[12]}, /*id:*/ "picSucc", /*left:*/ 198, /*top:*/ 77,,, /*width:*/ 336, /*height:*/ 322,,,, /*visible:*/ true],
+			[/*Image*/UI[4], /*props:*/ {src: /*ui/img/失败*/ RES[13]}, /*id:*/ "picFail", /*left:*/ 198, /*top:*/ 77,,, /*width:*/ 296, /*height:*/ 200,,,, /*visible:*/ false],
+			[/*Label*/UI[6], /*props:*/ {text: "本局得分", align: 1},,, /*top:*/ 462,,, /*width:*/ 119, /*height:*/ 29, /*x:*/ "50%"],
+			[/*Label*/UI[6], /*props:*/ {text: "1000", strokeWidth: 4, strokeColor: "#9b8ddd", font: "50px", gradient: {y1:50, colors:['#a995ff', '#8670f4']}}, /*id:*/ "score",, /*top:*/ 395,,, /*width:*/ 280, /*height:*/ 58, /*x:*/ "50%"],
+			[/*Label*/UI[6],, /*id:*/ "info",, /*top:*/ 530,,, /*width:*/ 283, /*height:*/ 32, /*x:*/ "50%"],
+			[/*Image*/UI[4], /*props:*/ {src: /*ui/img/line*/ RES[14]},, /*left:*/ 177, /*top:*/ 503,,, /*width:*/ 360, /*height:*/ 2],
+			[/*Image*/UI[4], /*props:*/ {src: /*ui/img/line*/ RES[14]},, /*left:*/ 177, /*top:*/ 579,,, /*width:*/ 360, /*height:*/ 2],
+			[/*game.Button*/UI[5], /*props:*/ {label: "查看排行榜", style: "blue"}, /*id:*/ "rank",, /*top:*/ 669,,, /*width:*/ 195, /*height:*/ 70, /*x:*/ "50%"],
+			[/*game.Button*/UI[5], /*props:*/ {label: "生成成绩单", style: "blue"}, /*id:*/ "result",, /*top:*/ 769,,, /*width:*/ 195, /*height:*/ 70, /*x:*/ "50%"],
+			[/*Group*/UI[2],,,, /*top:*/ 900,, /*bottom:*/ 0, /*width:*/ "100%",,,,,,,,,,,,,,/*childs*/ [
+				[/*game.Button*/UI[5], /*props:*/ {label: "再次挑战", style: "purple"}, /*id:*/ "replay",,,,, /*width:*/ 195, /*height:*/ 70, /*x:*/ "50%", /*y:*/ "50%"],
+			]],
+			[/*game.RankPage*/UI[9],, /*id:*/ "rankPage",,,,,,,,,, /*visible:*/ false]
 		];
 		constructor(parent: ui.Container, template?:ui.Template){
 			super(parent);
@@ -294,20 +296,20 @@ namespace game{
 		static ClassName = "game.SharePage";
 		static instance: game.SharePage;
 		private static _childs = [
-			{ class: "RectFill", id: "bg", gradient:{ y1: 1280, colors:['#010036', '#4e004f'] }, width:"100%", height:"100%" },
-			{ class: "Image", src:"share/logo", left:64, width:323, top:92, height:46 },
-			{ class: "Image", src:"share/rect", left:81, width:522, top:300, height:231 },
-			{ class: "Label", id: "name", left:114, width:383, top:337, height:37, text:"姓名：" },
-			{ class: "Label", id: "score", left:114, width:383, top:387, height:37, text:"成绩：10000" },
-			{ class: "Label", id: "info", left:114, width:383, top:439, height:37 },
-			{ class: "game.Button", id: "closeShare", left:650, width:39, top:40, height:38, childsProperty:{ bk:{ src: "ui/btn/close" } } },
-			{ class: "Image", src:"share/text猪望仔大战蝙蝠侠", left:65, top:165 },
-			{ class: "Label", font:"28px", color:"#bbadfb", lineHeight:48, format:2, left:68, width:585, top:575, height:137, text:"2020“创青春 交子杯”新网银行金融科技挑战赛\n47万奖金池，最高 10 万奖金等你来拿！\n是时候展现你真正的技术了！" },
-			{ class: "Group", width:300, top:700, bottom:0, x:"50%", _childs:[
-				{ class: "Group", height:332, width:300, y:"50%", _childs:[
-					{ class: "Image", id: "share", src:"share/二维码", height:332, width:300 },
-				] },
-			] }
+			[/*RectFill*/UI[3], /*props:*/ {gradient: { y1: 1280, colors:['#010036', '#4e004f'] }}, /*id:*/ "bg",,,,, /*width:*/ "100%", /*height:*/ "100%"],
+			[/*Image*/UI[4], /*props:*/ {src: /*share/logo*/ RES[15]},, /*left:*/ 64, /*top:*/ 92,,, /*width:*/ 323, /*height:*/ 46],
+			[/*Image*/UI[4], /*props:*/ {src: /*share/rect*/ RES[16]},, /*left:*/ 81, /*top:*/ 300,,, /*width:*/ 522, /*height:*/ 231],
+			[/*Label*/UI[6], /*props:*/ {text: "姓名："}, /*id:*/ "name", /*left:*/ 114, /*top:*/ 337,,, /*width:*/ 383, /*height:*/ 37],
+			[/*Label*/UI[6], /*props:*/ {text: "成绩：10000"}, /*id:*/ "score", /*left:*/ 114, /*top:*/ 387,,, /*width:*/ 383, /*height:*/ 37],
+			[/*Label*/UI[6],, /*id:*/ "info", /*left:*/ 114, /*top:*/ 439,,, /*width:*/ 383, /*height:*/ 37],
+			[/*game.Button*/UI[5],, /*id:*/ "closeShare", /*left:*/ 650, /*top:*/ 40,,, /*width:*/ 39, /*height:*/ 38,,,,,,,,,,, /*childsProperty*/{bk: { src: /*ui/btn/close*/ RES[17] }}],
+			[/*Image*/UI[4], /*props:*/ {src: /*share/text猪望仔大战蝙蝠侠*/ RES[18]},, /*left:*/ 65, /*top:*/ 165],
+			[/*Label*/UI[6], /*props:*/ {font: "28px", color: "#bbadfb", lineHeight: 48, format: 2, text: "2020“创青春 交子杯”新网银行金融科技挑战赛\n47万奖金池，最高 10 万奖金等你来拿！\n是时候展现你真正的技术了！"},, /*left:*/ 68, /*top:*/ 575,,, /*width:*/ 585, /*height:*/ 137],
+			[/*Group*/UI[2],,,, /*top:*/ 700,, /*bottom:*/ 0, /*width:*/ 300,, /*x:*/ "50%",,,,,,,,,,,,/*childs*/ [
+				[/*Group*/UI[2],,,,,,, /*width:*/ 300, /*height:*/ 332,, /*y:*/ "50%",,,,,,,,,,,/*childs*/ [
+					[/*Image*/UI[4], /*props:*/ {src: /*share/二维码*/ RES[19]}, /*id:*/ "share",,,,, /*width:*/ 300, /*height:*/ 332],
+				]],
+			]]
 		];
 		constructor(parent: ui.Container, template?:ui.Template){
 			super(parent);
@@ -338,7 +340,7 @@ namespace game{
 		static ClassName = "game.Splash";
 		static instance: game.Splash;
 		private static _childs = [
-			{ class: "Image", src:"logo", x:"50%", y:"50%" }
+			[/*Image*/UI[4], /*props:*/ {src: /*logo*/ RES[20]},,,,,,,, /*x:*/ "50%", /*y:*/ "50%"]
 		];
 		constructor(parent: ui.Container, template?:ui.Template){
 			super(parent);
@@ -358,12 +360,12 @@ namespace game{
 		static ClassName = "game.RankItem";
 		static instance: game.RankItem;
 		private static _childs = [
-			{ class: "Label", id: "name", color:"#42464d", left:217, width:180, top:24, height:25, align:1, format:8 },
-			{ class: "Label", id: "rank", color:"#42464d", left:20, width:50, top:23, height:17, visible:false, align:1 },
-			{ class: "Label", id: "score", color:"#e04f00", left:409, width:112, top:24, height:25, align:1 },
-			{ class: "Image", id: "avatar", left:127, width:74, top:7, height:74, effect:"mask", effectParams:{mask: 'mask'} },
-			{ class: "RectFill", color:"#F0F0F0", left:0, width:530, top:86, height:2 },
-			{ class: "Image", id: "rankIcon", left:27, width:44, top:15, height:48, src:"ui/icon/1st" }
+			[/*Label*/UI[6], /*props:*/ {color: "#42464d", align: 1, format: 8}, /*id:*/ "name", /*left:*/ 217, /*top:*/ 24,,, /*width:*/ 180, /*height:*/ 25],
+			[/*Label*/UI[6], /*props:*/ {color: "#42464d", align: 1}, /*id:*/ "rank", /*left:*/ 20, /*top:*/ 23,,, /*width:*/ 50, /*height:*/ 17,,,, /*visible:*/ false],
+			[/*Label*/UI[6], /*props:*/ {color: "#e04f00", align: 1}, /*id:*/ "score", /*left:*/ 409, /*top:*/ 24,,, /*width:*/ 112, /*height:*/ 25],
+			[/*Image*/UI[4], /*props:*/ {effect: "mask", effectParams: {mask: 'mask'}}, /*id:*/ "avatar", /*left:*/ 127, /*top:*/ 7,,, /*width:*/ 74, /*height:*/ 74],
+			[/*RectFill*/UI[3], /*props:*/ {color: "#F0F0F0"},, /*left:*/ 0, /*top:*/ 86,,, /*width:*/ 530, /*height:*/ 2],
+			[/*Image*/UI[4], /*props:*/ {src: /*ui/icon/1st*/ RES[21]}, /*id:*/ "rankIcon", /*left:*/ 27, /*top:*/ 15,,, /*width:*/ 44, /*height:*/ 48]
 		];
 		constructor(parent: ui.Container, template?:ui.Template){
 			super(parent);
@@ -391,19 +393,19 @@ namespace game{
 		static ClassName = "game.RankPage";
 		static instance: game.RankPage;
 		private static _childs = [
-			{ class: "Image", src:"ui/img/rectbk", left:0, width:640, top:0, height:1300 },
-			{ class: "Image", src:"ui/img/rectwh", left:45, width:540, top:219, height:806 },
-			{ class: "game.Button", id: "closeRank", left:566, width:39, top:200, height:38, childsProperty:{ bk:{ src: "ui/btn/close" } } },
-			{ class: "RectFill", color:"#F2F2F4", left:45, width:540, top:319, height:78 },
-			{ class: "Label", text:"排行", left:74, width:58, top:344, height:28 },
-			{ class: "Label", text:"头像", left:190, width:58, top:344, height:28 },
-			{ class: "Label", text:"昵称", left:334, width:58, top:344, height:28 },
-			{ class: "Label", text:"成绩", left:478, width:58, top:344, height:28 },
-			{ class: "Label", font:"32px", text:"排行榜TOP100", color:"#494b59", left:246, width:220, top:253, height:34 },
-			{ class: "Image", src:"ui/icon/cup", left:187, width:44, top:246, height:49 },
-			{ class: "ScrollView", left:50, width:532, top:402, height:617, scrollMode:2, _childs:[
-				{ class: "ListView", id: "rankList", width:532, itemClass:"game.RankItem", culling:true },
-			] }
+			[/*Image*/UI[4], /*props:*/ {src: /*ui/img/rectbk*/ RES[22]},, /*left:*/ 0, /*top:*/ 0,,, /*width:*/ 640, /*height:*/ 1300],
+			[/*Image*/UI[4], /*props:*/ {src: /*ui/img/rectwh*/ RES[23]},, /*left:*/ 45, /*top:*/ 219,,, /*width:*/ 540, /*height:*/ 806],
+			[/*game.Button*/UI[5],, /*id:*/ "closeRank", /*left:*/ 566, /*top:*/ 200,,, /*width:*/ 39, /*height:*/ 38,,,,,,,,,,, /*childsProperty*/{bk: { src: /*ui/btn/close*/ RES[17] }}],
+			[/*RectFill*/UI[3], /*props:*/ {color: "#F2F2F4"},, /*left:*/ 45, /*top:*/ 319,,, /*width:*/ 540, /*height:*/ 78],
+			[/*Label*/UI[6], /*props:*/ {text: "排行"},, /*left:*/ 74, /*top:*/ 344,,, /*width:*/ 58, /*height:*/ 28],
+			[/*Label*/UI[6], /*props:*/ {text: "头像"},, /*left:*/ 190, /*top:*/ 344,,, /*width:*/ 58, /*height:*/ 28],
+			[/*Label*/UI[6], /*props:*/ {text: "昵称"},, /*left:*/ 334, /*top:*/ 344,,, /*width:*/ 58, /*height:*/ 28],
+			[/*Label*/UI[6], /*props:*/ {text: "成绩"},, /*left:*/ 478, /*top:*/ 344,,, /*width:*/ 58, /*height:*/ 28],
+			[/*Label*/UI[6], /*props:*/ {font: "32px", text: "排行榜TOP100", color: "#494b59"},, /*left:*/ 246, /*top:*/ 253,,, /*width:*/ 220, /*height:*/ 34],
+			[/*Image*/UI[4], /*props:*/ {src: /*ui/icon/cup*/ RES[24]},, /*left:*/ 187, /*top:*/ 246,,, /*width:*/ 44, /*height:*/ 49],
+			[/*ScrollView*/UI[10], /*props:*/ {scrollMode: 2},, /*left:*/ 50, /*top:*/ 402,,, /*width:*/ 532, /*height:*/ 617,,,,,,,,,,,,,/*childs*/ [
+				[/*ListView*/UI[11], /*props:*/ {itemClass: "game.RankItem", culling: true}, /*id:*/ "rankList",,,,, /*width:*/ 532],
+			]]
 		];
 		constructor(parent: ui.Container, template?:ui.Template){
 			super(parent);
@@ -431,27 +433,27 @@ namespace game{
 		static ClassName = "game.StartPage";
 		static instance: game.StartPage;
 		private static _childs = [
-			{ class: "Image", src:"image/bg" },
-			{ class: "Group", width:"100%", height:"100%", id: "mainPage", _childs:[
-				{ class: "UIStage", id: "stage", width:"100%", height:1280, y:"50%", _childs:[
-					{ type: "Image", id:"蝙蝠侠", src:"start/蝙蝠侠", x:515, y:812, anchorX:0.5, anchorY:0.5 },
-					{ type: "Image", id:"猪", src:"start/猪", x:38, y:112 },
-					{ type: "Image", src:"start/txt蝙蝠侠", x:132, y:538 },
-					{ type: "Image", src:"start/txt猪望仔", x:103, y:402 },
-				] },
-				{ class: "Image", src:"start/logo", bottom:"10%", x:"50%", width:237, height:34 },
-				{ class: "game.Button", id: "help", bottom:"15%", left:80, width:218, height:85, childsProperty:{ bk:{ src: "start/活动规则" } } },
-				{ class: "game.Button", id: "start", bottom:"15%", right:80, width:218, height:85, childsProperty:{ bk:{ src: "start/开始游戏" } } },
-				{ class: "game.Button", id: "rank", style:"yellow", label:"排行榜", left:44, width:146, top:92, height:54 },
-			] },
-			{ class: "game.Checkbox", id: "sound", left:570, width:56, top:92, height:59, childsProperty:{ icon:{ src: "ui/btn/喇叭" },checkImg:{ src: "ui/btn/喇叭check" } } },
-			{ class: "Group", id: "helpPage", width:"100%", height:"100%", visible:false, _childs:[
-				{ class: "Image", src:"image/活动规则", x:"50%", top:160 },
-				{ class: "Group", width:"100%", top:900, bottom:0, _childs:[
-					{ class: "game.Button", id: "okBtn", label:"已知晓", x:"50%", width:195, height:70, top:"30%" },
-				] },
-			] },
-			{ class: "game.RankPage", id: "rankPage", visible:false }
+			[/*Image*/UI[4], /*props:*/ {src: /*image/bg*/ RES[0]}],
+			[/*Group*/UI[2],, /*id:*/ "mainPage",,,,, /*width:*/ "100%", /*height:*/ "100%",,,,,,,,,,,,,/*childs*/ [
+				[/*UIStage*/UI[0],, /*id:*/ "stage",,,,, /*width:*/ "100%", /*height:*/ 1280,, /*y:*/ "50%",,,,,,,,,,,/*childs*/ [
+					{ type: "Image", id:"蝙蝠侠", src:/*start/蝙蝠侠*/ RES[25], x:515, y:812, anchorX:0.5, anchorY:0.5 },
+					{ type: "Image", id:"猪", src:/*start/猪*/ RES[26], x:38, y:112 },
+					{ type: "Image", src:/*start/txt蝙蝠侠*/ RES[27], x:132, y:538 },
+					{ type: "Image", src:/*start/txt猪望仔*/ RES[28], x:103, y:402 },
+				]],
+				[/*Image*/UI[4], /*props:*/ {src: /*start/logo*/ RES[29]},,,,, /*bottom:*/ "10%", /*width:*/ 237, /*height:*/ 34, /*x:*/ "50%"],
+				[/*game.Button*/UI[5],, /*id:*/ "help", /*left:*/ 80,,, /*bottom:*/ "15%", /*width:*/ 218, /*height:*/ 85,,,,,,,,,,, /*childsProperty*/{bk: { src: /*start/活动规则*/ RES[30] }}],
+				[/*game.Button*/UI[5],, /*id:*/ "start",,, /*right:*/ 80, /*bottom:*/ "15%", /*width:*/ 218, /*height:*/ 85,,,,,,,,,,, /*childsProperty*/{bk: { src: /*start/开始游戏*/ RES[31] }}],
+				[/*game.Button*/UI[5], /*props:*/ {style: "yellow", label: "排行榜"}, /*id:*/ "rank", /*left:*/ 44, /*top:*/ 92,,, /*width:*/ 146, /*height:*/ 54],
+			]],
+			[/*game.Checkbox*/UI[7],, /*id:*/ "sound", /*left:*/ 570, /*top:*/ 92,,, /*width:*/ 56, /*height:*/ 59,,,,,,,,,,, /*childsProperty*/{icon: { src: /*ui/btn/喇叭*/ RES[7] }, checkImg: { src: /*ui/btn/喇叭check*/ RES[8] }}],
+			[/*Group*/UI[2],, /*id:*/ "helpPage",,,,, /*width:*/ "100%", /*height:*/ "100%",,,, /*visible:*/ false,,,,,,,,,/*childs*/ [
+				[/*Image*/UI[4], /*props:*/ {src: /*image/活动规则*/ RES[4]},,, /*top:*/ 160,,,,, /*x:*/ "50%"],
+				[/*Group*/UI[2],,,, /*top:*/ 900,, /*bottom:*/ 0, /*width:*/ "100%",,,,,,,,,,,,,,/*childs*/ [
+					[/*game.Button*/UI[5], /*props:*/ {label: "已知晓"}, /*id:*/ "okBtn",, /*top:*/ "30%",,, /*width:*/ 195, /*height:*/ 70, /*x:*/ "50%"],
+				]],
+			]],
+			[/*game.RankPage*/UI[9],, /*id:*/ "rankPage",,,,,,,,,, /*visible:*/ false]
 		];
 		constructor(parent: ui.Container, template?:ui.Template){
 			super(parent);

@@ -1,6 +1,8 @@
 var game;
 (function (game) {
     var ui = ez.ui;
+    var UI = ["UIStage", "Control", "Group", "RectFill", "Image", "game.Button", "Label", "game.Checkbox", "game.StartPage", "game.RankPage", "ScrollView", "ListView"];
+    var RES = ["R:JCF2OQOGMT7O", "R:B0LVRU4VENJS", "R:1EF948RMIQRD", "R:4PGJIM7IPCOV", "R:QJ204MMAGROF", "R:LAO8Q29LE1TO", "R:4LVSPIK3B203", "R:S9IQLHG3U700", "R:INH1T34JAHE4", "R:G503ILGF8S28", "R:O123T11GLFK9", "R:CTDCID13AB9F", "R:U7VJ9SGIHTNO", "R:FOTVN4BTL6M7", "R:P637DGG88RRB", "R:307B8VJHSQ38", "R:O18PU18DTSMO", "R:UFGMTQLP3H5J", "R:85GD560O0A62", "R:RGDNTIFOJEJ1", "R:PQF1C511M1BQ", "R:5A1F5RDNRR3D", "R:SPMG8J9324MB", "R:6VBE1JLANTMV", "R:52OMU7AEFJE8", "R:MFP4S2F9MF7F", "R:F45FD2M7NRMS", "R:EN6PH70VD7LV", "R:M3F90V7UJL03", "R:EJRRQ2IU0JS0", "R:LMIPDLENLMJG", "R:VCP8LGVCL71S"];
     ui.registerTextStyle([
         { id: "normal", font: "28px", color: "#bbadfb" },
         { id: "normalCenter", font: "28px", color: "#bbadfb", align: 1 },
@@ -13,42 +15,42 @@ var game;
             init: function (control) {
             },
             childs: [
-                { class: "UIStage", id: "game", left: 0, width: 710, top: 0, height: 1280, _childs: [
-                        { type: "Image", src: "image/bg" },
-                        { type: "Image", src: "game/wall2", anchorX: 0.5, anchorY: 0.5, x: 242, y: 920.5 },
-                        { type: "Image", src: "game/wall", angle: -33, x: 738, y: 535, anchorX: 0.5, anchorY: 0.5 },
-                        { type: "Image", src: "game/wall", angle: 32, x: 562, y: 95, anchorX: 0.5, anchorY: 0.5 },
-                    ] },
-                { class: "Control", id: "touch", width: "100%", height: "100%" },
-                { class: "Group", id: "intro", width: "100%", height: "100%", _childs: [
-                        { class: "RectFill", color: "#000", opacity: 0.3, width: "100%", height: "100%" },
-                        { class: "Group", width: "100%", height: 600, y: "50%", _childs: [
-                                { class: "Image", src: "image/说明", x: "50%" },
-                                { class: "game.Button", id: "ok2Btn", label: "确定", x: "50%", width: 195, height: 70, top: 400 },
-                            ] },
-                    ] },
-                { class: "Group", id: "helpPage", width: "100%", height: "100%", visible: false, _childs: [
-                        { class: "RectFill", color: "#000", opacity: 0.3, width: "100%", height: "100%" },
-                        { class: "Image", src: "image/活动规则", x: "50%", top: 160 },
-                        { class: "Group", width: "100%", top: 900, bottom: 0, _childs: [
-                                { class: "game.Button", id: "okBtn", label: "已知晓", x: "50%", width: 195, height: 70, top: "30%" },
-                            ] },
-                    ] },
-                { class: "Group", id: "clock", width: 66, height: 66, x: 611, y: 127, visible: false, _childs: [
-                        { class: "Image", src: "game/clock" },
-                        { class: "Label", id: "time", font: "34px", color: "#fff", width: "100%", height: "100%", align: 5, text: "0" },
-                    ] },
-                { class: "Image", id: "disk", src: "game/disk", visible: false },
-                { class: "Group", width: "100%", height: 70, textStyle: "gameHead", _childs: [
-                        { class: "RectFill", width: "100%", height: 70, color: "#2c296e" },
-                        { class: "RectFill", width: "100%", top: 70, height: 2, color: "#6854aa" },
-                        { class: "Image", id: "avatar", left: 10, width: 50, top: 13, height: 50 },
-                        { class: "Label", id: "level", left: 70, width: 100, top: 24, height: 27, text: "关卡 0" },
-                        { class: "Label", id: "score", left: 180, width: 220, top: 24, height: 27, text: "得分 0" },
-                        { class: "Label", id: "chance", left: 400, width: 120, top: 24, height: 27, text: "机会 5" },
-                        { class: "game.Button", id: "help", left: 520, width: 120, top: 24, height: 30, label: "说明", childsProperty: { bk: { src: "" }, label: { color: "#5186ff" } } },
-                        { class: "game.Checkbox", id: "sound", left: 650, width: 56, top: 8, childsProperty: { icon: { src: "ui/btn/喇叭" }, checkImg: { src: "ui/btn/喇叭check" } } },
-                    ] },
+                [UI[0], , "game", 0, 0, , , 710, 1280, , , , , , , , , , , , , [
+                        { type: "Image", src: RES[0] },
+                        { type: "Image", src: RES[1], anchorX: 0.5, anchorY: 0.5, x: 242, y: 920.5 },
+                        { type: "Image", src: RES[2], angle: -33, x: 738, y: 535, anchorX: 0.5, anchorY: 0.5 },
+                        { type: "Image", src: RES[2], angle: 32, x: 562, y: 95, anchorX: 0.5, anchorY: 0.5 },
+                    ]],
+                [UI[1], , "touch", , , , , "100%", "100%"],
+                [UI[2], , "intro", , , , , "100%", "100%", , , , , , , , , , , , , [
+                        [UI[3], { color: "#000" }, , , , , , "100%", "100%", , , 0.3],
+                        [UI[2], , , , , , , "100%", 600, , "50%", , , , , , , , , , , [
+                                [UI[4], { src: RES[3] }, , , , , , , , "50%"],
+                                [UI[5], { label: "确定" }, "ok2Btn", , 400, , , 195, 70, "50%"],
+                            ]],
+                    ]],
+                [UI[2], , "helpPage", , , , , "100%", "100%", , , , false, , , , , , , , , [
+                        [UI[3], { color: "#000" }, , , , , , "100%", "100%", , , 0.3],
+                        [UI[4], { src: RES[4] }, , , 160, , , , , "50%"],
+                        [UI[2], , , , 900, , 0, "100%", , , , , , , , , , , , , , [
+                                [UI[5], { label: "已知晓" }, "okBtn", , "30%", , , 195, 70, "50%"],
+                            ]],
+                    ]],
+                [UI[2], , "clock", , , , , 66, 66, 611, 127, , false, , , , , , , , , [
+                        [UI[4], { src: RES[5] }],
+                        [UI[6], { font: "34px", color: "#fff", align: 5, text: "0" }, "time", , , , , "100%", "100%"],
+                    ]],
+                [UI[4], { src: RES[6] }, "disk", , , , , , , , , , false],
+                [UI[2], { textStyle: "gameHead" }, , , , , , "100%", 70, , , , , , , , , , , , , [
+                        [UI[3], { color: "#2c296e" }, , , , , , "100%", 70],
+                        [UI[3], { color: "#6854aa" }, , , 70, , , "100%", 2],
+                        [UI[4], , "avatar", 10, 13, , , 50, 50],
+                        [UI[6], { text: "关卡 0" }, "level", 70, 24, , , 100, 27],
+                        [UI[6], { text: "得分 0" }, "score", 180, 24, , , 220, 27],
+                        [UI[6], { text: "机会 5" }, "chance", 400, 24, , , 120, 27],
+                        [UI[5], { label: "说明" }, "help", 520, 24, , , 120, 30, , , , , , , , , , , { bk: { src: "" }, label: { color: "#5186ff" } }],
+                        [UI[7], , "sound", 650, 8, , , 56, , , , , , , , , , , , { icon: { src: RES[7] }, checkImg: { src: RES[8] } }],
+                    ]],
             ]
         },
     };
@@ -73,9 +75,9 @@ var game;
     }
     Button.ClassName = "game.Button";
     Button.Styles = {
-        blue: { childsProperty: { bk: { src: "ui/btn/blue" } } },
-        purple: { childsProperty: { bk: { src: "ui/btn/purple" } } },
-        yellow: { childsProperty: { bk: { src: "ui/btn/yellow" }, label: { gradient: { y0: 0, y1: 30, colors: ['#a54800', '#ce7300'] } } } }
+        blue: { childsProperty: { bk: { src: RES[9] } } },
+        purple: { childsProperty: { bk: { src: RES[10] } } },
+        yellow: { childsProperty: { bk: { src: RES[11] }, label: { gradient: { y0: 0, y1: 30, colors: ['#a54800', '#ce7300'] } } } }
     };
     Button.Properties = [
         { name: "label", type: "string" },
@@ -86,8 +88,8 @@ var game;
         down: {}
     };
     Button._childs = [
-        { class: "Image", id: "bk", src: "ui/btn/blue", width: "100%", height: "100%" },
-        { class: "Label", id: "label", font: "30px", color: "#fff", width: "100%", height: 30, y: "50%", align: 1 }
+        [UI[4], { src: RES[9] }, "bk", , , , , "100%", "100%"],
+        [UI[6], { font: "30px", color: "#fff", align: 1 }, "label", , , , , "100%", 30, , "50%"]
     ];
     game.Button = Button;
     ui.initUIClass(Button, ui.Control);
@@ -112,8 +114,8 @@ var game;
         uncheck: { props: { childsProperty: { checkImg: { visible: false } } } }
     };
     Checkbox._childs = [
-        { class: "Image", id: "icon", width: "100%", height: "100%" },
-        { class: "Image", id: "checkImg", width: "100%", height: "100%" }
+        [UI[4], , "icon", , , , , "100%", "100%"],
+        [UI[4], , "checkImg", , , , , "100%", "100%"]
     ];
     game.Checkbox = Checkbox;
     ui.initUIClass(Checkbox, ui.Control);
@@ -148,42 +150,42 @@ var game;
     }
     _GamePage.ClassName = "game.GamePage";
     _GamePage._childs = [
-        { class: "UIStage", id: "game", left: 0, width: 710, top: 0, height: 1280, _childs: [
-                { type: "Image", src: "image/bg" },
-                { type: "Image", src: "game/wall2", anchorX: 0.5, anchorY: 0.5, x: 242, y: 920.5 },
-                { type: "Image", src: "game/wall", angle: -33, x: 738, y: 535, anchorX: 0.5, anchorY: 0.5 },
-                { type: "Image", src: "game/wall", angle: 32, x: 562, y: 95, anchorX: 0.5, anchorY: 0.5 },
-            ] },
-        { class: "Control", id: "touch", width: "100%", height: "100%" },
-        { class: "Group", id: "intro", width: "100%", height: "100%", _childs: [
-                { class: "RectFill", color: "#000", opacity: 0.3, width: "100%", height: "100%" },
-                { class: "Group", width: "100%", height: 600, y: "50%", _childs: [
-                        { class: "Image", src: "image/说明", x: "50%" },
-                        { class: "game.Button", id: "ok2Btn", label: "确定", x: "50%", width: 195, height: 70, top: 400 },
-                    ] },
-            ] },
-        { class: "Group", id: "helpPage", width: "100%", height: "100%", visible: false, _childs: [
-                { class: "RectFill", color: "#000", opacity: 0.3, width: "100%", height: "100%" },
-                { class: "Image", src: "image/活动规则", x: "50%", top: 160 },
-                { class: "Group", width: "100%", top: 900, bottom: 0, _childs: [
-                        { class: "game.Button", id: "okBtn", label: "已知晓", x: "50%", width: 195, height: 70, top: "30%" },
-                    ] },
-            ] },
-        { class: "Group", id: "clock", width: 66, height: 66, x: 611, y: 127, visible: false, _childs: [
-                { class: "Image", src: "game/clock" },
-                { class: "Label", id: "time", font: "34px", color: "#fff", width: "100%", height: "100%", align: 5, text: "0" },
-            ] },
-        { class: "Image", id: "disk", src: "game/disk", visible: false },
-        { class: "Group", width: "100%", height: 70, textStyle: "gameHead", _childs: [
-                { class: "RectFill", width: "100%", height: 70, color: "#2c296e" },
-                { class: "RectFill", width: "100%", top: 70, height: 2, color: "#6854aa" },
-                { class: "Image", id: "avatar", left: 10, width: 50, top: 13, height: 50 },
-                { class: "Label", id: "level", left: 70, width: 100, top: 24, height: 27, text: "关卡 0" },
-                { class: "Label", id: "score", left: 180, width: 220, top: 24, height: 27, text: "得分 0" },
-                { class: "Label", id: "chance", left: 400, width: 120, top: 24, height: 27, text: "机会 5" },
-                { class: "game.Button", id: "help", left: 520, width: 120, top: 24, height: 30, label: "说明", childsProperty: { bk: { src: "" }, label: { color: "#5186ff" } } },
-                { class: "game.Checkbox", id: "sound", left: 650, width: 56, top: 8, childsProperty: { icon: { src: "ui/btn/喇叭" }, checkImg: { src: "ui/btn/喇叭check" } } },
-            ] }
+        [UI[0], , "game", 0, 0, , , 710, 1280, , , , , , , , , , , , , [
+                { type: "Image", src: RES[0] },
+                { type: "Image", src: RES[1], anchorX: 0.5, anchorY: 0.5, x: 242, y: 920.5 },
+                { type: "Image", src: RES[2], angle: -33, x: 738, y: 535, anchorX: 0.5, anchorY: 0.5 },
+                { type: "Image", src: RES[2], angle: 32, x: 562, y: 95, anchorX: 0.5, anchorY: 0.5 },
+            ]],
+        [UI[1], , "touch", , , , , "100%", "100%"],
+        [UI[2], , "intro", , , , , "100%", "100%", , , , , , , , , , , , , [
+                [UI[3], { color: "#000" }, , , , , , "100%", "100%", , , 0.3],
+                [UI[2], , , , , , , "100%", 600, , "50%", , , , , , , , , , , [
+                        [UI[4], { src: RES[3] }, , , , , , , , "50%"],
+                        [UI[5], { label: "确定" }, "ok2Btn", , 400, , , 195, 70, "50%"],
+                    ]],
+            ]],
+        [UI[2], , "helpPage", , , , , "100%", "100%", , , , false, , , , , , , , , [
+                [UI[3], { color: "#000" }, , , , , , "100%", "100%", , , 0.3],
+                [UI[4], { src: RES[4] }, , , 160, , , , , "50%"],
+                [UI[2], , , , 900, , 0, "100%", , , , , , , , , , , , , , [
+                        [UI[5], { label: "已知晓" }, "okBtn", , "30%", , , 195, 70, "50%"],
+                    ]],
+            ]],
+        [UI[2], , "clock", , , , , 66, 66, 611, 127, , false, , , , , , , , , [
+                [UI[4], { src: RES[5] }],
+                [UI[6], { font: "34px", color: "#fff", align: 5, text: "0" }, "time", , , , , "100%", "100%"],
+            ]],
+        [UI[4], { src: RES[6] }, "disk", , , , , , , , , , false],
+        [UI[2], { textStyle: "gameHead" }, , , , , , "100%", 70, , , , , , , , , , , , , [
+                [UI[3], { color: "#2c296e" }, , , , , , "100%", 70],
+                [UI[3], { color: "#6854aa" }, , , 70, , , "100%", 2],
+                [UI[4], , "avatar", 10, 13, , , 50, 50],
+                [UI[6], { text: "关卡 0" }, "level", 70, 24, , , 100, 27],
+                [UI[6], { text: "得分 0" }, "score", 180, 24, , , 220, 27],
+                [UI[6], { text: "机会 5" }, "chance", 400, 24, , , 120, 27],
+                [UI[5], { label: "说明" }, "help", 520, 24, , , 120, 30, , , , , , , , , , , { bk: { src: "" }, label: { color: "#5186ff" } }],
+                [UI[7], , "sound", 650, 8, , , 56, , , , , , , , , , , , { icon: { src: RES[7] }, checkImg: { src: RES[8] } }],
+            ]]
     ];
     game._GamePage = _GamePage;
     ez.initCall(() => { ui.initUIClass(game.GamePage, ui.Container); });
@@ -204,10 +206,10 @@ var game;
     }
     MainFrame.ClassName = "game.MainFrame";
     MainFrame._childs = [
-        { class: "RectFill", id: "bg", gradient: { y1: 1280, colors: ['#010036', '#4e004f'] }, width: "100%", height: "100%" },
-        { class: "Group", id: "frame", width: "100%", height: "100%", _childs: [
-                { class: "game.StartPage" },
-            ] }
+        [UI[3], { gradient: { y1: 1280, colors: ['#010036', '#4e004f'] } }, "bg", , , , , "100%", "100%"],
+        [UI[2], , "frame", , , , , "100%", "100%", , , , , , , , , , , , , [
+                [UI[8]],
+            ]]
     ];
     game.MainFrame = MainFrame;
     ui.initUIClass(MainFrame, ui.Container);
@@ -229,19 +231,19 @@ var game;
     }
     ResultPage.ClassName = "game.ResultPage";
     ResultPage._childs = [
-        { class: "Image", id: "picSucc", src: "ui/img/奖杯", left: 198, width: 336, top: 77, height: 322, visible: true },
-        { class: "Image", id: "picFail", src: "ui/img/失败", left: 198, width: 296, top: 77, height: 200, visible: false },
-        { class: "Label", text: "本局得分", x: "50%", align: 1, width: 119, top: 462, height: 29 },
-        { class: "Label", id: "score", text: "1000", x: "50%", strokeWidth: 4, strokeColor: "#9b8ddd", width: 280, top: 395, height: 58, font: "50px", gradient: { y1: 50, colors: ['#a995ff', '#8670f4'] } },
-        { class: "Label", id: "info", x: "50%", width: 283, top: 530, height: 32 },
-        { class: "Image", src: "ui/img/line", left: 177, width: 360, top: 503, height: 2 },
-        { class: "Image", src: "ui/img/line", left: 177, width: 360, top: 579, height: 2 },
-        { class: "game.Button", id: "rank", label: "查看排行榜", style: "blue", x: "50%", width: 195, top: 669, height: 70 },
-        { class: "game.Button", id: "result", label: "生成成绩单", style: "blue", x: "50%", width: 195, top: 769, height: 70 },
-        { class: "Group", top: 900, bottom: 0, width: "100%", _childs: [
-                { class: "game.Button", id: "replay", label: "再次挑战", style: "purple", x: "50%", width: 195, y: "50%", height: 70 },
-            ] },
-        { class: "game.RankPage", id: "rankPage", visible: false }
+        [UI[4], { src: RES[12] }, "picSucc", 198, 77, , , 336, 322, , , , true],
+        [UI[4], { src: RES[13] }, "picFail", 198, 77, , , 296, 200, , , , false],
+        [UI[6], { text: "本局得分", align: 1 }, , , 462, , , 119, 29, "50%"],
+        [UI[6], { text: "1000", strokeWidth: 4, strokeColor: "#9b8ddd", font: "50px", gradient: { y1: 50, colors: ['#a995ff', '#8670f4'] } }, "score", , 395, , , 280, 58, "50%"],
+        [UI[6], , "info", , 530, , , 283, 32, "50%"],
+        [UI[4], { src: RES[14] }, , 177, 503, , , 360, 2],
+        [UI[4], { src: RES[14] }, , 177, 579, , , 360, 2],
+        [UI[5], { label: "查看排行榜", style: "blue" }, "rank", , 669, , , 195, 70, "50%"],
+        [UI[5], { label: "生成成绩单", style: "blue" }, "result", , 769, , , 195, 70, "50%"],
+        [UI[2], , , , 900, , 0, "100%", , , , , , , , , , , , , , [
+                [UI[5], { label: "再次挑战", style: "purple" }, "replay", , , , , 195, 70, "50%", "50%"],
+            ]],
+        [UI[9], , "rankPage", , , , , , , , , , false]
     ];
     game.ResultPage = ResultPage;
     ui.initUIClass(ResultPage, ui.Container);
@@ -264,20 +266,20 @@ var game;
     }
     SharePage.ClassName = "game.SharePage";
     SharePage._childs = [
-        { class: "RectFill", id: "bg", gradient: { y1: 1280, colors: ['#010036', '#4e004f'] }, width: "100%", height: "100%" },
-        { class: "Image", src: "share/logo", left: 64, width: 323, top: 92, height: 46 },
-        { class: "Image", src: "share/rect", left: 81, width: 522, top: 300, height: 231 },
-        { class: "Label", id: "name", left: 114, width: 383, top: 337, height: 37, text: "姓名：" },
-        { class: "Label", id: "score", left: 114, width: 383, top: 387, height: 37, text: "成绩：10000" },
-        { class: "Label", id: "info", left: 114, width: 383, top: 439, height: 37 },
-        { class: "game.Button", id: "closeShare", left: 650, width: 39, top: 40, height: 38, childsProperty: { bk: { src: "ui/btn/close" } } },
-        { class: "Image", src: "share/text猪望仔大战蝙蝠侠", left: 65, top: 165 },
-        { class: "Label", font: "28px", color: "#bbadfb", lineHeight: 48, format: 2, left: 68, width: 585, top: 575, height: 137, text: "2020“创青春 交子杯”新网银行金融科技挑战赛\n47万奖金池，最高 10 万奖金等你来拿！\n是时候展现你真正的技术了！" },
-        { class: "Group", width: 300, top: 700, bottom: 0, x: "50%", _childs: [
-                { class: "Group", height: 332, width: 300, y: "50%", _childs: [
-                        { class: "Image", id: "share", src: "share/二维码", height: 332, width: 300 },
-                    ] },
-            ] }
+        [UI[3], { gradient: { y1: 1280, colors: ['#010036', '#4e004f'] } }, "bg", , , , , "100%", "100%"],
+        [UI[4], { src: RES[15] }, , 64, 92, , , 323, 46],
+        [UI[4], { src: RES[16] }, , 81, 300, , , 522, 231],
+        [UI[6], { text: "姓名：" }, "name", 114, 337, , , 383, 37],
+        [UI[6], { text: "成绩：10000" }, "score", 114, 387, , , 383, 37],
+        [UI[6], , "info", 114, 439, , , 383, 37],
+        [UI[5], , "closeShare", 650, 40, , , 39, 38, , , , , , , , , , , { bk: { src: RES[17] } }],
+        [UI[4], { src: RES[18] }, , 65, 165],
+        [UI[6], { font: "28px", color: "#bbadfb", lineHeight: 48, format: 2, text: "2020“创青春 交子杯”新网银行金融科技挑战赛\n47万奖金池，最高 10 万奖金等你来拿！\n是时候展现你真正的技术了！" }, , 68, 575, , , 585, 137],
+        [UI[2], , , , 700, , 0, 300, , "50%", , , , , , , , , , , , [
+                [UI[2], , , , , , , 300, 332, , "50%", , , , , , , , , , , [
+                        [UI[4], { src: RES[19] }, "share", , , , , 300, 332],
+                    ]],
+            ]]
     ];
     game.SharePage = SharePage;
     ui.initUIClass(SharePage, ui.Container);
@@ -296,7 +298,7 @@ var game;
     }
     Splash.ClassName = "game.Splash";
     Splash._childs = [
-        { class: "Image", src: "logo", x: "50%", y: "50%" }
+        [UI[4], { src: RES[20] }, , , , , , , , "50%", "50%"]
     ];
     game.Splash = Splash;
     ui.initUIClass(Splash, ui.Container);
@@ -317,12 +319,12 @@ var game;
     }
     _RankItem.ClassName = "game.RankItem";
     _RankItem._childs = [
-        { class: "Label", id: "name", color: "#42464d", left: 217, width: 180, top: 24, height: 25, align: 1, format: 8 },
-        { class: "Label", id: "rank", color: "#42464d", left: 20, width: 50, top: 23, height: 17, visible: false, align: 1 },
-        { class: "Label", id: "score", color: "#e04f00", left: 409, width: 112, top: 24, height: 25, align: 1 },
-        { class: "Image", id: "avatar", left: 127, width: 74, top: 7, height: 74, effect: "mask", effectParams: { mask: 'mask' } },
-        { class: "RectFill", color: "#F0F0F0", left: 0, width: 530, top: 86, height: 2 },
-        { class: "Image", id: "rankIcon", left: 27, width: 44, top: 15, height: 48, src: "ui/icon/1st" }
+        [UI[6], { color: "#42464d", align: 1, format: 8 }, "name", 217, 24, , , 180, 25],
+        [UI[6], { color: "#42464d", align: 1 }, "rank", 20, 23, , , 50, 17, , , , false],
+        [UI[6], { color: "#e04f00", align: 1 }, "score", 409, 24, , , 112, 25],
+        [UI[4], { effect: "mask", effectParams: { mask: 'mask' } }, "avatar", 127, 7, , , 74, 74],
+        [UI[3], { color: "#F0F0F0" }, , 0, 86, , , 530, 2],
+        [UI[4], { src: RES[21] }, "rankIcon", 27, 15, , , 44, 48]
     ];
     game._RankItem = _RankItem;
     ez.initCall(() => { ui.initUIClass(game.RankItem, ui.Container); });
@@ -346,19 +348,19 @@ var game;
     }
     RankPage.ClassName = "game.RankPage";
     RankPage._childs = [
-        { class: "Image", src: "ui/img/rectbk", left: 0, width: 640, top: 0, height: 1300 },
-        { class: "Image", src: "ui/img/rectwh", left: 45, width: 540, top: 219, height: 806 },
-        { class: "game.Button", id: "closeRank", left: 566, width: 39, top: 200, height: 38, childsProperty: { bk: { src: "ui/btn/close" } } },
-        { class: "RectFill", color: "#F2F2F4", left: 45, width: 540, top: 319, height: 78 },
-        { class: "Label", text: "排行", left: 74, width: 58, top: 344, height: 28 },
-        { class: "Label", text: "头像", left: 190, width: 58, top: 344, height: 28 },
-        { class: "Label", text: "昵称", left: 334, width: 58, top: 344, height: 28 },
-        { class: "Label", text: "成绩", left: 478, width: 58, top: 344, height: 28 },
-        { class: "Label", font: "32px", text: "排行榜TOP100", color: "#494b59", left: 246, width: 220, top: 253, height: 34 },
-        { class: "Image", src: "ui/icon/cup", left: 187, width: 44, top: 246, height: 49 },
-        { class: "ScrollView", left: 50, width: 532, top: 402, height: 617, scrollMode: 2, _childs: [
-                { class: "ListView", id: "rankList", width: 532, itemClass: "game.RankItem", culling: true },
-            ] }
+        [UI[4], { src: RES[22] }, , 0, 0, , , 640, 1300],
+        [UI[4], { src: RES[23] }, , 45, 219, , , 540, 806],
+        [UI[5], , "closeRank", 566, 200, , , 39, 38, , , , , , , , , , , { bk: { src: RES[17] } }],
+        [UI[3], { color: "#F2F2F4" }, , 45, 319, , , 540, 78],
+        [UI[6], { text: "排行" }, , 74, 344, , , 58, 28],
+        [UI[6], { text: "头像" }, , 190, 344, , , 58, 28],
+        [UI[6], { text: "昵称" }, , 334, 344, , , 58, 28],
+        [UI[6], { text: "成绩" }, , 478, 344, , , 58, 28],
+        [UI[6], { font: "32px", text: "排行榜TOP100", color: "#494b59" }, , 246, 253, , , 220, 34],
+        [UI[4], { src: RES[24] }, , 187, 246, , , 44, 49],
+        [UI[10], { scrollMode: 2 }, , 50, 402, , , 532, 617, , , , , , , , , , , , , [
+                [UI[11], { itemClass: "game.RankItem", culling: true }, "rankList", , , , , 532],
+            ]]
     ];
     game.RankPage = RankPage;
     ui.initUIClass(RankPage, ui.Container);
@@ -379,27 +381,27 @@ var game;
     }
     _StartPage.ClassName = "game.StartPage";
     _StartPage._childs = [
-        { class: "Image", src: "image/bg" },
-        { class: "Group", width: "100%", height: "100%", id: "mainPage", _childs: [
-                { class: "UIStage", id: "stage", width: "100%", height: 1280, y: "50%", _childs: [
-                        { type: "Image", id: "蝙蝠侠", src: "start/蝙蝠侠", x: 515, y: 812, anchorX: 0.5, anchorY: 0.5 },
-                        { type: "Image", id: "猪", src: "start/猪", x: 38, y: 112 },
-                        { type: "Image", src: "start/txt蝙蝠侠", x: 132, y: 538 },
-                        { type: "Image", src: "start/txt猪望仔", x: 103, y: 402 },
-                    ] },
-                { class: "Image", src: "start/logo", bottom: "10%", x: "50%", width: 237, height: 34 },
-                { class: "game.Button", id: "help", bottom: "15%", left: 80, width: 218, height: 85, childsProperty: { bk: { src: "start/活动规则" } } },
-                { class: "game.Button", id: "start", bottom: "15%", right: 80, width: 218, height: 85, childsProperty: { bk: { src: "start/开始游戏" } } },
-                { class: "game.Button", id: "rank", style: "yellow", label: "排行榜", left: 44, width: 146, top: 92, height: 54 },
-            ] },
-        { class: "game.Checkbox", id: "sound", left: 570, width: 56, top: 92, height: 59, childsProperty: { icon: { src: "ui/btn/喇叭" }, checkImg: { src: "ui/btn/喇叭check" } } },
-        { class: "Group", id: "helpPage", width: "100%", height: "100%", visible: false, _childs: [
-                { class: "Image", src: "image/活动规则", x: "50%", top: 160 },
-                { class: "Group", width: "100%", top: 900, bottom: 0, _childs: [
-                        { class: "game.Button", id: "okBtn", label: "已知晓", x: "50%", width: 195, height: 70, top: "30%" },
-                    ] },
-            ] },
-        { class: "game.RankPage", id: "rankPage", visible: false }
+        [UI[4], { src: RES[0] }],
+        [UI[2], , "mainPage", , , , , "100%", "100%", , , , , , , , , , , , , [
+                [UI[0], , "stage", , , , , "100%", 1280, , "50%", , , , , , , , , , , [
+                        { type: "Image", id: "蝙蝠侠", src: RES[25], x: 515, y: 812, anchorX: 0.5, anchorY: 0.5 },
+                        { type: "Image", id: "猪", src: RES[26], x: 38, y: 112 },
+                        { type: "Image", src: RES[27], x: 132, y: 538 },
+                        { type: "Image", src: RES[28], x: 103, y: 402 },
+                    ]],
+                [UI[4], { src: RES[29] }, , , , , "10%", 237, 34, "50%"],
+                [UI[5], , "help", 80, , , "15%", 218, 85, , , , , , , , , , , { bk: { src: RES[30] } }],
+                [UI[5], , "start", , , 80, "15%", 218, 85, , , , , , , , , , , { bk: { src: RES[31] } }],
+                [UI[5], { style: "yellow", label: "排行榜" }, "rank", 44, 92, , , 146, 54],
+            ]],
+        [UI[7], , "sound", 570, 92, , , 56, 59, , , , , , , , , , , { icon: { src: RES[7] }, checkImg: { src: RES[8] } }],
+        [UI[2], , "helpPage", , , , , "100%", "100%", , , , false, , , , , , , , , [
+                [UI[4], { src: RES[4] }, , , 160, , , , , "50%"],
+                [UI[2], , , , 900, , 0, "100%", , , , , , , , , , , , , , [
+                        [UI[5], { label: "已知晓" }, "okBtn", , "30%", , , 195, 70, "50%"],
+                    ]],
+            ]],
+        [UI[9], , "rankPage", , , , , , , , , , false]
     ];
     game._StartPage = _StartPage;
     ez.initCall(() => { ui.initUIClass(game.StartPage, ui.Container); });

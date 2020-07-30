@@ -2,68 +2,8 @@ namespace game {
 	import ui = ez.ui;
 
 	var RAD = 180 / Math.PI;
-	const PlayerRadius = 30;
 	var player;
 	var launchResovle = null;
-
-	var lines = [
-		[0,  70, 490, 70],
-		[490,70, 710, 205],
-		[490, 70, 710, 205],
-		[710, 205, 710, 524],
-		[710, 524, 446, 695],
-		[446, 695, 466, 723],
-		[466, 723, 710, 564],
-		[710, 564, 710, 1280],
-		[0, 70, 0, 1280],
-		[120, 902, 361, 902],
-		[361, 902, 361, 934],
-		[361, 934, 120, 939],
-		[120, 902, 120, 939],
-		[710, 1280, 0, 1280]
-	].map(l => [{ x: l[0], y: l[1] }, { x: l[2], y: l[3] }] );
-
-	function intersect(p1, p2, c, r){
-		var flag1 = (p1.x - c.x) * (p1.x - c.x) + (p1.y - c.y) * (p1.y - c.y) <= r * r;
-		var flag2 = (p2.x - c.x) * (p2.x - c.x) + (p2.y - c.y) * (p2.y - c.y) <= r * r;
-		if (flag1 && flag2)
-			return false;
-		else if (flag1 || flag2)
-			return true;
-		else
-		{
-			var A, B, C, dist1, dist2, angle1, angle2;
-			A = p1.y - p2.y;
-			B = p2.x - p1.x;
-			C = p1.x * p2.y - p2.x * p1.y;
-			dist1 = A * c.x + B * c.y + C;
-			dist1 *= dist1;
-			dist2 = (A * A + B * B) * r * r;
-			if (dist1 > dist2)
-				return false;
-			angle1 = (c.x - p1.x) * (p2.x - p1.x) + (c.y - p1.y) * (p2.y - p1.y);
-			angle2 = (c.x - p2.x) * (p1.x - p2.x) + (c.y - p2.y) * (p1.y - p2.y);
-			return (angle1 > 0 && angle2 > 0);
-		}
-	}
-
-	function reflect(p1, p2, p0, dx, dy){
-		var A = p2.y - p1.y;
-		var B = p1.x - p2.x;
-		var C = p2.x * p1.y - p1.x * p2.y;
-		var D = 1 / (A * A + B * B);
-		var x = (B * B * p0.x - A * B * p0.y - A * C) * D;
-		var y = (A * A * p0.y - A * B * p0.x - B * C) * D;
-		var nx = p0.x - x;
-		var ny = p0.y - y;
-		var r = 1 / Math.sqrt(nx*nx+ny*ny);
-		nx *= r;
-		ny *= r;
-		var d = dx * nx + dy * ny;
-		var vx = dx - 2 * nx * d;
-		var vy = dy - 2 * ny * d;
-		return [vx, vy];
-	}
 
 	function createPlayer(stage:ez.Stage) {
 		var sprite = new ez.SubStageSprite(stage);
@@ -160,119 +100,142 @@ namespace game {
 		// data[0] = x;
 		// data[1] = y;
 		var temp = { type: EnemyType.Batman, x: x, y: y };
-		// console.log("黑洞数据： （", x," " ,y, ")");
+		console.log("黑洞数据： （", x," " ,y, ")");
 		data[0] =temp;
 		return data;
 	}
 
 	/**
-	 * 产生xy数据
+	 * 结束游戏，展示结果
+	 * @param ctx
 	 */
-	function createXY() {
-		// 边界 防止生成的敌人越界
-		var border:number = 25;
-		var x = Math.floor(Math.random() * (700-border)) + border;
-		var y = Math.floor(Math.random() * (1280-border)) + border;
-		return [x, y];
+	async function showResult(ctx: GamePage) {
+		var page = ctx.parent.createChild(game.ResultPage);
+		var n = page.namedChilds;
+		if(isSuccessful()){
+			console.log("成功")
+			n.replay.label = "下一局";
+		}else{
+			console.log("失败")
+			n.picSucc.visible = false;
+			n.picFail.visible = true;
+		}
+		n.score.text = "" + score;
+		var data = await commitScore(score);
+		getRank(n.rankPage);
+		if (data){
+			n.info.text = `超过了${data}的玩家`;
+		}
+
+		page.addEventHandler("click", function(e){
+			switch (e.sender.id) {
+				case "rank":
+					n.rankPage.visible = true;
+					break;
+				case "closeRank":
+					n.rankPage.visible = false;
+					break;
+				case "replay": // 达成目标则下一关，未达成目标则重回主界面
+
+					console.log("选择下一步");
+					if(isSuccessful() && level <= 5){
+						score = 0;
+						level += 1;
+						initEverTime();
+						page.parent.createChild(game.GamePage);
+						page.dispose();
+					}else{
+						score = 0;
+						level = 1;
+						initEverTime();
+						page.parent.createChild(game.MainFrame);
+						page.dispose();
+					}
+					break;
+				//	生成分享链接
+				case "result":
+					ajax(url + `/openapi/statistics/add?openid=${PlayerInfo.openid}&playTime=${Date.now() - startTime}`, function () { });
+					var share = page.parent.createChild(game.SharePage);
+					// page.dispose();
+					page.visible = false;
+					var n1 = share.namedChilds;
+					if (data){
+						n1.info.text = `超过了${data}的玩家`;
+					}
+					n1.name.text = "姓名：" + PlayerInfo.nickname;
+					n1.score.text = "成绩：" + score;
+					ez.setTimer(100, function () {
+						/*var pt = n1.share.clientToScreen(0, 0);
+						var scale = (<any>ez.getRoot()).scale;
+						var width = 300 * scale;
+						var height = 300 * scale;
+						pt.x *= scale;
+						pt.y *= scale;*/
+						var isiOS = !!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
+						var div = document.getElementById("game");
+
+						var canvas = div.getElementsByTagName("canvas")[0];
+						var png = canvas.toDataURL("image/png");
+						/*
+						let image = new Image();
+						image.src = png;
+						image.style.top = "0px";
+						image.style.left = "0px";
+						image.style.height = div.clientHeight + "px";
+						image.style.width = div.clientWidth + "px";
+						image.style.position = "absolute";
+						document.body.appendChild(image);*/
+						window.parent.postMessage({ msg: "show", src: png }, "*");
+					});
+					share.addEventHandler("click", function (e) {
+						switch (e.sender.id) {
+							case "closeShare":
+								share.dispose();
+								page.visible = true;
+								break;
+						}
+					});
+					break;
+			}
+
+		});
+		//n.rankBtn.addEventHandler("click", function(){
+		ctx.dispose();
 	}
 
 	/**
-	 * 生成敌人数据
+	 * 开始游戏
+	 * @param stage
+	 * @param n
+	 * @param gameOver 游戏结束 回调函数
 	 */
-	function createEnemyData() {
-		// 数组大小
-		var size:number = 50;
-		var data = new Array(size);
-		var i:number = 0;
-
-		while (i < 35){
-			var arr = createXY();
-			var x = arr[0];
-			var y = arr[1];
-			var temp = { type: EnemyType.Batman, x: x, y: y };
-			data[i] =temp;
-			i++;
-		}
-		while (i < 40){
-			var arr = createXY();
-			var x = arr[0];
-			var y = arr[1];
-			var temp = { type: EnemyType.BatmanKing, x: x, y: y };
-			data[i] =temp;
-			i++;
-		}
-		while (i < 43){
-			var arr = createXY();
-			var x = arr[0];
-			var y = arr[1];
-			var temp = { type: EnemyType.Logo, x: x, y: y };
-			data[i] =temp;
-			i++;
-		}
-		while (i < 55){
-			var arr = createXY();
-			var x = arr[0];
-			var y = arr[1];
-			var temp = { type: EnemyType.Boom, x: x, y: y };
-			data[i] =temp;
-			i++;
-		}
-		while (i < size){
-			var arr = createXY();
-			var x = arr[0];
-			var y = arr[1];
-			var temp = { type: EnemyType.Mask, x: x, y: y };
-			data[i] =temp;
-			i++;
-		}
-		return data;
-	}
-
-	function shulffle(arr) {
-		var seed = Date.now();
-		function rand(max: number) {
-			seed = (seed * 22695477 + 1) & 0x7ffffff;
-			return (seed >> 16) % (max + 1);
-		}
-		for(var i = 0; i < arr.length; i++){
-			var idx = rand(arr.length - 1);
-			var t = arr[i];
-			arr[i] = arr[idx];
-			arr[idx] = t;
-		}
-	}
-
-	async function addScore(s, n) {
-		var s1 = score;
-		score += s;
-		var d = (s / 10)|0;
-		for(let i = 0; i < 10; i++){
-			s1 += d;
-			n.score.text = `得分 ${s1}`;
-			await ez.delay(30);
-		}
-		n.score.text = `得分 ${score}`;
-	}
-
 	async function startGame(stage: ez.Stage, n, gameOver) {
 
+		var isEndOfTime:Boolean = true;
+		var time1:Number = maxTime;
+		// 计时器
 		async function showClock() {
-			n.clock.visible = true;
-			var time = 10;
-			n.time.text = `${time}s`;
-			while(time > 0){
-				n.time.text = `${time}s`;
-				await ez.delay(1000);
-				time--;
+			if(!isEndOfTime){
+				time1 = maxTime;
+				return;
 			}
+			isEndOfTime=false;
+			n.clock.visible = true;
+			time1 = maxTime;
+			n.time.text = `${time1}`;
+			while(time1 > 0){
+				n.time.text = `${time1}`;
+				await ez.delay(100);
+				// @ts-ignore
+				time1-=1;
+			}
+			isEndOfTime = true;
 			n.clock.visible = false;
 			getMask = false;
 		}
 
 		var enemies = [];
-		if(PlayerInfo.openid == "undefine"){
-			PlayerInfo.openid = "123456";
-		}
+
 		ajax(url+`/openapi/statistics/add?openid=${PlayerInfo.openid}&fps=${ez.fps}`, function(){});
 
 		// 判断是否撞到口罩
@@ -304,7 +267,7 @@ namespace game {
 			.play();
 
 		var lastPos = [104, 144];
-		var chance = 5;
+		var chance = chanceMax;
 
 		while(true) {
 			if (chance-- <= 0)
@@ -453,111 +416,22 @@ namespace game {
 		}
 		gameOver();
 	}
-	
-	async function showResult(ctx: GamePage) {
-		// 提交分数
-		function commitScore(score) {
-			return new Promise((resolver, reject) =>{
-				var key = "zxdqw";
-				var timestamp = Date.now();
-				if(PlayerInfo.openid == "undefined"){
-					PlayerInfo.openid = "123456";
-				}
-				var sign = md5.hex(`${key}openid${PlayerInfo.openid}score${score}${timestamp}`);
-				ajax(url+`/openapi/pinball/add/measy?key=${key}&sign=${sign}&openid=${PlayerInfo.openid}&score=${score}&timestamp=${timestamp}`, function (e, r) {
-					if (r.code) {
-						alert(r.msg);
-						reject();
-					}
-					else
-						resolver(r.data);
-				});
-			});
-		}
-		var page = ctx.parent.createChild(game.ResultPage);
-		var n = page.namedChilds;
-		n.score.text = "" + score;
-		var data = await commitScore(score);
-		getRank(n.rankPage);
-		if (data)
-			n.info.text = `超过了${data}的玩家`;
-		page.addEventHandler("click", function(e){
-			switch (e.sender.id) {
-				case "rank":
-					n.rankPage.visible = true;
-					break;
-				case "closeRank":
-					n.rankPage.visible = false;
-					break;
-				case "replay":
-					page.parent.createChild(game.MainFrame);
-					page.dispose();
-					break;
-				//	生成分享链接
-				case "result":
-					if(PlayerInfo.openid == "undefined"){
-						PlayerInfo.openid = "123456";
-					}
-					ajax(url + `/openapi/statistics/add?openid=${PlayerInfo.openid}&playTime=${Date.now() - startTime}`, function () { });
-					var share = page.parent.createChild(game.SharePage);
-					page.dispose();
-					var n1 = share.namedChilds;
-					//if (data)
-					//	n1.info.text = `超过了${data}的玩家`;
-					n1.name.text = "姓名：" + PlayerInfo.nickname;
-					n1.score.text = "成绩：" + score;
-					ez.setTimer(100, function () {
-						/*var pt = n1.share.clientToScreen(0, 0);
-						var scale = (<any>ez.getRoot()).scale;
-						var width = 300 * scale;
-						var height = 300 * scale;
-						pt.x *= scale;
-						pt.y *= scale;*/
-						var isiOS = !!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
-						var div = document.getElementById("game");
-						
-						var canvas = div.getElementsByTagName("canvas")[0];
-						var png = canvas.toDataURL("image/png");
-						/*
-						let image = new Image();
-						image.src = png;
-						image.style.top = "0px";
-						image.style.left = "0px";
-						image.style.height = div.clientHeight + "px";
-						image.style.width = div.clientWidth + "px";
-						image.style.position = "absolute";
-						document.body.appendChild(image);*/
-						window.parent.postMessage({ msg: "show", src: png }, "*");
-					});
-					share.addEventHandler("click", function (e) {
-						switch (e.sender.id) {
-							case "closeRank":
-								n.result.visible = false;
-								break;
-						}
-					});
-					break;
-			}
 
-		});
-		//n.rankBtn.addEventHandler("click", function(){		
-		ctx.dispose();
-	}
 
-	function length(sprite, x, y) {
-		var dx = sprite.x - x;
-		var dy = sprite.y - y;
-		return Math.sqrt(dx*dx + dy*dy);
-	}
-
+	/**
+	 * 进入游戏界面
+	 */
 	export class GamePage extends _GamePage {
-
 		constructor(parent: ui.Container) {
 			super(parent);
-			score = 0;
 			var lastLine = lines[lines.length - 1];
 			lastLine[0].y = lastLine[1].y = parent.getBound().height - 0;
 			const n = this.namedChilds;
+			score = 0;
+			initEverTime()
+			n.level.text = `关卡 ${level}`;
+			var s:String = score + " / " + target;
+			n.score.text = `得分 ${s}`
 
 			var sound = localStorage.getItem("sound");
 			if (sound == null)
@@ -566,6 +440,7 @@ namespace game {
 
 			var stage = n.game.stage;
 			n.touch.hitTest = function(){ return true; }
+
 			// 箭头
 			var arrow = new ez.ImageSprite(stage);
 			arrow.src = "game/arrow";
@@ -578,10 +453,10 @@ namespace game {
 			var lastPt;
 			//ez.loadGroup("share/二维码");
 			if (PlayerInfo){
-				n.name.text = PlayerInfo.nickname;
+				// n.name.text = PlayerInfo.nickname;
 				n.avatar.src = PlayerInfo.headimgurl;
 			}
-
+			n.chance.text = chanceMax.toString();
 			n.touch.onTouchBegin = function(e: ez.TouchData){
 				if (!launchResovle)
 					return;
@@ -628,8 +503,12 @@ namespace game {
 				if (launchResovle)
 					launchResovle([-dx * len / r, -dy * len / r]);
 			}
-
-			startGame(stage, n, function () {showResult(ctx); });
+			/**
+			 * 开始游戏，游戏结束，转到提交分数和展示分数页面
+			 * */
+			startGame(stage, n, function () {
+				showResult(ctx);
+			});
 
 			this.addEventHandler("click", function (e) {
 				switch (e.sender.id) {
@@ -640,7 +519,7 @@ namespace game {
 						n.helpPage.visible = false;
 						break;
 					case "ok2Btn":
-						n.intro.visible = false;						
+						n.intro.visible = false;
 						break;
 					case "sound":
 						var state = (<ui.Control>e.sender).state;

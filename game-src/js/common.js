@@ -7,9 +7,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var url_online = "https://xwfintech.qingke.io/5f172e0de25bdc002d9a5abf/api";
+var url_online = "https://xwfintech.qingke.io/_api/5f172e0de25bdc002d9a5abf";
 var url_debug = "http://127.0.0.1:7000";
-var url = "";
+var url = url_online;
 function ajax(url, cb) {
     var x = new XMLHttpRequest();
     x.open("GET", url);
@@ -39,7 +39,7 @@ function createPlayerInfo() {
     PlayerInfo.openid = "A" + parseInt(Math.random().toString());
     PlayerInfo.nickname = "Tom";
     PlayerInfo.sex = "whoMan";
-    PlayerInfo.headimgurl = "https://lg-4y405dn2-1256251417.cos.ap-shanghai.myqcloud.com/111222.png";
+    PlayerInfo.headimgurl = "/res/111222.png";
 }
 var EnemyType;
 (function (EnemyType) {
@@ -142,5 +142,23 @@ function shulffle(arr) {
         arr[i] = arr[idx];
         arr[idx] = t;
     }
+}
+function createXY() {
+    var border = 25;
+    var x = Math.floor(Math.random() * (700 - border)) + border;
+    var y = Math.floor(Math.random() * (1280 - border)) + border;
+    return [x, y];
+}
+function createEnemyData() {
+    var data = [];
+    for (var i = 0; i < enemyData.length; i++) {
+        var num = enemyData[i].num * enemyNum;
+        for (var j = 0; j < num; j++) {
+            var arr = createXY();
+            var temp = { type: enemyData[i].type, x: arr[0], y: arr[1] };
+            data.push(temp);
+        }
+    }
+    return data;
 }
 //# sourceMappingURL=common.js.map

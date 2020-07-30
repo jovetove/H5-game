@@ -1,10 +1,8 @@
 var levelMax = 10;
 var levelCurr = 1;
-var leveldata = [50, 80, 100, 120, 140];
-var chanceMax = 2;
-var score = 1000;
+var chanceMax = 5;
+var score = 0;
 var level = 1;
-var target = 4000;
 var rate = 0.5;
 var alpha = 0.9;
 var maxTime = 20;
@@ -24,4 +22,20 @@ var lines = [
     [120, 902, 120, 939],
     [710, 1280, 0, 1280]
 ].map(l => [{ x: l[0], y: l[1] }, { x: l[2], y: l[3] }]);
+var enemyData = [
+    { type: EnemyType.Batman, num: 0.80 },
+    { type: EnemyType.BatmanKing, num: 0.05 },
+    { type: EnemyType.Boom, num: 0.06 },
+    { type: EnemyType.Mask, num: 0.04 },
+    { type: EnemyType.Logo, num: 0.05 },
+];
+var enemyNum = 50 + 30 * (level - 1);
+var target = 9 * enemyNum;
+function initEverTime() {
+    enemyNum = 50 + 30 * (level - 1);
+    target = 9 * enemyNum;
+    var temp = level <= 6 ? level : 6;
+    rate += 0.01 * temp;
+    alpha -= 0.02 * (temp - 1);
+}
 //# sourceMappingURL=levelData.js.map

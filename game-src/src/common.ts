@@ -1,9 +1,9 @@
 /**
  * gobal data
  */
-var url_online= "https://xwfintech.qingke.io/5f172e0de25bdc002d9a5abf/api";
+var url_online= "https://xwfintech.qingke.io/_api/5f172e0de25bdc002d9a5abf";
 var url_debug = "http://127.0.0.1:7000";
-var url = "";
+var url = url_online;
 
 /**
  * 发送请求
@@ -54,7 +54,7 @@ function createPlayerInfo() {
     PlayerInfo.openid = "A" + parseInt(Math.random().toString());
     PlayerInfo.nickname = "Tom";
     PlayerInfo.sex = "whoMan";
-    PlayerInfo.headimgurl = "https://lg-4y405dn2-1256251417.cos.ap-shanghai.myqcloud.com/111222.png"
+    PlayerInfo.headimgurl = "/res/111222.png";
 }
 
 /**
@@ -207,4 +207,32 @@ function shulffle(arr) {
         arr[i] = arr[idx];
         arr[idx] = t;
     }
+}
+
+/**
+ * 产生xy数据
+ */
+function createXY() {
+    // 边界 防止生成的敌人越界
+    var border:number = 25;
+    var x = Math.floor(Math.random() * (700-border)) + border;
+    var y = Math.floor(Math.random() * (1280-border)) + border;
+    return [x, y];
+}
+
+/**
+ * 生成敌人数据
+ */
+function createEnemyData() {
+    // 数组大小
+    var data = [];
+    for(var i=0; i < enemyData.length; i++){
+        var num = enemyData[i].num*enemyNum;
+        for(var j = 0; j < num; j++){
+            var arr = createXY();
+            var temp = { type: enemyData[i].type, x: arr[0], y: arr[1] };
+            data.push(temp);
+        }
+    }
+    return data;
 }

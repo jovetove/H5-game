@@ -97,59 +97,8 @@ var game;
         var y = arr[1];
         var data = new Array(1);
         var temp = { type: EnemyType.Batman, x: x, y: y };
+        console.log("黑洞数据： （", x, " ", y, ")");
         data[0] = temp;
-        return data;
-    }
-    function createXY() {
-        var border = 25;
-        var x = Math.floor(Math.random() * (700 - border)) + border;
-        var y = Math.floor(Math.random() * (1280 - border)) + border;
-        return [x, y];
-    }
-    function createEnemyData() {
-        var size = 100;
-        var data = new Array(size);
-        var i = 0;
-        while (i < 35) {
-            var arr = createXY();
-            var x = arr[0];
-            var y = arr[1];
-            var temp = { type: EnemyType.Batman, x: x, y: y };
-            data[i] = temp;
-            i++;
-        }
-        while (i < 40) {
-            var arr = createXY();
-            var x = arr[0];
-            var y = arr[1];
-            var temp = { type: EnemyType.BatmanKing, x: x, y: y };
-            data[i] = temp;
-            i++;
-        }
-        while (i < 43) {
-            var arr = createXY();
-            var x = arr[0];
-            var y = arr[1];
-            var temp = { type: EnemyType.Logo, x: x, y: y };
-            data[i] = temp;
-            i++;
-        }
-        while (i < 55) {
-            var arr = createXY();
-            var x = arr[0];
-            var y = arr[1];
-            var temp = { type: EnemyType.Boom, x: x, y: y };
-            data[i] = temp;
-            i++;
-        }
-        while (i < size) {
-            var arr = createXY();
-            var x = arr[0];
-            var y = arr[1];
-            var temp = { type: EnemyType.Mask, x: x, y: y };
-            data[i] = temp;
-            i++;
-        }
         return data;
     }
     function showResult(ctx) {
@@ -180,13 +129,18 @@ var game;
                         n.rankPage.visible = false;
                         break;
                     case "replay":
-                        if (isSuccessful()) {
-                            level += 1;
+                        console.log("选择下一步");
+                        if (isSuccessful() && level <= 5) {
                             score = 0;
+                            level += 1;
+                            initEverTime();
                             page.parent.createChild(game.GamePage);
                             page.dispose();
                         }
                         else {
+                            score = 0;
+                            level = 1;
+                            initEverTime();
                             page.parent.createChild(game.MainFrame);
                             page.dispose();
                         }
@@ -405,6 +359,7 @@ var game;
             lastLine[0].y = lastLine[1].y = parent.getBound().height - 0;
             const n = this.namedChilds;
             score = 0;
+            initEverTime();
             n.level.text = `关卡 ${level}`;
             var s = score + " / " + target;
             n.score.text = `得分 ${s}`;
