@@ -1,7 +1,7 @@
 /**最大关卡*/
 var levelMax:number = 10;
 /**当前关卡*/
-var levelCurr:number = 1;
+//var levelCurr:number = 1;
 
 // 生命力
 var chanceMax = 5;
@@ -9,7 +9,7 @@ var chanceMax = 5;
 // 累计分数
 var score = 0;
 var level = 1;
-
+var maxLevel = 7;
 // 速率
 var rate = 0.5;
 
@@ -46,11 +46,12 @@ var lines = [
  * 游戏数据
  * */
 var enemyData = [
-    {type:EnemyType.Batman, num:0.80},
+    {type:EnemyType.Batman, num:0.78},
     {type:EnemyType.BatmanKing, num: 0.05},
     {type:EnemyType.Boom, num:0.06},
     {type:EnemyType.Mask, num:0.04},
     {type:EnemyType.Logo, num:0.05},
+    {type:EnemyType.clone, num:0.02}
 ]
 
 var enemyNum = 50 + 30 * (level-1);
@@ -58,8 +59,14 @@ var target = 9 * enemyNum;
 
 function initEverTime() {
     enemyNum = 50 + 30 * (level-1);
-    target = 9 * enemyNum;
+    // target = 9 * enemyNum  + (enemyNum*0.02)*(enemyNum*0.02)*level*20;
+    target = getTarget(level);
     var temp = level <= 6 ? level : 6;
     rate  += 0.01 * temp;
-    alpha -= 0.02 * (temp-1);
+    alpha -= 0.01 * (temp-1);
+}
+
+function getTarget(level) {
+    var c = [420,800,1200,2000,3890,6010,9999];
+    return c[level-1];
 }

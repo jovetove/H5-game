@@ -28,7 +28,7 @@
 			<Label text=头像 left=190 width=58 top=344 height=28 />
 			<Label text=昵称 left=334 width=58 top=344 height=28 />
 			<Label text=成绩 left=478 width=58 top=344 height=28 />
-			<Label font=32px text=排行榜TOP100 color=#494b59 left=246 width=220 top=253 height=34 />
+			<Label font=32px text=排行榜TOP50 color=#494b59 left=246 width=220 top=253 height=34 />
 			<Image src=ui/icon/cup left=187 width=44 top=246 height=49 />
 			<ScrollView left=50 width=532 top=402 height=617 scrollMode=Vertical  >
 				<ListView id=rankList width=532 itemClass=game.RankItem culling ></ListView>

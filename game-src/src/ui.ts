@@ -254,6 +254,7 @@ namespace game{
 		private static _childs = [
 			[/*Image*/UI[4], /*props:*/ {src: /*ui/img/奖杯*/ RES[12]}, /*id:*/ "picSucc", /*left:*/ 198, /*top:*/ 77,,, /*width:*/ 336, /*height:*/ 322,,,, /*visible:*/ true],
 			[/*Image*/UI[4], /*props:*/ {src: /*ui/img/失败*/ RES[13]}, /*id:*/ "picFail", /*left:*/ 198, /*top:*/ 77,,, /*width:*/ 296, /*height:*/ 200,,,, /*visible:*/ false],
+			[/*Label*/UI[6], /*props:*/ {text: "闯关失败", align: 1, font: "50px"}, /*id:*/ "picFailTxt",, /*top:*/ 320,,, /*width:*/ 240, /*height:*/ 29, /*x:*/ "50%",,, /*visible:*/ false],
 			[/*Label*/UI[6], /*props:*/ {text: "本局得分", align: 1},,, /*top:*/ 462,,, /*width:*/ 119, /*height:*/ 29, /*x:*/ "50%"],
 			[/*Label*/UI[6], /*props:*/ {text: "1000", strokeWidth: 4, strokeColor: "#9b8ddd", font: "50px", gradient: {y1:50, colors:['#a995ff', '#8670f4']}}, /*id:*/ "score",, /*top:*/ 395,,, /*width:*/ 280, /*height:*/ 58, /*x:*/ "50%"],
 			[/*Label*/UI[6],, /*id:*/ "info",, /*top:*/ 530,,, /*width:*/ 283, /*height:*/ 32, /*x:*/ "50%"],
@@ -282,6 +283,7 @@ namespace game{
 		public get namedChilds(): { 
 			picSucc: ui.Image,
 			picFail: ui.Image,
+			picFailTxt: ui.Label,
 			score: ui.Label,
 			info: ui.Label,
 			rank: game.Button,
@@ -401,7 +403,7 @@ namespace game{
 			[/*Label*/UI[6], /*props:*/ {text: "头像"},, /*left:*/ 190, /*top:*/ 344,,, /*width:*/ 58, /*height:*/ 28],
 			[/*Label*/UI[6], /*props:*/ {text: "昵称"},, /*left:*/ 334, /*top:*/ 344,,, /*width:*/ 58, /*height:*/ 28],
 			[/*Label*/UI[6], /*props:*/ {text: "成绩"},, /*left:*/ 478, /*top:*/ 344,,, /*width:*/ 58, /*height:*/ 28],
-			[/*Label*/UI[6], /*props:*/ {font: "32px", text: "排行榜TOP100", color: "#494b59"},, /*left:*/ 246, /*top:*/ 253,,, /*width:*/ 220, /*height:*/ 34],
+			[/*Label*/UI[6], /*props:*/ {font: "32px", text: "排行榜TOP50", color: "#494b59"},, /*left:*/ 246, /*top:*/ 253,,, /*width:*/ 220, /*height:*/ 34],
 			[/*Image*/UI[4], /*props:*/ {src: /*ui/icon/cup*/ RES[24]},, /*left:*/ 187, /*top:*/ 246,,, /*width:*/ 44, /*height:*/ 49],
 			[/*ScrollView*/UI[10], /*props:*/ {scrollMode: 2},, /*left:*/ 50, /*top:*/ 402,,, /*width:*/ 532, /*height:*/ 617,,,,,,,,,,,,,/*childs*/ [
 				[/*ListView*/UI[11], /*props:*/ {itemClass: "game.RankItem", culling: true}, /*id:*/ "rankList",,,,, /*width:*/ 532],

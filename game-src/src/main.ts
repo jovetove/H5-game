@@ -54,7 +54,7 @@ async function main() {
 			if (progress >= total) {
 				var t = Date.now() - startTime;
 				// url = url_debug;
-				console.log("发送用户信息 --> URL: "+ url+`/openapi/statistics/add?openid=${PlayerInfo.openid}&loadTime=${t}`);
+				// console.log("发送用户信息 --> URL: "+ url+`/openapi/statistics/add?openid=${PlayerInfo.openid}&loadTime=${t}`);
 				ajax(url + `/openapi/statistics/add?openid=${PlayerInfo.openid}&loadTime=${t}`, function () { });
 				mainFrame = ez.getRoot().createChild(game.MainFrame);
 				var loading = document.getElementById("loading");

@@ -5,106 +5,6 @@ namespace game {
 	var player;
 	var launchResovle = null;
 
-	function createPlayer(stage:ez.Stage) {
-		var sprite = new ez.SubStageSprite(stage);
-		var p1 = new ez.ImageSprite(sprite);
-		var p2 = new ez.ImageSprite(sprite);
-		p1.src = "game/playerlight";
-		p2.src = "game/player";
-		p1.anchorX = 0.5;
-		p2.anchorX = 0.5;
-		p1.anchorY = 0.66;
-		p1.scale = 0.9;
-		p2.anchorY = 0.7;
-		sprite.scale = 0.7;
-		new ez.Tween(p1)
-			.move({ opacity: [0.5, 1] }, 1000)
-			.to({ opacity: 0.5 }, 1000)
-			.config({ loop: true })
-			.play();
-		return sprite;
-	}
-
-	function createHole(e, stage: ez.Stage){
-		var s = new ez.ImageSprite(stage);
-		s.anchorX = 0.5;
-		s.anchorY = 0.5;
-		s.x = e.x;
-		s.y = e.y;
-		let data:any = {};
-		s["data"] = data;
-		data.type = e.type;
-		s.src = "game/hole";
-		data.radius = 60;
-	}
-
-	function createEnemy(e, stage: ez.Stage) {
-		var s = new ez.ImageSprite(stage);
-		s.anchorX = 0.5;
-		s.anchorY = 0.5;
-		s.x = e.x;
-		s.y = e.y;
-		let data:any = {};
-		s["data"] = data;
-		data.type = e.type;
-
-		switch (e.type){
-			case EnemyType.Hole:
-				s.src = "game/hole";
-				data.radius = 60;
-				break;
-
-			case EnemyType.Mask:
-				s.src = "game/mask";
-				data.score = 30;
-				data.radius = 20;
-				ez.setTimer(Math.random() * 1000, () => ez.Tween.add(s).move({scale:[0.9, 1.1]}, 1000).to({scale:0.9}, 1000).config({loop:true}).play());
-				break;
-			case EnemyType.Boom:
-				s.src = "game/boom";
-				data.score = -10;
-				data.radius = 20;
-				break;
-			case EnemyType.Logo:
-				s.src = "game/logo";
-				data.score = 20;
-				data.radius = 13;
-				break;
-			case EnemyType.Batman:
-				s.src = "game/batman";
-				s.scale = 0.7;
-				data.score = 10;
-				data.radius = 13;
-				ez.setTimer(Math.random() * 1000, () => ez.Tween.add(s).move({ scale: [1, 1.2] }, 2000).to({ scale: 1 }, 2000).config({ loop: true }).play());
-				ez.setTimer(Math.random() * 1000, () => ez.Tween.add(s).move({ y: [s.y, s.y + 5 * Math.random() + 5] }, 3000).to({ y: s.y }, 3000).config({ loop: true }).play());
-				break;
-			case EnemyType.BatmanKing:
-				s.src = "game/batman";
-				s.scale = 1.8;
-				data.score = 100;
-				data.radius = 36;
-				ez.Tween.add(s).move({ scale: [1.8, 2.1] }, 2000).to({ scale: 1.8 }, 1000).config({ loop: true }).play();
-				break;
-		}
-		return s;
-	}
-
-	/**
-	 * 生成黑洞数据
-	 */
-	function createHoleData() {
-		var arr = createXY();
-		var x = arr[0];
-		var y = arr[1];
-		var data = new Array(1);
-		// data[0] = x;
-		// data[1] = y;
-		var temp = { type: EnemyType.Batman, x: x, y: y };
-		console.log("黑洞数据： （", x," " ,y, ")");
-		data[0] =temp;
-		return data;
-	}
-
 	/**
 	 * 结束游戏，展示结果
 	 * @param ctx
@@ -113,10 +13,11 @@ namespace game {
 		var page = ctx.parent.createChild(game.ResultPage);
 		var n = page.namedChilds;
 		if(isSuccessful()){
-			console.log("成功")
+			// console.log("成功")
 			n.replay.label = "下一局";
 		}else{
-			console.log("失败")
+			// console.log("失败")
+			n.picFailTxt.visible = true;
 			n.picSucc.visible = false;
 			n.picFail.visible = true;
 		}
@@ -137,10 +38,13 @@ namespace game {
 					break;
 				case "replay": // 达成目标则下一关，未达成目标则重回主界面
 
-					console.log("选择下一步");
-					if(isSuccessful() && level <= 5){
+					// console.log("选择下一步");
+					if(isSuccessful() && level <= maxLevel){
 						score = 0;
 						level += 1;
+						if(level>7){
+							level = 1;
+						}
 						initEverTime();
 						page.parent.createChild(game.GamePage);
 						page.dispose();
@@ -154,7 +58,8 @@ namespace game {
 					break;
 				//	生成分享链接
 				case "result":
-					ajax(url + `/openapi/statistics/add?openid=${PlayerInfo.openid}&playTime=${Date.now() - startTime}`, function () { });
+					ajax(url + `/openapi/statistics/add?openid=${PlayerInfo.openid}&playTime=${Date.now() - startTime}`,
+						function () { });
 					var share = page.parent.createChild(game.SharePage);
 					// page.dispose();
 					page.visible = false;
@@ -199,7 +104,6 @@ namespace game {
 			}
 
 		});
-		//n.rankBtn.addEventHandler("click", function(){
 		ctx.dispose();
 	}
 
@@ -254,6 +158,7 @@ namespace game {
 		player = createPlayer(stage);
 		player.x = 104;
 		player.y = 144;
+		player.scale = 1.2;
 
 		// 玩家光环
 		var circle = new ez.ImageSprite(stage);
@@ -270,8 +175,10 @@ namespace game {
 		var chance = chanceMax;
 
 		while(true) {
-			if (chance-- <= 0)
+			if (chance-- <= 0){
 				break;
+			}
+			player.scale = 1.2;
 			let launch = new Promise<number[]>((r) => {
 				launchResovle = r;
 			});
@@ -283,25 +190,23 @@ namespace game {
 			}
 			n.chance.text = `机会 ${chance}`;
 			launchResovle = null;
-
-			// console.log("r值为：" + r.toString())
 			// 变化率像素
 			let dx = r[0] * rate;
 			let dy = r[1] * rate;
-
 			while(true){
+				player.scale = 0.7;
 				player.x += dx;
 				player.y += dy;
 				// 速度过小时，停之
 				if (Math.abs(dx) < 1 && Math.abs(dy) < 1)
 					break;
-				// 碰撞检测
+
+				// 物体碰撞检测
 				for(let i = 0; i < enemies.length; i++){
 					let e = enemies[i];
 					let data = e.data;
 					let dx1 = e.x - player.x;
 					let dy1 = e.y - player.y;
-
 					// 碰撞检测
 					if (dx1 * dx1 + dy1 * dy1 < (30 + data.radius) * (30 + data.radius)) {
 						// 没碰到一个球
@@ -317,14 +222,24 @@ namespace game {
 						s.x = e.x;
 						s.font = "Arial 30px";
 
-						if (data.type == EnemyType.BatmanKing && !getMask)
+						// 随机产生新的物品
+						if(data.type == EnemyType.clone){
+							// TODO
+							for(var j = 0; j < level*2; j++){
+								var arrc = createXY();
+								var temp = { type: 0 + Math.round(Math.random()* 4), x: arrc[0], y: arrc[1] };
+								enemies.push(createEnemy(temp, stage));
+							}
+						}
+
+						if (data.type == EnemyType.BatmanKing && !getMask){
 							score = 30;
+						}
 
 						if(score > 0){
 							s.text = "+" + score;
 							s.gradient = {y1:30, colors:["#ff8", "#fa8"]};
-						}
-						else{
+						} else{
 							s.text = "" + score;
 							s.gradient = { y1: 30, colors: ["#8ff", "#8af"] };
 						}
@@ -332,6 +247,7 @@ namespace game {
 							chance += 1;
 							n.chance.text = `机会 ${chance}`;
 						}
+
 						ez.Tween.add(s)
 							.move({y:[e.y, e.y - 30], opacity: [0.5, 1]}, 300, ez.Ease.bounceOut)
 							.move({opacity:[1, 0]}, 2000)
@@ -343,6 +259,7 @@ namespace game {
 						ez.playSFX(score > 0 ? "sound/add" : "sound/lose");
 						e.dispose();
 						enemies.splice(i, 1);
+
 						if (data.type == EnemyType.Mask){
 							getMask = true;
 							// 吃掉口罩随机消灭2个小蝙蝠
@@ -361,6 +278,7 @@ namespace game {
 						break;
 					}
 				}
+
 				// 砖碰撞
 				for(let i = 0; i < lines.length; i++){
 					let line = lines[i];
@@ -372,6 +290,11 @@ namespace game {
 						dy = r[1] * alpha;
 						break;
 					}
+				}
+				if(player.x <0 || player.y <0 || player.x > 710 || player.y > 1400){
+					var kk = createXY();
+					player.x = kk[0];
+					player.y = kk[1];
 				}
 
 				let hx = hole[0] - player.x;
@@ -410,9 +333,10 @@ namespace game {
 					dy -= 0.1;
 				else if (dy < 0.15)
 					dy += 0.1;
-				// console.log("当前速度"+ dx+" "+dy);
 				await ez.nextFrame();
+
 			}
+
 		}
 		gameOver();
 	}
@@ -432,7 +356,9 @@ namespace game {
 			n.level.text = `关卡 ${level}`;
 			var s:String = score + " / " + target;
 			n.score.text = `得分 ${s}`
-
+			if(isWechat()){
+				n.avatar.src = PlayerInfo.headimgurl;
+			}
 			var sound = localStorage.getItem("sound");
 			if (sound == null)
 				sound = "1";
@@ -443,6 +369,7 @@ namespace game {
 
 			// 箭头
 			var arrow = new ez.ImageSprite(stage);
+
 			arrow.src = "game/arrow";
 			arrow.anchorY = 0.5;
 			arrow.visible = false;
@@ -456,7 +383,7 @@ namespace game {
 				// n.name.text = PlayerInfo.nickname;
 				n.avatar.src = PlayerInfo.headimgurl;
 			}
-			n.chance.text = chanceMax.toString();
+			n.chance.text = "机会 " + chanceMax.toString();
 			n.touch.onTouchBegin = function(e: ez.TouchData){
 				if (!launchResovle)
 					return;

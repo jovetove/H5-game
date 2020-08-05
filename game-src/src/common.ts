@@ -3,7 +3,7 @@
  */
 var url_online= "https://xwfintech.qingke.io/_api/5f172e0de25bdc002d9a5abf";
 var url_debug = "http://127.0.0.1:7000";
-var url = url_online;
+var url = url_debug;
 
 /**
  * 发送请求
@@ -54,25 +54,27 @@ function createPlayerInfo() {
     PlayerInfo.openid = "A" + parseInt(Math.random().toString());
     PlayerInfo.nickname = "Tom";
     PlayerInfo.sex = "whoMan";
-    PlayerInfo.headimgurl = "/res/111222.png";
+    PlayerInfo.headimgurl = "image/111222";
 }
 
 /**
  * 游戏角色
  */
 enum EnemyType {
-    /**黑洞*/
-    Hole,
-    /**口罩*/
-    Mask,
-    /**炸弹*/
-    Boom,
     /**小兵*/
     Batman,
+    /**炸弹*/
+    Boom,
+    /**口罩*/
+    Mask,
     /**大王*/
     BatmanKing,
+    /**clone*/
+    clone,
     /**新网银行logo*/
-    Logo
+    Logo,
+    /**黑洞*/
+    Hole,
 }
 
 /**
@@ -92,9 +94,6 @@ function commitScore(score) {
     return new Promise((resolver, reject) =>{
         var key = "zxdqw";
         var timestamp = Date.now();
-        if(PlayerInfo.openid == "undefined"){
-            PlayerInfo.openid = "123456";
-        }
         var sign = md5.hex(`${key}openid${PlayerInfo.openid}score${score}${timestamp}`);
         ajax(url+`/openapi/pinball/add/measy?key=${key}&sign=${sign}&openid=${PlayerInfo.openid}&score=${score}&timestamp=${timestamp}`, function (e, r) {
             if (r.code) {
@@ -118,6 +117,46 @@ function length1(sprite, x, y) {
     var dy = sprite.y - y;
     return Math.sqrt(dx*dx + dy*dy);
 }
+
+/**
+ * 计算交点
+ * @param a
+ * @param b
+ * @param c
+ * @param d
+ */
+// function jiaodian(a, b, c, d) {
+//     var k1 = (b.y - a.y) / (b.x - a.x);
+//     var k2 = (d.y - c.y) / (d.x - c.x);
+//     var b1 = b.y - b.x * k1;
+//     var b2 = d.y - d.x * k2;
+//     var x = (b2 - b1) / (k1 - k2);
+//     var y = k2 * x + b2;
+// }
+
+/**
+ * 计算两个线段是否相交
+ * @param a
+ * @param b
+ * @param c
+ * @param d
+ */
+// function intersectV2(a,b,c,d) {
+//     //AB = A + r(B-A), r 在[0,1]
+//     //CD = C + t(D-C),s 在[0,1]
+//     var deno = (b.x - a.x) * (d.y - c.y) - (b.y - a.y) * (d.x - c.x);
+//     var mem1 = (a.y - c.y) * (d.x - c.x) - (a.x - c.x) * (d.y - c.y);
+//     var mem2 = (a.y - c.y) * (b.x - a.x) - (a.x - c.x) * (b.y - a.y);
+//     var r = mem1 / deno;
+//     var s = mem2 / deno;
+//     // console.log("r: ", r, "s: ", s);
+//     if (r > 1 || r < 0)
+//         return false;
+//     if (s > 1 || s < 0)
+//         return false;
+//     return true;
+// }
+
 /**
  * 碰撞检测
  * @param p1
@@ -235,4 +274,120 @@ function createEnemyData() {
         }
     }
     return data;
+}
+
+function createPlayer(stage:ez.Stage) {
+    var sprite = new ez.SubStageSprite(stage);
+    var p1 = new ez.ImageSprite(sprite);
+    var p2 = new ez.ImageSprite(sprite);
+    p1.src = "game/playerlight";
+    p2.src = "game/player";
+    p1.anchorX = 0.5;
+    p2.anchorX = 0.5;
+    p1.anchorY = 0.66;
+    p1.scale = 0.9;
+    p2.anchorY = 0.7;
+    sprite.scale = 0.7;
+    new ez.Tween(p1)
+        .move({ opacity: [0.5, 1] }, 1000)
+        .to({ opacity: 0.5 }, 1000)
+        .config({ loop: true })
+        .play();
+    return sprite;
+}
+
+function createHole(e, stage: ez.Stage){
+    var s = new ez.ImageSprite(stage);
+    s.anchorX = 0.5;
+    s.anchorY = 0.5;
+    s.x = e.x;
+    s.y = e.y;
+    let data:any = {};
+    s["data"] = data;
+    data.type = e.type;
+    s.src = "game/hole";
+    data.radius = 60;
+}
+
+function createEnemy(e, stage: ez.Stage) {
+    var s = new ez.ImageSprite(stage);
+    s.anchorX = 0.5;
+    s.anchorY = 0.5;
+    s.x = e.x;
+    s.y = e.y;
+    let data:any = {};
+    s["data"] = data;
+    data.type = e.type;
+
+    switch (e.type){
+        case EnemyType.Hole:
+            s.src = "game/hole";
+            data.radius = 60;
+            break;
+        case EnemyType.Mask:
+            s.src = "game/mask";
+            data.score = 30;
+            data.radius = 20;
+            ez.setTimer(Math.random() * 1000, () => ez.Tween.add(s).move({scale:[0.9, 1.1]}, 1000).to({scale:0.9}, 1000).config({loop:true}).play());
+            break;
+        case EnemyType.Boom:
+            s.src = "game/boom";
+            data.score = -10;
+            data.radius = 20;
+            break;
+        case EnemyType.Logo:
+            s.src = "game/logo";
+            data.score = 20;
+            data.radius = 13;
+            break;
+        case EnemyType.Batman:
+            s.src = "game/batman";
+            s.scale = 0.7;
+            data.score = 10;
+            data.radius = 13;
+            ez.setTimer(Math.random() * 1000, () => ez.Tween.add(s).move({ scale: [1, 1.2] }, 2000).to({ scale: 1 }, 2000).config({ loop: true }).play());
+            // ez.setTimer(Math.random() * 1000, () => ez.Tween.add(s).move({ y: [s.y, s.y + 5 * Math.random() + 5] }, 3000).to({ y: s.y }, 3000).config({ loop: true }).play());
+            break;
+        case EnemyType.BatmanKing:
+            s.src = "game/batman";
+            s.scale = 1.8;
+            data.score = 100;
+            data.radius = 36;
+            ez.Tween.add(s).move({ scale: [1.8, 2.1] }, 2000).to({ scale: 1.8 }, 1000).config({ loop: true }).play();
+            break;
+        case EnemyType.clone:
+            // console.log("创建clone");
+            s.src = "game/clone";
+            s.scale = 1;
+            data.score = 0;
+            data.radius = 13;
+            var numX = getRandomNumInt(-20,20);
+            var numY = getRandomNumInt(-20,20);
+            ez.Tween.add(s)
+            .move({y: [s.y, s.y+numY], x:[s.x, s.x+numX], angle: [-180, 180], scale: [0.95, 1.05]}, 1200, ez.Ease.sineInOut)
+            .to({y: s.y,x:s.x, angle: -180, scale: 0.95}, 1200, ez.Ease.sineInOut)
+            .config({loop: true})
+            .play();
+            break;
+    }
+    return s;
+}
+
+/**
+ * 生成黑洞数据
+ */
+function createHoleData() {
+    var arr = createXY();
+    var x = arr[0];
+    var y = arr[1];
+    var data = new Array(1);
+    var temp = { type: EnemyType.Batman, x: x, y: y };
+    data[0] =temp;
+    return data;
+}
+
+function  getRandomNumInt(min: number, max: number) {
+    var Range = max - min;
+    var Rand = Math.random(); //获取[0-1）的随机数
+    return (min + Math.round(Rand * Range)); //放大取整
 }

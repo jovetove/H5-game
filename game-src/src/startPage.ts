@@ -7,7 +7,7 @@ namespace game {
 	// 声音
 	export function soundEnable(enable) {
 		var val = 0;
-		var sound = "0";
+		var sound = "2";
 		if (enable)
 			val = 1, sound = "1";
 		ez.setBGMVolume(val);
@@ -18,7 +18,7 @@ namespace game {
 	/** 获取排行榜数据 */
 	export function getRank(rankPage) {
 		var startTime = Date.now();
-		ajax(url + "/openapi/pinball/list?pageSize=100", function (e, r) {
+		ajax(url + "/openapi/pinball/list?pageSize=50", function (e, r) {
 			if (e) {
 				ajax(url + `/openapi/statistics/add?openid=${PlayerInfo.openid}
 					&interfaceName=${encodeURIComponent("排行榜")}
@@ -39,9 +39,9 @@ namespace game {
 			const n = this.namedChilds;
 			var ctx = this;
 			var sound = localStorage.getItem("sound");
-			if (sound == null)
-				sound == "1";
-			n.sound.state = sound == "0" ? "check" : "uncheck";
+			if (sound == null || sound == "2")
+				sound = "1";
+			n.sound.state = sound == "2" ? "check" : "uncheck";
 			soundEnable(sound == "1");
 			getRank(n.rankPage);
 			ez.playMusic(0, "sound/bgm", true);

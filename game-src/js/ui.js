@@ -233,6 +233,7 @@ var game;
     ResultPage._childs = [
         [UI[4], { src: RES[12] }, "picSucc", 198, 77, , , 336, 322, , , , true],
         [UI[4], { src: RES[13] }, "picFail", 198, 77, , , 296, 200, , , , false],
+        [UI[6], { text: "闯关失败", align: 1, font: "50px" }, "picFailTxt", , 320, , , 240, 29, "50%", , , false],
         [UI[6], { text: "本局得分", align: 1 }, , , 462, , , 119, 29, "50%"],
         [UI[6], { text: "1000", strokeWidth: 4, strokeColor: "#9b8ddd", font: "50px", gradient: { y1: 50, colors: ['#a995ff', '#8670f4'] } }, "score", , 395, , , 280, 58, "50%"],
         [UI[6], , "info", , 530, , , 283, 32, "50%"],
@@ -356,7 +357,7 @@ var game;
         [UI[6], { text: "头像" }, , 190, 344, , , 58, 28],
         [UI[6], { text: "昵称" }, , 334, 344, , , 58, 28],
         [UI[6], { text: "成绩" }, , 478, 344, , , 58, 28],
-        [UI[6], { font: "32px", text: "排行榜TOP100", color: "#494b59" }, , 246, 253, , , 220, 34],
+        [UI[6], { font: "32px", text: "排行榜TOP50", color: "#494b59" }, , 246, 253, , , 220, 34],
         [UI[4], { src: RES[24] }, , 187, 246, , , 44, 49],
         [UI[10], { scrollMode: 2 }, , 50, 402, , , 532, 617, , , , , , , , , , , , , [
                 [UI[11], { itemClass: "game.RankItem", culling: true }, "rankList", , , , , 532],

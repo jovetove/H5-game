@@ -3009,7 +3009,7 @@ var ez;
                 return [l.x - w, l.y];
             }
             if (PROFILING)
-                Log.debug("reset the font pool, w:" + w + " h:" + h, fontLines);
+                // Log.debug("reset the font pool, w:" + w + " h:" + h, fontLines);
             return null;
         }
         function getTextCacheOrKey(font, fill, stroke, scale, text) {
@@ -7477,7 +7477,7 @@ var ez;
                         thisObj.event.addStep("download");
                     if (xhr.response) {
                         var t = Date.now();
-                        Log.debug("begin decode " + url);
+                        // Log.debug("begin decode " + url);
                         ez.WebAudio.decodeAudioData(xhr.response, function (buf) {
                             if (PROFILING && thisObj && thisObj.event)
                                 thisObj.event.addStep("mp3 decode");

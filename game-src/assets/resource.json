@@ -12,6 +12,7 @@
 	{ "name":"game/clock", "type":"subimage", "parent":"game","width":66,"height":66,"region":"241,181,66,66"},
 	{ "name":"game/circle", "type":"subimage", "parent":"game","width":64,"height":64,"margin":"0,0,1,1","region":"0,204,63,63"},
 	{ "name":"game/logo", "type":"subimage", "parent":"game","width":54,"height":40,"region":"64,204,54,40"},
+
 	{ "name":"game", "type":"ezm", "width":758,"height":289,"url":"game.ezm"},
 	{ "name":"mask", "type":"ezm", "width":74,"height":74,"url":"mask.ezm"},
 	{ "name":"share/二维码", "type":"subimage", "parent":"share","width":300,"height":332,"margin":"0,1,0,0","region":"0,0,300,331"},
@@ -46,6 +47,8 @@
 	{ "name":"ui/img/失败", "type":"image", "width":336, "height":322,"url": "ui/img/失败.png"},
 	{ "name":"image/bg", "type":"ezm", "width":710,"height":1280,"url":"image/bg.ezm"},
 	{ "name":"image/活动规则", "type":"image", "width":545,"height":823,"url":"image/活动.jpg"},
+	{ "name":"image/111222", "type":"image", "width":50,"height":50,"url":"image/111222.png"},
+	{ "name":"game/clone", "type":"image","width":50,"height":50,"url": "game/clone.png"},
 	{ "name":"image/说明", "type":"ezm", "width":534,"height":389,"url":"image/说明.ezm"},
 	{ "name":"sound/add", "type":"sound", "url":"sound/add.mp3"},
 	{ "name":"sound/bgm", "type":"sound", "url":"sound/bgm.mp3"},

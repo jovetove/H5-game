@@ -3015,7 +3015,7 @@ var ez;
                 return [l.x - w, l.y];
             }
             if (PROFILING)
-                Log.debug("reset the font pool, w:" + w + " h:" + h, fontLines);
+                // Log.debug("reset the font pool, w:" + w + " h:" + h, fontLines);
             return null;
         }
         function getTextCacheOrKey(font, fill, stroke, scale, text) {
@@ -7483,7 +7483,7 @@ var ez;
                         thisObj.event.addStep("download");
                     if (xhr.response) {
                         var t = Date.now();
-                        Log.debug("begin decode " + url);
+                        // Log.debug("begin decode " + url);
                         ez.WebAudio.decodeAudioData(xhr.response, function (buf) {
                             if (PROFILING && thisObj && thisObj.event)
                                 thisObj.event.addStep("mp3 decode");
@@ -10998,6 +10998,7 @@ var game;
         ResultPage._childs = [
             [UI[4], { src: RES[12] }, "picSucc", 198, 77, , , 336, 322, , , , true],
             [UI[4], { src: RES[13] }, "picFail", 198, 77, , , 296, 200, , , , false],
+            [UI[6], { text: "闯关失败", align: 1, font: "50px" }, "picFailTxt", , 320, , , 240, 29, "50%", , , false],
             [UI[6], { text: "本局得分", align: 1 }, , , 462, , , 119, 29, "50%"],
             [UI[6], { text: "1000", strokeWidth: 4, strokeColor: "#9b8ddd", font: "50px", gradient: { y1: 50, colors: ['#a995ff', '#8670f4'] } }, "score", , 395, , , 280, 58, "50%"],
             [UI[6], , "info", , 530, , , 283, 32, "50%"],
@@ -11145,7 +11146,7 @@ var game;
             [UI[6], { text: "头像" }, , 190, 344, , , 58, 28],
             [UI[6], { text: "昵称" }, , 334, 344, , , 58, 28],
             [UI[6], { text: "成绩" }, , 478, 344, , , 58, 28],
-            [UI[6], { font: "32px", text: "排行榜TOP100", color: "#494b59" }, , 246, 253, , , 220, 34],
+            [UI[6], { font: "32px", text: "排行榜TOP50", color: "#494b59" }, , 246, 253, , , 220, 34],
             [UI[4], { src: RES[24] }, , 187, 246, , , 44, 49],
             [UI[10], { scrollMode: 2 }, , 50, 402, , , 532, 617, , , , , , , , , , , , , [
                     [UI[11], { itemClass: "game.RankItem", culling: true }, "rankList", , , , , 532],
@@ -11242,7 +11243,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var url_online = "https://xwfintech.qingke.io/_api/5f172e0de25bdc002d9a5abf";
 var url_debug = "http://127.0.0.1:7000";
-var url = url_online;
+var url = url_debug;
 function ajax(url, cb) {
     var x = new XMLHttpRequest();
     x.open("GET", url);
@@ -11272,16 +11273,17 @@ function createPlayerInfo() {
     PlayerInfo.openid = "A" + parseInt(Math.random().toString());
     PlayerInfo.nickname = "Tom";
     PlayerInfo.sex = "whoMan";
-    PlayerInfo.headimgurl = "/res/111222.png";
+    PlayerInfo.headimgurl = "image/111222";
 }
 var EnemyType;
 (function (EnemyType) {
-    EnemyType[EnemyType["Hole"] = 0] = "Hole";
-    EnemyType[EnemyType["Mask"] = 1] = "Mask";
-    EnemyType[EnemyType["Boom"] = 2] = "Boom";
-    EnemyType[EnemyType["Batman"] = 3] = "Batman";
-    EnemyType[EnemyType["BatmanKing"] = 4] = "BatmanKing";
+    EnemyType[EnemyType["Batman"] = 0] = "Batman";
+    EnemyType[EnemyType["Boom"] = 1] = "Boom";
+    EnemyType[EnemyType["Mask"] = 2] = "Mask";
+    EnemyType[EnemyType["BatmanKing"] = 3] = "BatmanKing";
+    EnemyType[EnemyType["clone"] = 4] = "clone";
     EnemyType[EnemyType["Logo"] = 5] = "Logo";
+    EnemyType[EnemyType["Hole"] = 6] = "Hole";
 })(EnemyType || (EnemyType = {}));
 function isSuccessful() {
     return score >= target;
@@ -11290,9 +11292,6 @@ function commitScore(score) {
     return new Promise(function (resolver, reject) {
         var key = "zxdqw";
         var timestamp = Date.now();
-        if (PlayerInfo.openid == "undefined") {
-            PlayerInfo.openid = "123456";
-        }
         var sign = md5.hex(key + "openid" + PlayerInfo.openid + "score" + score + timestamp);
         ajax(url + ("/openapi/pinball/add/measy?key=" + key + "&sign=" + sign + "&openid=" + PlayerInfo.openid + "&score=" + score + "&timestamp=" + timestamp), function (e, r) {
             if (r.code) {
@@ -11410,6 +11409,111 @@ function createEnemyData() {
     }
     return data;
 }
+function createPlayer(stage) {
+    var sprite = new ez.SubStageSprite(stage);
+    var p1 = new ez.ImageSprite(sprite);
+    var p2 = new ez.ImageSprite(sprite);
+    p1.src = "game/playerlight";
+    p2.src = "game/player";
+    p1.anchorX = 0.5;
+    p2.anchorX = 0.5;
+    p1.anchorY = 0.66;
+    p1.scale = 0.9;
+    p2.anchorY = 0.7;
+    sprite.scale = 0.7;
+    new ez.Tween(p1)
+        .move({ opacity: [0.5, 1] }, 1000)
+        .to({ opacity: 0.5 }, 1000)
+        .config({ loop: true })
+        .play();
+    return sprite;
+}
+function createHole(e, stage) {
+    var s = new ez.ImageSprite(stage);
+    s.anchorX = 0.5;
+    s.anchorY = 0.5;
+    s.x = e.x;
+    s.y = e.y;
+    var data = {};
+    s["data"] = data;
+    data.type = e.type;
+    s.src = "game/hole";
+    data.radius = 60;
+}
+function createEnemy(e, stage) {
+    var s = new ez.ImageSprite(stage);
+    s.anchorX = 0.5;
+    s.anchorY = 0.5;
+    s.x = e.x;
+    s.y = e.y;
+    var data = {};
+    s["data"] = data;
+    data.type = e.type;
+    switch (e.type) {
+        case EnemyType.Hole:
+            s.src = "game/hole";
+            data.radius = 60;
+            break;
+        case EnemyType.Mask:
+            s.src = "game/mask";
+            data.score = 30;
+            data.radius = 20;
+            ez.setTimer(Math.random() * 1000, function () { return ez.Tween.add(s).move({ scale: [0.9, 1.1] }, 1000).to({ scale: 0.9 }, 1000).config({ loop: true }).play(); });
+            break;
+        case EnemyType.Boom:
+            s.src = "game/boom";
+            data.score = -10;
+            data.radius = 20;
+            break;
+        case EnemyType.Logo:
+            s.src = "game/logo";
+            data.score = 20;
+            data.radius = 13;
+            break;
+        case EnemyType.Batman:
+            s.src = "game/batman";
+            s.scale = 0.7;
+            data.score = 10;
+            data.radius = 13;
+            ez.setTimer(Math.random() * 1000, function () { return ez.Tween.add(s).move({ scale: [1, 1.2] }, 2000).to({ scale: 1 }, 2000).config({ loop: true }).play(); });
+            break;
+        case EnemyType.BatmanKing:
+            s.src = "game/batman";
+            s.scale = 1.8;
+            data.score = 100;
+            data.radius = 36;
+            ez.Tween.add(s).move({ scale: [1.8, 2.1] }, 2000).to({ scale: 1.8 }, 1000).config({ loop: true }).play();
+            break;
+        case EnemyType.clone:
+            s.src = "game/clone";
+            s.scale = 1;
+            data.score = 0;
+            data.radius = 13;
+            var numX = getRandomNumInt(-20, 20);
+            var numY = getRandomNumInt(-20, 20);
+            ez.Tween.add(s)
+                .move({ y: [s.y, s.y + numY], x: [s.x, s.x + numX], angle: [-180, 180], scale: [0.95, 1.05] }, 1200, ez.Ease.sineInOut)
+                .to({ y: s.y, x: s.x, angle: -180, scale: 0.95 }, 1200, ez.Ease.sineInOut)
+                .config({ loop: true })
+                .play();
+            break;
+    }
+    return s;
+}
+function createHoleData() {
+    var arr = createXY();
+    var x = arr[0];
+    var y = arr[1];
+    var data = new Array(1);
+    var temp = { type: EnemyType.Batman, x: x, y: y };
+    data[0] = temp;
+    return data;
+}
+function getRandomNumInt(min, max) {
+    var Range = max - min;
+    var Rand = Math.random();
+    return (min + Math.round(Rand * Range));
+}
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -11464,95 +11568,6 @@ var game;
     var RAD = 180 / Math.PI;
     var player;
     var launchResovle = null;
-    function createPlayer(stage) {
-        var sprite = new ez.SubStageSprite(stage);
-        var p1 = new ez.ImageSprite(sprite);
-        var p2 = new ez.ImageSprite(sprite);
-        p1.src = "game/playerlight";
-        p2.src = "game/player";
-        p1.anchorX = 0.5;
-        p2.anchorX = 0.5;
-        p1.anchorY = 0.66;
-        p1.scale = 0.9;
-        p2.anchorY = 0.7;
-        sprite.scale = 0.7;
-        new ez.Tween(p1)
-            .move({ opacity: [0.5, 1] }, 1000)
-            .to({ opacity: 0.5 }, 1000)
-            .config({ loop: true })
-            .play();
-        return sprite;
-    }
-    function createHole(e, stage) {
-        var s = new ez.ImageSprite(stage);
-        s.anchorX = 0.5;
-        s.anchorY = 0.5;
-        s.x = e.x;
-        s.y = e.y;
-        var data = {};
-        s["data"] = data;
-        data.type = e.type;
-        s.src = "game/hole";
-        data.radius = 60;
-    }
-    function createEnemy(e, stage) {
-        var s = new ez.ImageSprite(stage);
-        s.anchorX = 0.5;
-        s.anchorY = 0.5;
-        s.x = e.x;
-        s.y = e.y;
-        var data = {};
-        s["data"] = data;
-        data.type = e.type;
-        switch (e.type) {
-            case EnemyType.Hole:
-                s.src = "game/hole";
-                data.radius = 60;
-                break;
-            case EnemyType.Mask:
-                s.src = "game/mask";
-                data.score = 30;
-                data.radius = 20;
-                ez.setTimer(Math.random() * 1000, function () { return ez.Tween.add(s).move({ scale: [0.9, 1.1] }, 1000).to({ scale: 0.9 }, 1000).config({ loop: true }).play(); });
-                break;
-            case EnemyType.Boom:
-                s.src = "game/boom";
-                data.score = -10;
-                data.radius = 20;
-                break;
-            case EnemyType.Logo:
-                s.src = "game/logo";
-                data.score = 20;
-                data.radius = 13;
-                break;
-            case EnemyType.Batman:
-                s.src = "game/batman";
-                s.scale = 0.7;
-                data.score = 10;
-                data.radius = 13;
-                ez.setTimer(Math.random() * 1000, function () { return ez.Tween.add(s).move({ scale: [1, 1.2] }, 2000).to({ scale: 1 }, 2000).config({ loop: true }).play(); });
-                ez.setTimer(Math.random() * 1000, function () { return ez.Tween.add(s).move({ y: [s.y, s.y + 5 * Math.random() + 5] }, 3000).to({ y: s.y }, 3000).config({ loop: true }).play(); });
-                break;
-            case EnemyType.BatmanKing:
-                s.src = "game/batman";
-                s.scale = 1.8;
-                data.score = 100;
-                data.radius = 36;
-                ez.Tween.add(s).move({ scale: [1.8, 2.1] }, 2000).to({ scale: 1.8 }, 1000).config({ loop: true }).play();
-                break;
-        }
-        return s;
-    }
-    function createHoleData() {
-        var arr = createXY();
-        var x = arr[0];
-        var y = arr[1];
-        var data = new Array(1);
-        var temp = { type: EnemyType.Batman, x: x, y: y };
-        console.log("黑洞数据： （", x, " ", y, ")");
-        data[0] = temp;
-        return data;
-    }
     function showResult(ctx) {
         return __awaiter(this, void 0, void 0, function () {
             var page, n, data;
@@ -11562,11 +11577,10 @@ var game;
                         page = ctx.parent.createChild(game.ResultPage);
                         n = page.namedChilds;
                         if (isSuccessful()) {
-                            console.log("成功");
                             n.replay.label = "下一局";
                         }
                         else {
-                            console.log("失败");
+                            n.picFailTxt.visible = true;
                             n.picSucc.visible = false;
                             n.picFail.visible = true;
                         }
@@ -11587,10 +11601,12 @@ var game;
                                     n.rankPage.visible = false;
                                     break;
                                 case "replay":
-                                    console.log("选择下一步");
-                                    if (isSuccessful() && level <= 5) {
+                                    if (isSuccessful() && level <= maxLevel) {
                                         score = 0;
                                         level += 1;
+                                        if (level > 7) {
+                                            level = 1;
+                                        }
                                         initEverTime();
                                         page.parent.createChild(game.GamePage);
                                         page.dispose();
@@ -11670,7 +11686,7 @@ var game;
                     });
                 });
             }
-            var isEndOfTime, time1, enemies, getMask, enemiesData, i, hole1, hole, circle, lastPos, chance, launch, r, dx, dy, i, e, data, dx1, dy1, score_1, s, arr, j, idx, i, line, r_1, hx, hy, dr, i, i;
+            var isEndOfTime, time1, enemies, getMask, enemiesData, i, hole1, hole, circle, lastPos, chance, launch, r, dx, dy, i, e, data, dx1, dy1, score_1, s, j, arrc, temp, arr, j_1, idx, i, line, r_1, kk, hx, hy, dr, i, i;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -11689,6 +11705,7 @@ var game;
                         player = createPlayer(stage);
                         player.x = 104;
                         player.y = 144;
+                        player.scale = 1.2;
                         circle = new ez.ImageSprite(stage);
                         circle.src = "game/circle";
                         circle.anchorX = circle.anchorY = 0.5;
@@ -11703,8 +11720,10 @@ var game;
                         _a.label = 1;
                     case 1:
                         if (!true) return [3, 16];
-                        if (chance-- <= 0)
+                        if (chance-- <= 0) {
                             return [3, 16];
+                        }
+                        player.scale = 1.2;
                         launch = new Promise(function (r) {
                             launchResovle = r;
                         });
@@ -11723,6 +11742,7 @@ var game;
                         _a.label = 3;
                     case 3:
                         if (!true) return [3, 15];
+                        player.scale = 0.7;
                         player.x += dx;
                         player.y += dy;
                         if (Math.abs(dx) < 1 && Math.abs(dy) < 1)
@@ -11744,8 +11764,16 @@ var game;
                                 s.height = 30;
                                 s.x = e.x;
                                 s.font = "Arial 30px";
-                                if (data.type == EnemyType.BatmanKing && !getMask)
+                                if (data.type == EnemyType.clone) {
+                                    for (j = 0; j < level * 2; j++) {
+                                        arrc = createXY();
+                                        temp = { type: 0 + Math.round(Math.random() * 4), x: arrc[0], y: arrc[1] };
+                                        enemies.push(createEnemy(temp, stage));
+                                    }
+                                }
+                                if (data.type == EnemyType.BatmanKing && !getMask) {
                                     score_1 = 30;
+                                }
                                 if (score_1 > 0) {
                                     s.text = "+" + score_1;
                                     s.gradient = { y1: 30, colors: ["#ff8", "#fa8"] };
@@ -11771,7 +11799,7 @@ var game;
                                     getMask = true;
                                     arr = enemies.concat();
                                     shulffle(arr);
-                                    for (j = 0; j < 2; j++) {
+                                    for (j_1 = 0; j_1 < 2; j_1++) {
                                         idx = arr.findIndex(function (t) { return t.data.type == EnemyType.Batman; });
                                         if (idx >= 0) {
                                             ez.Tween.add(arr[idx]).move({ opacity: [1, 0] }, 800).disposeTarget().play();
@@ -11794,6 +11822,11 @@ var game;
                                 dy = r_1[1] * alpha;
                                 break;
                             }
+                        }
+                        if (player.x < 0 || player.y < 0 || player.x > 710 || player.y > 1400) {
+                            kk = createXY();
+                            player.x = kk[0];
+                            player.y = kk[1];
                         }
                         hx = hole[0] - player.x;
                         hy = hole[1] - player.y;
@@ -11872,6 +11905,9 @@ var game;
             n.level.text = "\u5173\u5361 " + level;
             var s = score + " / " + target;
             n.score.text = "\u5F97\u5206 " + s;
+            if (isWechat()) {
+                n.avatar.src = PlayerInfo.headimgurl;
+            }
             var sound = localStorage.getItem("sound");
             if (sound == null)
                 sound = "1";
@@ -11889,7 +11925,7 @@ var game;
             if (PlayerInfo) {
                 n.avatar.src = PlayerInfo.headimgurl;
             }
-            n.chance.text = chanceMax.toString();
+            n.chance.text = "机会 " + chanceMax.toString();
             n.touch.onTouchBegin = function (e) {
                 if (!launchResovle)
                     return;
@@ -11958,10 +11994,10 @@ var game;
     game.GamePage = GamePage;
 })(game || (game = {}));
 var levelMax = 10;
-var levelCurr = 1;
 var chanceMax = 5;
 var score = 0;
 var level = 1;
+var maxLevel = 7;
 var rate = 0.5;
 var alpha = 0.9;
 var maxTime = 20;
@@ -11982,20 +12018,25 @@ var lines = [
     [710, 1280, 0, 1280]
 ].map(function (l) { return [{ x: l[0], y: l[1] }, { x: l[2], y: l[3] }]; });
 var enemyData = [
-    { type: EnemyType.Batman, num: 0.80 },
+    { type: EnemyType.Batman, num: 0.78 },
     { type: EnemyType.BatmanKing, num: 0.05 },
     { type: EnemyType.Boom, num: 0.06 },
     { type: EnemyType.Mask, num: 0.04 },
     { type: EnemyType.Logo, num: 0.05 },
+    { type: EnemyType.clone, num: 0.02 }
 ];
 var enemyNum = 50 + 30 * (level - 1);
 var target = 9 * enemyNum;
 function initEverTime() {
     enemyNum = 50 + 30 * (level - 1);
-    target = 9 * enemyNum;
+    target = getTarget(level);
     var temp = level <= 6 ? level : 6;
     rate += 0.01 * temp;
-    alpha -= 0.02 * (temp - 1);
+    alpha -= 0.01 * (temp - 1);
+}
+function getTarget(level) {
+    var c = [420, 800, 1200, 2000, 3890, 6010, 9999];
+    return c[level - 1];
 }
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -12089,7 +12130,6 @@ function main() {
                     ez.loadGroup(["ui", "start", "image/bg"], function (progress, total) {
                         if (progress >= total) {
                             var t = Date.now() - startTime;
-                            console.log("发送用户信息 --> URL: " + url + ("/openapi/statistics/add?openid=" + PlayerInfo.openid + "&loadTime=" + t));
                             ajax(url + ("/openapi/statistics/add?openid=" + PlayerInfo.openid + "&loadTime=" + t), function () { });
                             mainFrame = ez.getRoot().createChild(game.MainFrame);
                             var loading = document.getElementById("loading");
@@ -12358,7 +12398,7 @@ var md5;
 })(md5 || (md5 = {}));
 var game;
 (function (game) {
-    game.resData = "4LVSPIK3B203|p|2JS362HMIVJ6|EZ,A,FU,FU||||||;HA8GLOB3BT28|p|2JS362HMIVJ6|KO,CM,HW,DX||||||;1EF948RMIQRD|p|2JS362HMIVJ6|CA,Ha,VD,BG||||||;56UQPADE1Q3L|p|2JS362HMIVJ6|SS,A,FD,DZ|Bb|BM||||;CD2USR5HDCIB|p|2JS362HMIVJ6|KO,A,ID,CL|Ce|c||||;ER7C5K9MCR91|p|2JS362HMIVJ6|SF,Da,FJ,DG|CW|BU||||;674HLN92PH6C|p|2JS362HMIVJ6|A,Cb,EV,DQ|CE|BT||||;STU2ANJ65A4I|p|2JS362HMIVJ6|A,A,EY,Ca|Ba|BC||||;B0LVRU4VENJS|p|2JS362HMIVJ6|JU,GE,HU,BF||||||;U3D0VPUF90K5|p|2JS362HMIVJ6|EW,FV,Ca,CE|EP|De||||;LAO8Q29LE1TO|p|2JS362HMIVJ6|HR,FV,CC,CC||||||;384C1JUD8MIS|p|2JS362HMIVJ6|A,GM,Bf,Bf|CA|CA||A,A,B,B||;Q3IOEMMM9HV3|p|2JS362HMIVJ6|CA,GM,BW,BI||||||;2JS362HMIVJ6|w|BEI5ATEOKD8IRL3K|XW|JB||||;4TR3NPOOD9FC|w|SJZTVNDSHTCSEN0K|CK|CK||||;RGDNTIFOJEJ1|p|3430TB8UBRS5|A,A,JM,KL||KM||A,B,A,A||;85GD560O0A62|p|3430TB8UBRS5|A,KL,Od,BZ||||||;307B8VJHSQ38|p|3430TB8UBRS5|A,ME,KD,BO||||||;O18PU18DTSMO|p|3430TB8UBRS5|JM,A,CF,Bf|||W,Y,X,X|||;3430TB8UBRS5|w|YAR4IF5QCFBT3P0Y|Od|NS||||;F45FD2M7NRMS|p|M33L9BH2LKJ4|A,A,Ja,Kd||||||;EN6PH70VD7LV|p|M33L9BH2LKJ4|Ja,A,MB,HZ||||||;MFP4S2F9MF7F|p|M33L9BH2LKJ4|Vb,A,KF,IM||||||;M3F90V7UJL03|p|M33L9BH2LKJ4|QU,IM,NQ,FI||||||;LMIPDLENLMJG|p|M33L9BH2LKJ4|Ja,HZ,Ga,CV||||||;VCP8LGVCL71S|p|M33L9BH2LKJ4|Ja,KO,Ga,CV||||||;EJRRQ2IU0JS0|p|M33L9BH2LKJ4|A,Kd,HN,BC||||||;M33L9BH2LKJ4|w|33A5CZI9WIQLPWC5|BAA|NU||||;U7VJ9SGIHTNO|p|EB50KH7ATNKU|A,A,KQ,KC||||||;S9IQLHG3U700|p|EB50KH7ATNKU|KR,GF,BY,Bb||||||;52OMU7AEFJE8|p|EB50KH7ATNKU|KR,A,BM,BR||||||;5A1F5RDNRR3D|p|EB50KH7ATNKU|KR,EU,BM,BQ||||||;PI6ME5HEHD40|p|EB50KH7ATNKU|KR,DD,BM,BQ||||||;MR7EA6RAGT5R|p|EB50KH7ATNKU|KR,BS,BM,BQ||||||;UFGMTQLP3H5J|p|EB50KH7ATNKU|KR,IB,BH,BG||||||;CTDCID13AB9F|p|EB50KH7ATNKU|KR,JI,BS,Z|||J,J,K,N|||;G503ILGF8S28|p|EB50KH7ATNKU|Le,BE,e,BD|||I,N,J,P|||;O123T11GLFK9|p|EB50KH7ATNKU|Le,A,e,BD|||I,N,J,P|||;DQ8AU90MGHMI|p|EB50KH7ATNKU|Le,CI,e,e||||||;P637DGG88RRB|p|EB50KH7ATNKU|A,KD,LI,C||||||;SPMG8J9324MB|p|EB50KH7ATNKU|Le,DH,V,Z|||F,G,F,G|||;6VBE1JLANTMV|p|EB50KH7ATNKU|Le,EB,V,Z|||F,G,F,G|||;INH1T34JAHE4|p|EB50KH7ATNKU|MU,DH,I,f|BY|Bb||BE,M,M,Q||;EB50KH7ATNKU|w|CCUH93QNYUMF4OQ7|Md|KG||||;FOTVN4BTL6M7|i|232MAT6ON9HE0IXW.0|KQ|KC||||;JCF2OQOGMT7O|w|DCXNROQW5H6N4QVK|WG|BIA||||;QJ204MMAGROF|i|QJMT8BJ3L8J327XN.0|RB|ZX||||;4PGJIM7IPCOV|w|GKBV7HI7HJNVC69E|QW|MF||||;1QO2CBOCQIBD|s|JA0G81AQV8EXMINP;UVOHVF14P3C8|s|NK0L2XPG4EDO1XAQ;JS4KKPVSP9K1|s|QMN8L7P4QXAI5M47";
+    game.resData = "4LVSPIK3B203|p|2JS362HMIVJ6|EZ,A,FU,FU||||||;HA8GLOB3BT28|p|2JS362HMIVJ6|KO,CM,HW,DX||||||;1EF948RMIQRD|p|2JS362HMIVJ6|CA,Ha,VD,BG||||||;56UQPADE1Q3L|p|2JS362HMIVJ6|SS,A,FD,DZ|Bb|BM||||;CD2USR5HDCIB|p|2JS362HMIVJ6|KO,A,ID,CL|Ce|c||||;ER7C5K9MCR91|p|2JS362HMIVJ6|SF,Da,FJ,DG|CW|BU||||;674HLN92PH6C|p|2JS362HMIVJ6|A,Cb,EV,DQ|CE|BT||||;STU2ANJ65A4I|p|2JS362HMIVJ6|A,A,EY,Ca|Ba|BC||||;B0LVRU4VENJS|p|2JS362HMIVJ6|JU,GE,HU,BF||||||;U3D0VPUF90K5|p|2JS362HMIVJ6|EW,FV,Ca,CE|EP|De||||;LAO8Q29LE1TO|p|2JS362HMIVJ6|HR,FV,CC,CC||||||;384C1JUD8MIS|p|2JS362HMIVJ6|A,GM,Bf,Bf|CA|CA||A,A,B,B||;Q3IOEMMM9HV3|p|2JS362HMIVJ6|CA,GM,BW,BI||||||;2JS362HMIVJ6|w|BEI5ATEOKD8IRL3K|XW|JB||||;4TR3NPOOD9FC|w|SJZTVNDSHTCSEN0K|CK|CK||||;RGDNTIFOJEJ1|p|3430TB8UBRS5|A,A,JM,KL||KM||A,B,A,A||;85GD560O0A62|p|3430TB8UBRS5|A,KL,Od,BZ||||||;307B8VJHSQ38|p|3430TB8UBRS5|A,ME,KD,BO||||||;O18PU18DTSMO|p|3430TB8UBRS5|JM,A,CF,Bf|||W,Y,X,X|||;3430TB8UBRS5|w|YAR4IF5QCFBT3P0Y|Od|NS||||;F45FD2M7NRMS|p|M33L9BH2LKJ4|A,A,Ja,Kd||||||;EN6PH70VD7LV|p|M33L9BH2LKJ4|Ja,A,MB,HZ||||||;MFP4S2F9MF7F|p|M33L9BH2LKJ4|Vb,A,KF,IM||||||;M3F90V7UJL03|p|M33L9BH2LKJ4|QU,IM,NQ,FI||||||;LMIPDLENLMJG|p|M33L9BH2LKJ4|Ja,HZ,Ga,CV||||||;VCP8LGVCL71S|p|M33L9BH2LKJ4|Ja,KO,Ga,CV||||||;EJRRQ2IU0JS0|p|M33L9BH2LKJ4|A,Kd,HN,BC||||||;M33L9BH2LKJ4|w|33A5CZI9WIQLPWC5|BAA|NU||||;U7VJ9SGIHTNO|p|EB50KH7ATNKU|A,A,KQ,KC||||||;S9IQLHG3U700|p|EB50KH7ATNKU|KR,GF,BY,Bb||||||;52OMU7AEFJE8|p|EB50KH7ATNKU|KR,A,BM,BR||||||;5A1F5RDNRR3D|p|EB50KH7ATNKU|KR,EU,BM,BQ||||||;PI6ME5HEHD40|p|EB50KH7ATNKU|KR,DD,BM,BQ||||||;MR7EA6RAGT5R|p|EB50KH7ATNKU|KR,BS,BM,BQ||||||;UFGMTQLP3H5J|p|EB50KH7ATNKU|KR,IB,BH,BG||||||;CTDCID13AB9F|p|EB50KH7ATNKU|KR,JI,BS,Z|||J,J,K,N|||;G503ILGF8S28|p|EB50KH7ATNKU|Le,BE,e,BD|||I,N,J,P|||;O123T11GLFK9|p|EB50KH7ATNKU|Le,A,e,BD|||I,N,J,P|||;DQ8AU90MGHMI|p|EB50KH7ATNKU|Le,CI,e,e||||||;P637DGG88RRB|p|EB50KH7ATNKU|A,KD,LI,C||||||;SPMG8J9324MB|p|EB50KH7ATNKU|Le,DH,V,Z|||F,G,F,G|||;6VBE1JLANTMV|p|EB50KH7ATNKU|Le,EB,V,Z|||F,G,F,G|||;INH1T34JAHE4|p|EB50KH7ATNKU|MU,DH,I,f|BY|Bb||BE,M,M,Q||;EB50KH7ATNKU|w|CCUH93QNYUMF4OQ7|Md|KG||||;FOTVN4BTL6M7|i|232MAT6ON9HE0IXW.0|KQ|KC||||;JCF2OQOGMT7O|w|DCXNROQW5H6N4QVK|WG|BIA||||;QJ204MMAGROF|i|QJMT8BJ3L8J327XN.0|RB|ZX||||;JCUPEPU1E9EG|i|GN5K3X6THHX5LTIZ.0|BS|BS||||;QVIBRGFQPTT2|i|GZDU6T2E16POLB7A.0|BS|BS||||;4PGJIM7IPCOV|w|GKBV7HI7HJNVC69E|QW|MF||||;1QO2CBOCQIBD|s|JA0G81AQV8EXMINP;UVOHVF14P3C8|s|NK0L2XPG4EDO1XAQ;JS4KKPVSP9K1|s|QMN8L7P4QXAI5M47";
     game.resGroups = [];
 })(game || (game = {}));
 var __extends = (this && this.__extends) || (function () {
@@ -12379,7 +12419,7 @@ var game;
     game.ranks = [];
     function soundEnable(enable) {
         var val = 0;
-        var sound = "0";
+        var sound = "2";
         if (enable)
             val = 1, sound = "1";
         ez.setBGMVolume(val);
@@ -12389,7 +12429,7 @@ var game;
     game.soundEnable = soundEnable;
     function getRank(rankPage) {
         var startTime = Date.now();
-        ajax(url + "/openapi/pinball/list?pageSize=100", function (e, r) {
+        ajax(url + "/openapi/pinball/list?pageSize=50", function (e, r) {
             if (e) {
                 ajax(url + ("/openapi/statistics/add?openid=" + PlayerInfo.openid + "\n\t\t\t\t\t&interfaceName=" + encodeURIComponent("排行榜") + "\n\t\t\t\t\t&responseTime=" + (Date.now() - startTime)), function () {
                 });
@@ -12409,9 +12449,9 @@ var game;
             var n = _this.namedChilds;
             var ctx = _this;
             var sound = localStorage.getItem("sound");
-            if (sound == null)
-                sound == "1";
-            n.sound.state = sound == "0" ? "check" : "uncheck";
+            if (sound == null || sound == "2")
+                sound = "1";
+            n.sound.state = sound == "2" ? "check" : "uncheck";
             soundEnable(sound == "1");
             getRank(n.rankPage);
             ez.playMusic(0, "sound/bgm", true);
