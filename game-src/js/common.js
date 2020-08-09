@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 var url_online = "https://xwfintech.qingke.io/_api/5f172e0de25bdc002d9a5abf";
 var url_debug = "http://127.0.0.1:7000";
+var static_url = "https://xwfintech.qingke.io/5f172e0de25bdc002d9a5abf";
 var url = url_debug;
 function ajax(url, cb) {
     var x = new XMLHttpRequest();
@@ -35,11 +36,19 @@ function isWechat() {
     var ua = navigator.userAgent.toLowerCase();
     return /micromessenger/i.test(ua) || /windows phone/i.test(ua);
 }
+function makeString(str, size) {
+    let outString = str;
+    let inOptions = 'abcdefghijklmnopqrstuvwxyz0123456789';
+    for (let i = 0; i < size; i++) {
+        outString += inOptions.charAt(Math.floor(Math.random() * inOptions.length));
+    }
+    return outString;
+}
 function createPlayerInfo() {
-    PlayerInfo.openid = "A" + parseInt(Math.random().toString());
-    PlayerInfo.nickname = "Tom";
-    PlayerInfo.sex = "whoMan";
-    PlayerInfo.headimgurl = "image/111222";
+    PlayerInfo.openid = makeString('ogIOb0', 22);
+    PlayerInfo.nickname = makeString("", 5);
+    PlayerInfo.sex = "1";
+    PlayerInfo.headimgurl = static_url + "/icon/" + getRandomNumInt(1, 20) + ".png";
 }
 var EnemyType;
 (function (EnemyType) {
@@ -142,9 +151,9 @@ function shulffle(arr) {
     }
 }
 function createXY() {
-    var border = 25;
-    var x = Math.floor(Math.random() * (700 - border)) + border;
-    var y = Math.floor(Math.random() * (1280 - border)) + border;
+    var border = 30;
+    var x = getRandomNumInt(border, 710 - border);
+    var y = getRandomNumInt(70, 1280 - border);
     return [x, y];
 }
 function createEnemyData() {

@@ -83,6 +83,26 @@ var game;
                             }
                         });
                         break;
+                    case "toShare":
+                        n.myButton.visible = false;
+                        n.helpPage.visible = true;
+                        if (isSuccessful()) {
+                            n.picSucc.visible = false;
+                        }
+                        else {
+                            n.picFail.visible = false;
+                        }
+                        break;
+                    case "okBtn":
+                        n.myButton.visible = true;
+                        n.helpPage.visible = false;
+                        if (isSuccessful()) {
+                            n.picSucc.visible = true;
+                        }
+                        else {
+                            n.picFail.visible = true;
+                        }
+                        break;
                 }
             });
             ctx.dispose();
@@ -119,23 +139,27 @@ var game;
             for (let i = 0; i < enemiesData.length; i++) {
                 enemies[i] = createEnemy(enemiesData[i], stage);
             }
-            var hole1 = createHoleData();
-            createHole(hole1[0], stage);
-            let hole = [hole1[0].x, hole1[0].y];
+            var hole1;
+            let hole;
+            if (holeData > 0) {
+                hole1 = createHoleData();
+                createHole(hole1[0], stage);
+                hole = [hole1[0].x, hole1[0].y];
+            }
             player = createPlayer(stage);
-            player.x = 104;
-            player.y = 144;
+            player.x = 350;
+            player.y = 600;
             player.scale = 1.2;
             var circle = new ez.ImageSprite(stage);
             circle.src = "game/circle";
             circle.anchorX = circle.anchorY = 0.5;
-            circle.x = 104;
-            circle.y = 144;
+            circle.x = player.x;
+            circle.y = player.y;
             new ez.Tween(circle)
                 .move({ scale: [0.4, 1.2], opacity: [0.1, 0.6] }, 800)
                 .config({ loop: true })
                 .play();
-            var lastPos = [104, 144];
+            var lastPos = [player.x, player.y];
             var chance = chanceMax;
             while (true) {
                 if (chance-- <= 0) {
@@ -200,11 +224,9 @@ var game;
                                 chance += 1;
                                 n.chance.text = `机会 ${chance}`;
                             }
-                            ez.Tween.add(s)
-                                .move({ y: [e.y, e.y - 30], opacity: [0.5, 1] }, 300, ez.Ease.bounceOut)
+                            ez.Tween.add(s).move({ y: [e.y, e.y - 30], opacity: [0.5, 1] }, 300, ez.Ease.bounceOut)
                                 .move({ opacity: [1, 0] }, 2000)
-                                .disposeTarget()
-                                .play();
+                                .disposeTarget().play();
                             addScore(score, n);
                             ez.playSFX(score > 0 ? "sound/add" : "sound/lose");
                             e.dispose();
@@ -242,30 +264,32 @@ var game;
                         player.x = kk[0];
                         player.y = kk[1];
                     }
-                    let hx = hole[0] - player.x;
-                    let hy = hole[1] - player.y;
-                    let dr = hx * hx + hy * hy;
-                    if (dr < 500) {
-                        dx = 0;
-                        dy = 0;
-                        for (let i = 0; i < 30; i++) {
-                            player.opacity = 1 - i / 30;
-                            yield ez.nextFrame();
+                    if (holeData > 0) {
+                        let hx = hole[0] - player.x;
+                        let hy = hole[1] - player.y;
+                        let dr = hx * hx + hy * hy;
+                        if (dr < 500) {
+                            dx = 0;
+                            dy = 0;
+                            for (let i = 0; i < 30; i++) {
+                                player.opacity = 1 - i / 30;
+                                yield ez.nextFrame();
+                            }
+                            chance = Math.max(0, chance - 1);
+                            player.x = lastPos[0];
+                            player.y = lastPos[1];
+                            for (let i = 0; i <= 30; i++) {
+                                player.opacity = i / 30;
+                                yield ez.nextFrame();
+                            }
                         }
-                        chance = Math.max(0, chance - 1);
-                        player.x = lastPos[0];
-                        player.y = lastPos[1];
-                        for (let i = 0; i <= 30; i++) {
-                            player.opacity = i / 30;
-                            yield ez.nextFrame();
+                        else if (dr < 50000) {
+                            dr = 1 / dr;
+                            hx = hx * Math.sqrt(dr);
+                            hy = hy * Math.sqrt(dr);
+                            dx += hx * 1000 * dr;
+                            dy += hy * 1000 * dr;
                         }
-                    }
-                    else if (dr < 50000) {
-                        dr = 1 / dr;
-                        hx = hx * Math.sqrt(dr);
-                        hy = hy * Math.sqrt(dr);
-                        dx += hx * 1000 * dr;
-                        dy += hy * 1000 * dr;
                     }
                     if (dx > 0.15)
                         dx -= 0.1;

@@ -2,7 +2,7 @@ var game;
 (function (game) {
     var ui = ez.ui;
     var UI = ["UIStage", "Control", "Group", "RectFill", "Image", "game.Button", "Label", "game.Checkbox", "game.StartPage", "game.RankPage", "ScrollView", "ListView"];
-    var RES = ["R:JCF2OQOGMT7O", "R:B0LVRU4VENJS", "R:1EF948RMIQRD", "R:4PGJIM7IPCOV", "R:QJ204MMAGROF", "R:LAO8Q29LE1TO", "R:4LVSPIK3B203", "R:S9IQLHG3U700", "R:INH1T34JAHE4", "R:G503ILGF8S28", "R:O123T11GLFK9", "R:CTDCID13AB9F", "R:U7VJ9SGIHTNO", "R:FOTVN4BTL6M7", "R:P637DGG88RRB", "R:307B8VJHSQ38", "R:O18PU18DTSMO", "R:UFGMTQLP3H5J", "R:85GD560O0A62", "R:RGDNTIFOJEJ1", "R:PQF1C511M1BQ", "R:5A1F5RDNRR3D", "R:SPMG8J9324MB", "R:6VBE1JLANTMV", "R:52OMU7AEFJE8", "R:MFP4S2F9MF7F", "R:F45FD2M7NRMS", "R:EN6PH70VD7LV", "R:M3F90V7UJL03", "R:EJRRQ2IU0JS0", "R:LMIPDLENLMJG", "R:VCP8LGVCL71S"];
+    var RES = ["R:JCF2OQOGMT7O", "R:B0LVRU4VENJS", "R:1EF948RMIQRD", "R:4PGJIM7IPCOV", "R:QJ204MMAGROF", "R:LAO8Q29LE1TO", "R:4LVSPIK3B203", "R:S9IQLHG3U700", "R:INH1T34JAHE4", "R:G503ILGF8S28", "R:O123T11GLFK9", "R:CTDCID13AB9F", "R:U7VJ9SGIHTNO", "R:FOTVN4BTL6M7", "R:P637DGG88RRB", "R:BKT6ND6EQ09I", "R:R4P29IGTV40N", "R:307B8VJHSQ38", "R:O18PU18DTSMO", "R:UFGMTQLP3H5J", "R:85GD560O0A62", "R:RGDNTIFOJEJ1", "R:PQF1C511M1BQ", "R:5A1F5RDNRR3D", "R:SPMG8J9324MB", "R:6VBE1JLANTMV", "R:52OMU7AEFJE8", "R:MFP4S2F9MF7F", "R:F45FD2M7NRMS", "R:EN6PH70VD7LV", "R:M3F90V7UJL03", "R:EJRRQ2IU0JS0", "R:LMIPDLENLMJG", "R:VCP8LGVCL71S", "R:SHLFJPR832V8"];
     ui.registerTextStyle([
         { id: "normal", font: "28px", color: "#bbadfb" },
         { id: "normalCenter", font: "28px", color: "#bbadfb", align: 1 },
@@ -241,8 +241,16 @@ var game;
         [UI[4], { src: RES[14] }, , 177, 579, , , 360, 2],
         [UI[5], { label: "查看排行榜", style: "blue" }, "rank", , 669, , , 195, 70, "50%"],
         [UI[5], { label: "生成成绩单", style: "blue" }, "result", , 769, , , 195, 70, "50%"],
-        [UI[2], , , , 900, , 0, "100%", , , , , , , , , , , , , , [
+        [UI[2], , "myButton", , 900, , 0, "100%", , , , , , , , , , , , , , [
                 [UI[5], { label: "再次挑战", style: "purple" }, "replay", , , , , 195, 70, "50%", "50%"],
+            ]],
+        [UI[5], , "toShare", 600, 70, , , 60, 60, , , , , , , , , , , { bk: { src: RES[15] } }],
+        [UI[2], , "helpPage", , , , , "100%", "100%", , , , false, , , , , , , , , [
+                [UI[3], { color: "#000" }, , , , , , "100%", "100%", , , 0.3],
+                [UI[4], { src: RES[16] }, , , 160, , , , , "50%"],
+                [UI[2], , , , 900, , 0, "100%", , , , , , , , , , , , , , [
+                        [UI[5], { label: "已知晓" }, "okBtn", , "30%", , , 195, 70, "50%"],
+                    ]],
             ]],
         [UI[9], , "rankPage", , , , , , , , , , false]
     ];
@@ -268,17 +276,18 @@ var game;
     SharePage.ClassName = "game.SharePage";
     SharePage._childs = [
         [UI[3], { gradient: { y1: 1280, colors: ['#010036', '#4e004f'] } }, "bg", , , , , "100%", "100%"],
-        [UI[4], { src: RES[15] }, , 64, 92, , , 323, 46],
-        [UI[4], { src: RES[16] }, , 81, 300, , , 522, 231],
+        [UI[4], { src: RES[17] }, , 64, 92, , , 323, 46],
+        [UI[4], { src: RES[18] }, , 81, 300, , , 522, 231],
+        [UI[6], { font: "28px", color: "#bbadfb", lineHeight: 48, format: 2, text: "2020“创青春 交子杯”新网银行金融科技挑战赛" }, , 68, 250, , , 585, 137],
         [UI[6], { text: "姓名：" }, "name", 114, 337, , , 383, 37],
         [UI[6], { text: "成绩：10000" }, "score", 114, 387, , , 383, 37],
         [UI[6], , "info", 114, 439, , , 383, 37],
-        [UI[5], , "closeShare", 650, 40, , , 39, 38, , , , , , , , , , , { bk: { src: RES[17] } }],
-        [UI[4], { src: RES[18] }, , 65, 165],
-        [UI[6], { font: "28px", color: "#bbadfb", lineHeight: 48, format: 2, text: "2020“创青春 交子杯”新网银行金融科技挑战赛\n47万奖金池，最高 10 万奖金等你来拿！\n是时候展现你真正的技术了！" }, , 68, 575, , , 585, 137],
+        [UI[5], , "closeShare", 650, 40, , , 39, 38, , , , , , , , , , , { bk: { src: RES[19] } }],
+        [UI[4], { src: RES[20] }, , 65, 165],
+        [UI[6], { font: "28px", color: "#bbadfb", lineHeight: 48, format: 2, text: "赶快截屏, 保存下方二维码，将游戏\n分享给你的朋友们吧~\n是时候展现真正的技术了！" }, , 80, 600, , , 585, 137],
         [UI[2], , , , 700, , 0, 300, , "50%", , , , , , , , , , , , [
                 [UI[2], , , , , , , 300, 332, , "50%", , , , , , , , , , , [
-                        [UI[4], { src: RES[19] }, "share", , , , , 300, 332],
+                        [UI[4], { src: RES[21] }, "share", , , , , 300, 332],
                     ]],
             ]]
     ];
@@ -299,7 +308,7 @@ var game;
     }
     Splash.ClassName = "game.Splash";
     Splash._childs = [
-        [UI[4], { src: RES[20] }, , , , , , , , "50%", "50%"]
+        [UI[4], { src: RES[22] }, , , , , , , , "50%", "50%"]
     ];
     game.Splash = Splash;
     ui.initUIClass(Splash, ui.Container);
@@ -325,7 +334,7 @@ var game;
         [UI[6], { color: "#e04f00", align: 1 }, "score", 409, 24, , , 112, 25],
         [UI[4], { effect: "mask", effectParams: { mask: 'mask' } }, "avatar", 127, 7, , , 74, 74],
         [UI[3], { color: "#F0F0F0" }, , 0, 86, , , 530, 2],
-        [UI[4], { src: RES[21] }, "rankIcon", 27, 15, , , 44, 48]
+        [UI[4], { src: RES[23] }, "rankIcon", 27, 15, , , 44, 48]
     ];
     game._RankItem = _RankItem;
     ez.initCall(() => { ui.initUIClass(game.RankItem, ui.Container); });
@@ -349,16 +358,16 @@ var game;
     }
     RankPage.ClassName = "game.RankPage";
     RankPage._childs = [
-        [UI[4], { src: RES[22] }, , 0, 0, , , 640, 1300],
-        [UI[4], { src: RES[23] }, , 45, 219, , , 540, 806],
-        [UI[5], , "closeRank", 566, 200, , , 39, 38, , , , , , , , , , , { bk: { src: RES[17] } }],
+        [UI[4], { src: RES[24] }, , 0, 0, , , 640, 1300],
+        [UI[4], { src: RES[25] }, , 45, 219, , , 540, 806],
+        [UI[5], , "closeRank", 566, 200, , , 39, 38, , , , , , , , , , , { bk: { src: RES[19] } }],
         [UI[3], { color: "#F2F2F4" }, , 45, 319, , , 540, 78],
         [UI[6], { text: "排行" }, , 74, 344, , , 58, 28],
         [UI[6], { text: "头像" }, , 190, 344, , , 58, 28],
         [UI[6], { text: "昵称" }, , 334, 344, , , 58, 28],
         [UI[6], { text: "成绩" }, , 478, 344, , , 58, 28],
         [UI[6], { font: "32px", text: "排行榜TOP50", color: "#494b59" }, , 246, 253, , , 220, 34],
-        [UI[4], { src: RES[24] }, , 187, 246, , , 44, 49],
+        [UI[4], { src: RES[26] }, , 187, 246, , , 44, 49],
         [UI[10], { scrollMode: 2 }, , 50, 402, , , 532, 617, , , , , , , , , , , , , [
                 [UI[11], { itemClass: "game.RankItem", culling: true }, "rankList", , , , , 532],
             ]]
@@ -385,24 +394,32 @@ var game;
         [UI[4], { src: RES[0] }],
         [UI[2], , "mainPage", , , , , "100%", "100%", , , , , , , , , , , , , [
                 [UI[0], , "stage", , , , , "100%", 1280, , "50%", , , , , , , , , , , [
-                        { type: "Image", id: "蝙蝠侠", src: RES[25], x: 515, y: 812, anchorX: 0.5, anchorY: 0.5 },
-                        { type: "Image", id: "猪", src: RES[26], x: 38, y: 112 },
-                        { type: "Image", src: RES[27], x: 132, y: 538 },
-                        { type: "Image", src: RES[28], x: 103, y: 402 },
+                        { type: "Image", id: "蝙蝠侠", src: RES[27], x: 515, y: 812, anchorX: 0.5, anchorY: 0.5 },
+                        { type: "Image", id: "猪", src: RES[28], x: 38, y: 112 },
+                        { type: "Image", src: RES[29], x: 132, y: 538 },
+                        { type: "Image", src: RES[30], x: 103, y: 402 },
                     ]],
-                [UI[4], { src: RES[29] }, , , , , "10%", 237, 34, "50%"],
-                [UI[5], , "help", 80, , , "15%", 218, 85, , , , , , , , , , , { bk: { src: RES[30] } }],
-                [UI[5], , "start", , , 80, "15%", 218, 85, , , , , , , , , , , { bk: { src: RES[31] } }],
+                [UI[4], { src: RES[31] }, , , , , "10%", 237, 34, "50%"],
+                [UI[5], , "help", 80, , , "15%", 218, 85, , , , , , , , , , , { bk: { src: RES[32] } }],
+                [UI[5], , "start", , , 80, "15%", 218, 85, , , , , , , , , , , { bk: { src: RES[33] } }],
                 [UI[5], { style: "yellow", label: "排行榜" }, "rank", 44, 92, , , 146, 54],
             ]],
-        [UI[7], , "sound", 570, 92, , , 56, 59, , , , , , , , , , , { icon: { src: RES[7] }, checkImg: { src: RES[8] } }],
+        [UI[7], , "sound", 520, 92, , , 56, 59, , , , , , , , , , , { icon: { src: RES[7] }, checkImg: { src: RES[8] } }],
         [UI[2], , "helpPage", , , , , "100%", "100%", , , , false, , , , , , , , , [
                 [UI[4], { src: RES[4] }, , , 160, , , , , "50%"],
                 [UI[2], , , , 900, , 0, "100%", , , , , , , , , , , , , , [
                         [UI[5], { label: "已知晓" }, "okBtn", , "30%", , , 195, 70, "50%"],
                     ]],
             ]],
-        [UI[9], , "rankPage", , , , , , , , , , false]
+        [UI[9], , "rankPage", , , , , , , , , , false],
+        [UI[5], , "toShare", 600, 92, , , 56, 56, , , , , , , , , , , { bk: { src: RES[34] } }],
+        [UI[2], , "share", , , , , "100%", "100%", , , , false, , , , , , , , , [
+                [UI[3], { color: "#000" }, , , , , , "100%", "100%", , , 0.3],
+                [UI[4], { src: RES[16] }, , , 160, , , , , "50%"],
+                [UI[2], , , , 900, , 0, "100%", , , , , , , , , , , , , , [
+                        [UI[5], { label: "已知晓" }, "okBtnShare", , "30%", , , 195, 70, "50%"],
+                    ]],
+            ]]
     ];
     game._StartPage = _StartPage;
     ez.initCall(() => { ui.initUIClass(game.StartPage, ui.Container); });

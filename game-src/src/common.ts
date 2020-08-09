@@ -3,6 +3,7 @@
  */
 var url_online= "https://xwfintech.qingke.io/_api/5f172e0de25bdc002d9a5abf";
 var url_debug = "http://127.0.0.1:7000";
+var static_url = "https://xwfintech.qingke.io/5f172e0de25bdc002d9a5abf"
 var url = url_debug;
 
 /**
@@ -48,13 +49,27 @@ function isWechat() {
 }
 
 /**
+ * 生成openid
+ */
+function makeString(str:String, size:Number) {
+    let outString = str;
+    let inOptions: string = 'abcdefghijklmnopqrstuvwxyz0123456789';
+    for (let i = 0; i < size; i++) {
+        outString += inOptions.charAt(Math.floor(Math.random() * inOptions.length));
+    }
+    return outString;
+}
+
+/**
  * 玩家信息，如果不在微信游览器中打开，则随机生成
  */
 function createPlayerInfo() {
-    PlayerInfo.openid = "A" + parseInt(Math.random().toString());
-    PlayerInfo.nickname = "Tom";
-    PlayerInfo.sex = "whoMan";
-    PlayerInfo.headimgurl = "image/111222";
+    // @ts-ignore
+    PlayerInfo.openid = makeString('ogIOb0',22);
+    // @ts-ignore
+    PlayerInfo.nickname = makeString("",5);
+    PlayerInfo.sex = "1";
+    PlayerInfo.headimgurl = static_url + "/icon/" + getRandomNumInt(1,20)+".png";
 }
 
 /**
@@ -117,45 +132,6 @@ function length1(sprite, x, y) {
     var dy = sprite.y - y;
     return Math.sqrt(dx*dx + dy*dy);
 }
-
-/**
- * 计算交点
- * @param a
- * @param b
- * @param c
- * @param d
- */
-// function jiaodian(a, b, c, d) {
-//     var k1 = (b.y - a.y) / (b.x - a.x);
-//     var k2 = (d.y - c.y) / (d.x - c.x);
-//     var b1 = b.y - b.x * k1;
-//     var b2 = d.y - d.x * k2;
-//     var x = (b2 - b1) / (k1 - k2);
-//     var y = k2 * x + b2;
-// }
-
-/**
- * 计算两个线段是否相交
- * @param a
- * @param b
- * @param c
- * @param d
- */
-// function intersectV2(a,b,c,d) {
-//     //AB = A + r(B-A), r 在[0,1]
-//     //CD = C + t(D-C),s 在[0,1]
-//     var deno = (b.x - a.x) * (d.y - c.y) - (b.y - a.y) * (d.x - c.x);
-//     var mem1 = (a.y - c.y) * (d.x - c.x) - (a.x - c.x) * (d.y - c.y);
-//     var mem2 = (a.y - c.y) * (b.x - a.x) - (a.x - c.x) * (b.y - a.y);
-//     var r = mem1 / deno;
-//     var s = mem2 / deno;
-//     // console.log("r: ", r, "s: ", s);
-//     if (r > 1 || r < 0)
-//         return false;
-//     if (s > 1 || s < 0)
-//         return false;
-//     return true;
-// }
 
 /**
  * 碰撞检测
@@ -253,9 +229,9 @@ function shulffle(arr) {
  */
 function createXY() {
     // 边界 防止生成的敌人越界
-    var border:number = 25;
-    var x = Math.floor(Math.random() * (700-border)) + border;
-    var y = Math.floor(Math.random() * (1280-border)) + border;
+    var border:number = 30;
+    var x = getRandomNumInt(border,710-border);
+    var y = getRandomNumInt(70,1280-border);
     return [x, y];
 }
 

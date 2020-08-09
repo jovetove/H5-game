@@ -13,7 +13,6 @@ subimage game/circle id:384C1JUD8MIS
 subimage game/logo id:Q3IOEMMM9HV3
 ezm game id:2JS362HMIVJ6 url: BEI5ATEOKD8IRL3K
 ezm mask id:4TR3NPOOD9FC url: SJZTVNDSHTCSEN0K
-subimage share/二维码 id:RGDNTIFOJEJ1
 subimage share/text猪望仔大战蝙蝠侠 id:85GD560O0A62
 subimage share/logo id:307B8VJHSQ38
 subimage share/rect id:O18PU18DTSMO
@@ -44,8 +43,11 @@ subimage ui/btn/喇叭check id:INH1T34JAHE4
 ezm ui id:EB50KH7ATNKU url: CCUH93QNYUMF4OQ7
 image ui/img/失败 id:FOTVN4BTL6M7 url: 232MAT6ON9HE0IXW.0
 ezm image/bg id:JCF2OQOGMT7O url: DCXNROQW5H6N4QVK
-image image/活动规则 id:QJ204MMAGROF url: QJMT8BJ3L8J327XN.0
-image image/111222 id:JCUPEPU1E9EG url: GN5K3X6THHX5LTIZ.0
+image image/活动规则 id:QJ204MMAGROF url: XRU3E7EIKAXWDIET.0
+image share/分享 id:BKT6ND6EQ09I url: 30V4I7ZSP4WABPQW.0
+image share/分享1 id:SHLFJPR832V8 url: QFO3SJQJ5EBT2C31.0
+image share/二维码 id:RGDNTIFOJEJ1 url: 10WM3ICX2WRRZG0P.0
+image image/分享 id:R4P29IGTV40N url: J2QYEQWL5DDEL1VM.0
 image game/clone id:QVIBRGFQPTT2 url: GZDU6T2E16POLB7A.0
 ezm image/说明 id:4PGJIM7IPCOV url: GKBV7HI7HJNVC69E
 sound sound/add id:1QO2CBOCQIBD url: JA0G81AQV8EXMINP

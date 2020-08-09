@@ -51,7 +51,7 @@
 				<Button id=start bk.src=start/开始游戏 bottom=15% right=80 width=218 height=85 />
 				<Button id=rank style=yellow 	label=排行榜 left=44 width=146 top=92 height=54 />
 			</Group>
-			<Checkbox id=sound icon.src="ui/btn/喇叭" checkImg.src="ui/btn/喇叭check"  left=570 width=56 top=92 height=59 />
+			<Checkbox id=sound icon.src="ui/btn/喇叭" checkImg.src="ui/btn/喇叭check"  left=520 width=56 top=92 height=59 />
 			<Group id=helpPage width=100% height=100% visible=false >
 				<Image  src=image/活动规则 	x=50% top=160 />				
 				<Group width=100% top=900 bottom=0>
@@ -59,6 +59,16 @@
 				</Group>
 			</Group>
 			<RankPage id=rankPage visible=false />
+			<Button id=toShare  bk.src="share/分享1" left=600 width=56 top=92 height=56 />
+			<Group id=share width=100% height=100% visible=false>
+				<RectFill color=#000 opacity=0.3 width=100% height=100% />
+				<Image  src=image/分享 	x=50% top=160 />
+				<Group width=100% top=900 bottom=0>
+					<Button id=okBtnShare label="已知晓" x=50% width=195 height=70 top=30% />
+				</Group>
+			</Group>
 		</children>
 	</StartPage>
+
+	
 </root>

@@ -13,10 +13,19 @@
 			<Image src=ui/img/line left=177 width=360 top=579 height=2 />
 			<Button id=rank label=查看排行榜 style=blue x=50% width=195 top=669 height=70 />
 			<Button id=result label=生成成绩单 style=blue x=50% width=195 top=769 height=70 />
-			
-			<Group top=900 bottom=0 width=100%>
+			<Group id=myButton top=900 bottom=0 width=100%>
 				<Button id=replay label=再次挑战 style=purple x=50% width=195 y=50% height=70 />
 			</Group>
+
+			<Button id=toShare  bk.src="share/分享" left=600 width=60 top=70 height=60 />
+			<Group id=helpPage width=100% height=100% visible=false>
+				<RectFill color=#000 opacity=0.3 width=100% height=100% />
+				<Image  src=image/分享 	x=50% top=160 />
+				<Group width=100% top=900 bottom=0>
+					<Button id=okBtn label="已知晓" x=50% width=195 height=70 top=30% />
+				</Group>
+			</Group>
+			
 			<RankPage id=rankPage visible=false />
 		</children>
 	</ResultPage>

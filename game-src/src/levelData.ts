@@ -53,6 +53,7 @@ var enemyData = [
     {type:EnemyType.Logo, num:0.05},
     {type:EnemyType.clone, num:0.02}
 ]
+var holeData = 0;
 
 var enemyNum = 50 + 30 * (level-1);
 var target = 9 * enemyNum;
@@ -64,6 +65,11 @@ function initEverTime() {
     var temp = level <= 6 ? level : 6;
     rate  += 0.01 * temp;
     alpha -= 0.01 * (temp-1);
+    if(level>=2){
+        holeData = 1;
+    }else{
+        holeData = 0;
+    }
 }
 
 function getTarget(level) {

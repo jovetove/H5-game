@@ -82,6 +82,22 @@ var game;
                         var state = e.sender.state;
                         soundEnable(state == "check");
                         break;
+                    case "toShare":
+                        n.share.visible = true;
+                        n.help.visible = false;
+                        n.start.visible = false;
+                        n.rank.visible = false;
+                        n.toShare.visible = false;
+                        n.sound.visible = false;
+                        break;
+                    case "okBtnShare":
+                        n.share.visible = false;
+                        n.help.visible = true;
+                        n.start.visible = true;
+                        n.rank.visible = true;
+                        n.toShare.visible = true;
+                        n.sound.visible = true;
+                        break;
                 }
             });
         }

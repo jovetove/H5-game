@@ -5,13 +5,14 @@
 			<RectFill id="bg" gradient="{ y1: 1280, colors:['#010036', '#4e004f'] }" width="100%" height="100%"/>			
 			<Image src=share/logo left=64 width=323 top=92 height=46 />
 			<Image src=share/rect left=81 width=522 top=300 height=231 />
+			<Label font=28px color=#bbadfb lineHeight=48 format=MultiLine left=68 width=585 top=250 height=137 text="2020“创青春 交子杯”新网银行金融科技挑战赛"/>
 			<Label id=name left=114 width=383 top=337 height=37 text="姓名：" />
 			<Label id=score left=114 width=383 top=387 height=37 text="成绩：10000" />
 			<Label id=info left=114 width=383 top=439 height=37 />
 			<Button id=closeShare  bk.src=ui/btn/close left=650 width=39 top=40 height=38 />
 			<!-- <Button id=closeShare label=关闭 style=blue x=50% width=195 top=669 height=70 /> -->
 			<Image src=share/text猪望仔大战蝙蝠侠 left=65 top=165  />
-			<Label font=28px color=#bbadfb lineHeight=48 format=MultiLine left=68 width=585 top=575 height=137 text="2020“创青春 交子杯”新网银行金融科技挑战赛\n47万奖金池，最高 10 万奖金等你来拿！\n是时候展现你真正的技术了！" />
+			<Label font=28px color=#bbadfb lineHeight=48 format=MultiLine left=80 width=585 top=600 height=137 text="赶快截屏, 保存下方二维码，将游戏\n分享给你的朋友们吧~\n是时候展现真正的技术了！" />
 			<Group width=300 top=700 bottom=0 x=50% >
 				<Group height=332 width=300 y=50% >
 					<Image id=share src=share/二维码 height=332 width=300 />

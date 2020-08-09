@@ -1,7 +1,7 @@
 namespace game{
 	import ui = ez.ui;
 	var UI = ["UIStage", "Control", "Group", "RectFill", "Image", "game.Button", "Label", "game.Checkbox", "game.StartPage", "game.RankPage", "ScrollView", "ListView"];
-	var RES = ["R:JCF2OQOGMT7O","R:B0LVRU4VENJS","R:1EF948RMIQRD","R:4PGJIM7IPCOV","R:QJ204MMAGROF","R:LAO8Q29LE1TO","R:4LVSPIK3B203","R:S9IQLHG3U700","R:INH1T34JAHE4","R:G503ILGF8S28","R:O123T11GLFK9","R:CTDCID13AB9F","R:U7VJ9SGIHTNO","R:FOTVN4BTL6M7","R:P637DGG88RRB","R:307B8VJHSQ38","R:O18PU18DTSMO","R:UFGMTQLP3H5J","R:85GD560O0A62","R:RGDNTIFOJEJ1","R:PQF1C511M1BQ","R:5A1F5RDNRR3D","R:SPMG8J9324MB","R:6VBE1JLANTMV","R:52OMU7AEFJE8","R:MFP4S2F9MF7F","R:F45FD2M7NRMS","R:EN6PH70VD7LV","R:M3F90V7UJL03","R:EJRRQ2IU0JS0","R:LMIPDLENLMJG","R:VCP8LGVCL71S"];
+	var RES = ["R:JCF2OQOGMT7O","R:B0LVRU4VENJS","R:1EF948RMIQRD","R:4PGJIM7IPCOV","R:QJ204MMAGROF","R:LAO8Q29LE1TO","R:4LVSPIK3B203","R:S9IQLHG3U700","R:INH1T34JAHE4","R:G503ILGF8S28","R:O123T11GLFK9","R:CTDCID13AB9F","R:U7VJ9SGIHTNO","R:FOTVN4BTL6M7","R:P637DGG88RRB","R:BKT6ND6EQ09I","R:R4P29IGTV40N","R:307B8VJHSQ38","R:O18PU18DTSMO","R:UFGMTQLP3H5J","R:85GD560O0A62","R:RGDNTIFOJEJ1","R:PQF1C511M1BQ","R:5A1F5RDNRR3D","R:SPMG8J9324MB","R:6VBE1JLANTMV","R:52OMU7AEFJE8","R:MFP4S2F9MF7F","R:F45FD2M7NRMS","R:EN6PH70VD7LV","R:M3F90V7UJL03","R:EJRRQ2IU0JS0","R:LMIPDLENLMJG","R:VCP8LGVCL71S","R:SHLFJPR832V8"];
 	
 	ui.registerTextStyle([
 		{ id:"normal", font:"28px", color:"#bbadfb" },
@@ -262,8 +262,16 @@ namespace game{
 			[/*Image*/UI[4], /*props:*/ {src: /*ui/img/line*/ RES[14]},, /*left:*/ 177, /*top:*/ 579,,, /*width:*/ 360, /*height:*/ 2],
 			[/*game.Button*/UI[5], /*props:*/ {label: "查看排行榜", style: "blue"}, /*id:*/ "rank",, /*top:*/ 669,,, /*width:*/ 195, /*height:*/ 70, /*x:*/ "50%"],
 			[/*game.Button*/UI[5], /*props:*/ {label: "生成成绩单", style: "blue"}, /*id:*/ "result",, /*top:*/ 769,,, /*width:*/ 195, /*height:*/ 70, /*x:*/ "50%"],
-			[/*Group*/UI[2],,,, /*top:*/ 900,, /*bottom:*/ 0, /*width:*/ "100%",,,,,,,,,,,,,,/*childs*/ [
+			[/*Group*/UI[2],, /*id:*/ "myButton",, /*top:*/ 900,, /*bottom:*/ 0, /*width:*/ "100%",,,,,,,,,,,,,,/*childs*/ [
 				[/*game.Button*/UI[5], /*props:*/ {label: "再次挑战", style: "purple"}, /*id:*/ "replay",,,,, /*width:*/ 195, /*height:*/ 70, /*x:*/ "50%", /*y:*/ "50%"],
+			]],
+			[/*game.Button*/UI[5],, /*id:*/ "toShare", /*left:*/ 600, /*top:*/ 70,,, /*width:*/ 60, /*height:*/ 60,,,,,,,,,,, /*childsProperty*/{bk: { src: /*share/分享*/ RES[15] }}],
+			[/*Group*/UI[2],, /*id:*/ "helpPage",,,,, /*width:*/ "100%", /*height:*/ "100%",,,, /*visible:*/ false,,,,,,,,,/*childs*/ [
+				[/*RectFill*/UI[3], /*props:*/ {color: "#000"},,,,,, /*width:*/ "100%", /*height:*/ "100%",,, /*opacity:*/ 0.3],
+				[/*Image*/UI[4], /*props:*/ {src: /*image/分享*/ RES[16]},,, /*top:*/ 160,,,,, /*x:*/ "50%"],
+				[/*Group*/UI[2],,,, /*top:*/ 900,, /*bottom:*/ 0, /*width:*/ "100%",,,,,,,,,,,,,,/*childs*/ [
+					[/*game.Button*/UI[5], /*props:*/ {label: "已知晓"}, /*id:*/ "okBtn",, /*top:*/ "30%",,, /*width:*/ 195, /*height:*/ 70, /*x:*/ "50%"],
+				]],
 			]],
 			[/*game.RankPage*/UI[9],, /*id:*/ "rankPage",,,,,,,,,, /*visible:*/ false]
 		];
@@ -288,7 +296,11 @@ namespace game{
 			info: ui.Label,
 			rank: game.Button,
 			result: game.Button,
+			myButton: ui.Group,
 			replay: game.Button,
+			toShare: game.Button,
+			helpPage: ui.Group,
+			okBtn: game.Button,
 			rankPage: game.RankPage }
 		{ return <any>this._namedChilds; }
 	}
@@ -299,17 +311,18 @@ namespace game{
 		static instance: game.SharePage;
 		private static _childs = [
 			[/*RectFill*/UI[3], /*props:*/ {gradient: { y1: 1280, colors:['#010036', '#4e004f'] }}, /*id:*/ "bg",,,,, /*width:*/ "100%", /*height:*/ "100%"],
-			[/*Image*/UI[4], /*props:*/ {src: /*share/logo*/ RES[15]},, /*left:*/ 64, /*top:*/ 92,,, /*width:*/ 323, /*height:*/ 46],
-			[/*Image*/UI[4], /*props:*/ {src: /*share/rect*/ RES[16]},, /*left:*/ 81, /*top:*/ 300,,, /*width:*/ 522, /*height:*/ 231],
+			[/*Image*/UI[4], /*props:*/ {src: /*share/logo*/ RES[17]},, /*left:*/ 64, /*top:*/ 92,,, /*width:*/ 323, /*height:*/ 46],
+			[/*Image*/UI[4], /*props:*/ {src: /*share/rect*/ RES[18]},, /*left:*/ 81, /*top:*/ 300,,, /*width:*/ 522, /*height:*/ 231],
+			[/*Label*/UI[6], /*props:*/ {font: "28px", color: "#bbadfb", lineHeight: 48, format: 2, text: "2020“创青春 交子杯”新网银行金融科技挑战赛"},, /*left:*/ 68, /*top:*/ 250,,, /*width:*/ 585, /*height:*/ 137],
 			[/*Label*/UI[6], /*props:*/ {text: "姓名："}, /*id:*/ "name", /*left:*/ 114, /*top:*/ 337,,, /*width:*/ 383, /*height:*/ 37],
 			[/*Label*/UI[6], /*props:*/ {text: "成绩：10000"}, /*id:*/ "score", /*left:*/ 114, /*top:*/ 387,,, /*width:*/ 383, /*height:*/ 37],
 			[/*Label*/UI[6],, /*id:*/ "info", /*left:*/ 114, /*top:*/ 439,,, /*width:*/ 383, /*height:*/ 37],
-			[/*game.Button*/UI[5],, /*id:*/ "closeShare", /*left:*/ 650, /*top:*/ 40,,, /*width:*/ 39, /*height:*/ 38,,,,,,,,,,, /*childsProperty*/{bk: { src: /*ui/btn/close*/ RES[17] }}],
-			[/*Image*/UI[4], /*props:*/ {src: /*share/text猪望仔大战蝙蝠侠*/ RES[18]},, /*left:*/ 65, /*top:*/ 165],
-			[/*Label*/UI[6], /*props:*/ {font: "28px", color: "#bbadfb", lineHeight: 48, format: 2, text: "2020“创青春 交子杯”新网银行金融科技挑战赛\n47万奖金池，最高 10 万奖金等你来拿！\n是时候展现你真正的技术了！"},, /*left:*/ 68, /*top:*/ 575,,, /*width:*/ 585, /*height:*/ 137],
+			[/*game.Button*/UI[5],, /*id:*/ "closeShare", /*left:*/ 650, /*top:*/ 40,,, /*width:*/ 39, /*height:*/ 38,,,,,,,,,,, /*childsProperty*/{bk: { src: /*ui/btn/close*/ RES[19] }}],
+			[/*Image*/UI[4], /*props:*/ {src: /*share/text猪望仔大战蝙蝠侠*/ RES[20]},, /*left:*/ 65, /*top:*/ 165],
+			[/*Label*/UI[6], /*props:*/ {font: "28px", color: "#bbadfb", lineHeight: 48, format: 2, text: "赶快截屏, 保存下方二维码，将游戏\n分享给你的朋友们吧~\n是时候展现真正的技术了！"},, /*left:*/ 80, /*top:*/ 600,,, /*width:*/ 585, /*height:*/ 137],
 			[/*Group*/UI[2],,,, /*top:*/ 700,, /*bottom:*/ 0, /*width:*/ 300,, /*x:*/ "50%",,,,,,,,,,,,/*childs*/ [
 				[/*Group*/UI[2],,,,,,, /*width:*/ 300, /*height:*/ 332,, /*y:*/ "50%",,,,,,,,,,,/*childs*/ [
-					[/*Image*/UI[4], /*props:*/ {src: /*share/二维码*/ RES[19]}, /*id:*/ "share",,,,, /*width:*/ 300, /*height:*/ 332],
+					[/*Image*/UI[4], /*props:*/ {src: /*share/二维码*/ RES[21]}, /*id:*/ "share",,,,, /*width:*/ 300, /*height:*/ 332],
 				]],
 			]]
 		];
@@ -342,7 +355,7 @@ namespace game{
 		static ClassName = "game.Splash";
 		static instance: game.Splash;
 		private static _childs = [
-			[/*Image*/UI[4], /*props:*/ {src: /*logo*/ RES[20]},,,,,,,, /*x:*/ "50%", /*y:*/ "50%"]
+			[/*Image*/UI[4], /*props:*/ {src: /*logo*/ RES[22]},,,,,,,, /*x:*/ "50%", /*y:*/ "50%"]
 		];
 		constructor(parent: ui.Container, template?:ui.Template){
 			super(parent);
@@ -367,7 +380,7 @@ namespace game{
 			[/*Label*/UI[6], /*props:*/ {color: "#e04f00", align: 1}, /*id:*/ "score", /*left:*/ 409, /*top:*/ 24,,, /*width:*/ 112, /*height:*/ 25],
 			[/*Image*/UI[4], /*props:*/ {effect: "mask", effectParams: {mask: 'mask'}}, /*id:*/ "avatar", /*left:*/ 127, /*top:*/ 7,,, /*width:*/ 74, /*height:*/ 74],
 			[/*RectFill*/UI[3], /*props:*/ {color: "#F0F0F0"},, /*left:*/ 0, /*top:*/ 86,,, /*width:*/ 530, /*height:*/ 2],
-			[/*Image*/UI[4], /*props:*/ {src: /*ui/icon/1st*/ RES[21]}, /*id:*/ "rankIcon", /*left:*/ 27, /*top:*/ 15,,, /*width:*/ 44, /*height:*/ 48]
+			[/*Image*/UI[4], /*props:*/ {src: /*ui/icon/1st*/ RES[23]}, /*id:*/ "rankIcon", /*left:*/ 27, /*top:*/ 15,,, /*width:*/ 44, /*height:*/ 48]
 		];
 		constructor(parent: ui.Container, template?:ui.Template){
 			super(parent);
@@ -395,16 +408,16 @@ namespace game{
 		static ClassName = "game.RankPage";
 		static instance: game.RankPage;
 		private static _childs = [
-			[/*Image*/UI[4], /*props:*/ {src: /*ui/img/rectbk*/ RES[22]},, /*left:*/ 0, /*top:*/ 0,,, /*width:*/ 640, /*height:*/ 1300],
-			[/*Image*/UI[4], /*props:*/ {src: /*ui/img/rectwh*/ RES[23]},, /*left:*/ 45, /*top:*/ 219,,, /*width:*/ 540, /*height:*/ 806],
-			[/*game.Button*/UI[5],, /*id:*/ "closeRank", /*left:*/ 566, /*top:*/ 200,,, /*width:*/ 39, /*height:*/ 38,,,,,,,,,,, /*childsProperty*/{bk: { src: /*ui/btn/close*/ RES[17] }}],
+			[/*Image*/UI[4], /*props:*/ {src: /*ui/img/rectbk*/ RES[24]},, /*left:*/ 0, /*top:*/ 0,,, /*width:*/ 640, /*height:*/ 1300],
+			[/*Image*/UI[4], /*props:*/ {src: /*ui/img/rectwh*/ RES[25]},, /*left:*/ 45, /*top:*/ 219,,, /*width:*/ 540, /*height:*/ 806],
+			[/*game.Button*/UI[5],, /*id:*/ "closeRank", /*left:*/ 566, /*top:*/ 200,,, /*width:*/ 39, /*height:*/ 38,,,,,,,,,,, /*childsProperty*/{bk: { src: /*ui/btn/close*/ RES[19] }}],
 			[/*RectFill*/UI[3], /*props:*/ {color: "#F2F2F4"},, /*left:*/ 45, /*top:*/ 319,,, /*width:*/ 540, /*height:*/ 78],
 			[/*Label*/UI[6], /*props:*/ {text: "排行"},, /*left:*/ 74, /*top:*/ 344,,, /*width:*/ 58, /*height:*/ 28],
 			[/*Label*/UI[6], /*props:*/ {text: "头像"},, /*left:*/ 190, /*top:*/ 344,,, /*width:*/ 58, /*height:*/ 28],
 			[/*Label*/UI[6], /*props:*/ {text: "昵称"},, /*left:*/ 334, /*top:*/ 344,,, /*width:*/ 58, /*height:*/ 28],
 			[/*Label*/UI[6], /*props:*/ {text: "成绩"},, /*left:*/ 478, /*top:*/ 344,,, /*width:*/ 58, /*height:*/ 28],
 			[/*Label*/UI[6], /*props:*/ {font: "32px", text: "排行榜TOP50", color: "#494b59"},, /*left:*/ 246, /*top:*/ 253,,, /*width:*/ 220, /*height:*/ 34],
-			[/*Image*/UI[4], /*props:*/ {src: /*ui/icon/cup*/ RES[24]},, /*left:*/ 187, /*top:*/ 246,,, /*width:*/ 44, /*height:*/ 49],
+			[/*Image*/UI[4], /*props:*/ {src: /*ui/icon/cup*/ RES[26]},, /*left:*/ 187, /*top:*/ 246,,, /*width:*/ 44, /*height:*/ 49],
 			[/*ScrollView*/UI[10], /*props:*/ {scrollMode: 2},, /*left:*/ 50, /*top:*/ 402,,, /*width:*/ 532, /*height:*/ 617,,,,,,,,,,,,,/*childs*/ [
 				[/*ListView*/UI[11], /*props:*/ {itemClass: "game.RankItem", culling: true}, /*id:*/ "rankList",,,,, /*width:*/ 532],
 			]]
@@ -438,24 +451,32 @@ namespace game{
 			[/*Image*/UI[4], /*props:*/ {src: /*image/bg*/ RES[0]}],
 			[/*Group*/UI[2],, /*id:*/ "mainPage",,,,, /*width:*/ "100%", /*height:*/ "100%",,,,,,,,,,,,,/*childs*/ [
 				[/*UIStage*/UI[0],, /*id:*/ "stage",,,,, /*width:*/ "100%", /*height:*/ 1280,, /*y:*/ "50%",,,,,,,,,,,/*childs*/ [
-					{ type: "Image", id:"蝙蝠侠", src:/*start/蝙蝠侠*/ RES[25], x:515, y:812, anchorX:0.5, anchorY:0.5 },
-					{ type: "Image", id:"猪", src:/*start/猪*/ RES[26], x:38, y:112 },
-					{ type: "Image", src:/*start/txt蝙蝠侠*/ RES[27], x:132, y:538 },
-					{ type: "Image", src:/*start/txt猪望仔*/ RES[28], x:103, y:402 },
+					{ type: "Image", id:"蝙蝠侠", src:/*start/蝙蝠侠*/ RES[27], x:515, y:812, anchorX:0.5, anchorY:0.5 },
+					{ type: "Image", id:"猪", src:/*start/猪*/ RES[28], x:38, y:112 },
+					{ type: "Image", src:/*start/txt蝙蝠侠*/ RES[29], x:132, y:538 },
+					{ type: "Image", src:/*start/txt猪望仔*/ RES[30], x:103, y:402 },
 				]],
-				[/*Image*/UI[4], /*props:*/ {src: /*start/logo*/ RES[29]},,,,, /*bottom:*/ "10%", /*width:*/ 237, /*height:*/ 34, /*x:*/ "50%"],
-				[/*game.Button*/UI[5],, /*id:*/ "help", /*left:*/ 80,,, /*bottom:*/ "15%", /*width:*/ 218, /*height:*/ 85,,,,,,,,,,, /*childsProperty*/{bk: { src: /*start/活动规则*/ RES[30] }}],
-				[/*game.Button*/UI[5],, /*id:*/ "start",,, /*right:*/ 80, /*bottom:*/ "15%", /*width:*/ 218, /*height:*/ 85,,,,,,,,,,, /*childsProperty*/{bk: { src: /*start/开始游戏*/ RES[31] }}],
+				[/*Image*/UI[4], /*props:*/ {src: /*start/logo*/ RES[31]},,,,, /*bottom:*/ "10%", /*width:*/ 237, /*height:*/ 34, /*x:*/ "50%"],
+				[/*game.Button*/UI[5],, /*id:*/ "help", /*left:*/ 80,,, /*bottom:*/ "15%", /*width:*/ 218, /*height:*/ 85,,,,,,,,,,, /*childsProperty*/{bk: { src: /*start/活动规则*/ RES[32] }}],
+				[/*game.Button*/UI[5],, /*id:*/ "start",,, /*right:*/ 80, /*bottom:*/ "15%", /*width:*/ 218, /*height:*/ 85,,,,,,,,,,, /*childsProperty*/{bk: { src: /*start/开始游戏*/ RES[33] }}],
 				[/*game.Button*/UI[5], /*props:*/ {style: "yellow", label: "排行榜"}, /*id:*/ "rank", /*left:*/ 44, /*top:*/ 92,,, /*width:*/ 146, /*height:*/ 54],
 			]],
-			[/*game.Checkbox*/UI[7],, /*id:*/ "sound", /*left:*/ 570, /*top:*/ 92,,, /*width:*/ 56, /*height:*/ 59,,,,,,,,,,, /*childsProperty*/{icon: { src: /*ui/btn/喇叭*/ RES[7] }, checkImg: { src: /*ui/btn/喇叭check*/ RES[8] }}],
+			[/*game.Checkbox*/UI[7],, /*id:*/ "sound", /*left:*/ 520, /*top:*/ 92,,, /*width:*/ 56, /*height:*/ 59,,,,,,,,,,, /*childsProperty*/{icon: { src: /*ui/btn/喇叭*/ RES[7] }, checkImg: { src: /*ui/btn/喇叭check*/ RES[8] }}],
 			[/*Group*/UI[2],, /*id:*/ "helpPage",,,,, /*width:*/ "100%", /*height:*/ "100%",,,, /*visible:*/ false,,,,,,,,,/*childs*/ [
 				[/*Image*/UI[4], /*props:*/ {src: /*image/活动规则*/ RES[4]},,, /*top:*/ 160,,,,, /*x:*/ "50%"],
 				[/*Group*/UI[2],,,, /*top:*/ 900,, /*bottom:*/ 0, /*width:*/ "100%",,,,,,,,,,,,,,/*childs*/ [
 					[/*game.Button*/UI[5], /*props:*/ {label: "已知晓"}, /*id:*/ "okBtn",, /*top:*/ "30%",,, /*width:*/ 195, /*height:*/ 70, /*x:*/ "50%"],
 				]],
 			]],
-			[/*game.RankPage*/UI[9],, /*id:*/ "rankPage",,,,,,,,,, /*visible:*/ false]
+			[/*game.RankPage*/UI[9],, /*id:*/ "rankPage",,,,,,,,,, /*visible:*/ false],
+			[/*game.Button*/UI[5],, /*id:*/ "toShare", /*left:*/ 600, /*top:*/ 92,,, /*width:*/ 56, /*height:*/ 56,,,,,,,,,,, /*childsProperty*/{bk: { src: /*share/分享1*/ RES[34] }}],
+			[/*Group*/UI[2],, /*id:*/ "share",,,,, /*width:*/ "100%", /*height:*/ "100%",,,, /*visible:*/ false,,,,,,,,,/*childs*/ [
+				[/*RectFill*/UI[3], /*props:*/ {color: "#000"},,,,,, /*width:*/ "100%", /*height:*/ "100%",,, /*opacity:*/ 0.3],
+				[/*Image*/UI[4], /*props:*/ {src: /*image/分享*/ RES[16]},,, /*top:*/ 160,,,,, /*x:*/ "50%"],
+				[/*Group*/UI[2],,,, /*top:*/ 900,, /*bottom:*/ 0, /*width:*/ "100%",,,,,,,,,,,,,,/*childs*/ [
+					[/*game.Button*/UI[5], /*props:*/ {label: "已知晓"}, /*id:*/ "okBtnShare",, /*top:*/ "30%",,, /*width:*/ 195, /*height:*/ 70, /*x:*/ "50%"],
+				]],
+			]]
 		];
 		constructor(parent: ui.Container, template?:ui.Template){
 			super(parent);
@@ -478,7 +499,10 @@ namespace game{
 			sound: game.Checkbox,
 			helpPage: ui.Group,
 			okBtn: game.Button,
-			rankPage: game.RankPage }
+			rankPage: game.RankPage,
+			toShare: game.Button,
+			share: ui.Group,
+			okBtnShare: game.Button }
 		{ return <any>this._namedChilds; }
 	}
 	ez.initCall(() => { ui.initUIClass(game.StartPage, ui.Container) });

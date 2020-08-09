@@ -46,10 +46,6 @@ namespace game {
 			getRank(n.rankPage);
 			ez.playMusic(0, "sound/bgm", true);
 
-			// var items = <ez.DataCollection>n.rankPage.namedChilds.rankList.items;
-			// for(var i = 0; i < 100; i++)
-			// 	items.addItem({ rank : i + 1, score:10000- i *10 });
-
 			new ez.Tween(n.stage.stage.find("猪"))
 				.move({x: [38, 42], y: [120, 108]}, 1000)
 				.to({x: 38, y: 120}, 1000)
@@ -103,6 +99,22 @@ namespace game {
 					case "sound":
 						var state = (<ui.Control>e.sender).state;
 						soundEnable(state == "check");
+						break;
+					case "toShare":
+						n.share.visible = true;
+						n.help.visible = false;
+						n.start.visible = false;
+						n.rank.visible = false;
+						n.toShare.visible = false;
+						n.sound.visible = false;
+						break;
+					case "okBtnShare":
+						n.share.visible = false;
+						n.help.visible = true;
+						n.start.visible = true;
+						n.rank.visible = true;
+						n.toShare.visible = true;
+						n.sound.visible = true;
 						break;
 				}
 			});

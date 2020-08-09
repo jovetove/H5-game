@@ -10731,7 +10731,7 @@ var game;
 (function (game) {
     var ui = ez.ui;
     var UI = ["UIStage", "Control", "Group", "RectFill", "Image", "game.Button", "Label", "game.Checkbox", "game.StartPage", "game.RankPage", "ScrollView", "ListView"];
-    var RES = ["R:JCF2OQOGMT7O", "R:B0LVRU4VENJS", "R:1EF948RMIQRD", "R:4PGJIM7IPCOV", "R:QJ204MMAGROF", "R:LAO8Q29LE1TO", "R:4LVSPIK3B203", "R:S9IQLHG3U700", "R:INH1T34JAHE4", "R:G503ILGF8S28", "R:O123T11GLFK9", "R:CTDCID13AB9F", "R:U7VJ9SGIHTNO", "R:FOTVN4BTL6M7", "R:P637DGG88RRB", "R:307B8VJHSQ38", "R:O18PU18DTSMO", "R:UFGMTQLP3H5J", "R:85GD560O0A62", "R:RGDNTIFOJEJ1", "R:PQF1C511M1BQ", "R:5A1F5RDNRR3D", "R:SPMG8J9324MB", "R:6VBE1JLANTMV", "R:52OMU7AEFJE8", "R:MFP4S2F9MF7F", "R:F45FD2M7NRMS", "R:EN6PH70VD7LV", "R:M3F90V7UJL03", "R:EJRRQ2IU0JS0", "R:LMIPDLENLMJG", "R:VCP8LGVCL71S"];
+    var RES = ["R:JCF2OQOGMT7O", "R:B0LVRU4VENJS", "R:1EF948RMIQRD", "R:4PGJIM7IPCOV", "R:QJ204MMAGROF", "R:LAO8Q29LE1TO", "R:4LVSPIK3B203", "R:S9IQLHG3U700", "R:INH1T34JAHE4", "R:G503ILGF8S28", "R:O123T11GLFK9", "R:CTDCID13AB9F", "R:U7VJ9SGIHTNO", "R:FOTVN4BTL6M7", "R:P637DGG88RRB", "R:BKT6ND6EQ09I", "R:R4P29IGTV40N", "R:307B8VJHSQ38", "R:O18PU18DTSMO", "R:UFGMTQLP3H5J", "R:85GD560O0A62", "R:RGDNTIFOJEJ1", "R:PQF1C511M1BQ", "R:5A1F5RDNRR3D", "R:SPMG8J9324MB", "R:6VBE1JLANTMV", "R:52OMU7AEFJE8", "R:MFP4S2F9MF7F", "R:F45FD2M7NRMS", "R:EN6PH70VD7LV", "R:M3F90V7UJL03", "R:EJRRQ2IU0JS0", "R:LMIPDLENLMJG", "R:VCP8LGVCL71S", "R:SHLFJPR832V8"];
     ui.registerTextStyle([
         { id: "normal", font: "28px", color: "#bbadfb" },
         { id: "normalCenter", font: "28px", color: "#bbadfb", align: 1 },
@@ -11006,8 +11006,16 @@ var game;
             [UI[4], { src: RES[14] }, , 177, 579, , , 360, 2],
             [UI[5], { label: "查看排行榜", style: "blue" }, "rank", , 669, , , 195, 70, "50%"],
             [UI[5], { label: "生成成绩单", style: "blue" }, "result", , 769, , , 195, 70, "50%"],
-            [UI[2], , , , 900, , 0, "100%", , , , , , , , , , , , , , [
+            [UI[2], , "myButton", , 900, , 0, "100%", , , , , , , , , , , , , , [
                     [UI[5], { label: "再次挑战", style: "purple" }, "replay", , , , , 195, 70, "50%", "50%"],
+                ]],
+            [UI[5], , "toShare", 600, 70, , , 60, 60, , , , , , , , , , , { bk: { src: RES[15] } }],
+            [UI[2], , "helpPage", , , , , "100%", "100%", , , , false, , , , , , , , , [
+                    [UI[3], { color: "#000" }, , , , , , "100%", "100%", , , 0.3],
+                    [UI[4], { src: RES[16] }, , , 160, , , , , "50%"],
+                    [UI[2], , , , 900, , 0, "100%", , , , , , , , , , , , , , [
+                            [UI[5], { label: "已知晓" }, "okBtn", , "30%", , , 195, 70, "50%"],
+                        ]],
                 ]],
             [UI[9], , "rankPage", , , , , , , , , , false]
         ];
@@ -11040,17 +11048,18 @@ var game;
         SharePage.ClassName = "game.SharePage";
         SharePage._childs = [
             [UI[3], { gradient: { y1: 1280, colors: ['#010036', '#4e004f'] } }, "bg", , , , , "100%", "100%"],
-            [UI[4], { src: RES[15] }, , 64, 92, , , 323, 46],
-            [UI[4], { src: RES[16] }, , 81, 300, , , 522, 231],
+            [UI[4], { src: RES[17] }, , 64, 92, , , 323, 46],
+            [UI[4], { src: RES[18] }, , 81, 300, , , 522, 231],
+            [UI[6], { font: "28px", color: "#bbadfb", lineHeight: 48, format: 2, text: "2020“创青春 交子杯”新网银行金融科技挑战赛" }, , 68, 250, , , 585, 137],
             [UI[6], { text: "姓名：" }, "name", 114, 337, , , 383, 37],
             [UI[6], { text: "成绩：10000" }, "score", 114, 387, , , 383, 37],
             [UI[6], , "info", 114, 439, , , 383, 37],
-            [UI[5], , "closeShare", 650, 40, , , 39, 38, , , , , , , , , , , { bk: { src: RES[17] } }],
-            [UI[4], { src: RES[18] }, , 65, 165],
-            [UI[6], { font: "28px", color: "#bbadfb", lineHeight: 48, format: 2, text: "2020“创青春 交子杯”新网银行金融科技挑战赛\n47万奖金池，最高 10 万奖金等你来拿！\n是时候展现你真正的技术了！" }, , 68, 575, , , 585, 137],
+            [UI[5], , "closeShare", 650, 40, , , 39, 38, , , , , , , , , , , { bk: { src: RES[19] } }],
+            [UI[4], { src: RES[20] }, , 65, 165],
+            [UI[6], { font: "28px", color: "#bbadfb", lineHeight: 48, format: 2, text: "赶快截屏, 保存下方二维码，将游戏\n分享给你的朋友们吧~\n是时候展现真正的技术了！" }, , 80, 600, , , 585, 137],
             [UI[2], , , , 700, , 0, 300, , "50%", , , , , , , , , , , , [
                     [UI[2], , , , , , , 300, 332, , "50%", , , , , , , , , , , [
-                            [UI[4], { src: RES[19] }, "share", , , , , 300, 332],
+                            [UI[4], { src: RES[21] }, "share", , , , , 300, 332],
                         ]],
                 ]]
         ];
@@ -11074,7 +11083,7 @@ var game;
         }
         Splash.ClassName = "game.Splash";
         Splash._childs = [
-            [UI[4], { src: RES[20] }, , , , , , , , "50%", "50%"]
+            [UI[4], { src: RES[22] }, , , , , , , , "50%", "50%"]
         ];
         return Splash;
     }(ui.Container));
@@ -11107,7 +11116,7 @@ var game;
             [UI[6], { color: "#e04f00", align: 1 }, "score", 409, 24, , , 112, 25],
             [UI[4], { effect: "mask", effectParams: { mask: 'mask' } }, "avatar", 127, 7, , , 74, 74],
             [UI[3], { color: "#F0F0F0" }, , 0, 86, , , 530, 2],
-            [UI[4], { src: RES[21] }, "rankIcon", 27, 15, , , 44, 48]
+            [UI[4], { src: RES[23] }, "rankIcon", 27, 15, , , 44, 48]
         ];
         return _RankItem;
     }(ui.Container));
@@ -11138,16 +11147,16 @@ var game;
         });
         RankPage.ClassName = "game.RankPage";
         RankPage._childs = [
-            [UI[4], { src: RES[22] }, , 0, 0, , , 640, 1300],
-            [UI[4], { src: RES[23] }, , 45, 219, , , 540, 806],
-            [UI[5], , "closeRank", 566, 200, , , 39, 38, , , , , , , , , , , { bk: { src: RES[17] } }],
+            [UI[4], { src: RES[24] }, , 0, 0, , , 640, 1300],
+            [UI[4], { src: RES[25] }, , 45, 219, , , 540, 806],
+            [UI[5], , "closeRank", 566, 200, , , 39, 38, , , , , , , , , , , { bk: { src: RES[19] } }],
             [UI[3], { color: "#F2F2F4" }, , 45, 319, , , 540, 78],
             [UI[6], { text: "排行" }, , 74, 344, , , 58, 28],
             [UI[6], { text: "头像" }, , 190, 344, , , 58, 28],
             [UI[6], { text: "昵称" }, , 334, 344, , , 58, 28],
             [UI[6], { text: "成绩" }, , 478, 344, , , 58, 28],
             [UI[6], { font: "32px", text: "排行榜TOP50", color: "#494b59" }, , 246, 253, , , 220, 34],
-            [UI[4], { src: RES[24] }, , 187, 246, , , 44, 49],
+            [UI[4], { src: RES[26] }, , 187, 246, , , 44, 49],
             [UI[10], { scrollMode: 2 }, , 50, 402, , , 532, 617, , , , , , , , , , , , , [
                     [UI[11], { itemClass: "game.RankItem", culling: true }, "rankList", , , , , 532],
                 ]]
@@ -11181,24 +11190,32 @@ var game;
             [UI[4], { src: RES[0] }],
             [UI[2], , "mainPage", , , , , "100%", "100%", , , , , , , , , , , , , [
                     [UI[0], , "stage", , , , , "100%", 1280, , "50%", , , , , , , , , , , [
-                            { type: "Image", id: "蝙蝠侠", src: RES[25], x: 515, y: 812, anchorX: 0.5, anchorY: 0.5 },
-                            { type: "Image", id: "猪", src: RES[26], x: 38, y: 112 },
-                            { type: "Image", src: RES[27], x: 132, y: 538 },
-                            { type: "Image", src: RES[28], x: 103, y: 402 },
+                            { type: "Image", id: "蝙蝠侠", src: RES[27], x: 515, y: 812, anchorX: 0.5, anchorY: 0.5 },
+                            { type: "Image", id: "猪", src: RES[28], x: 38, y: 112 },
+                            { type: "Image", src: RES[29], x: 132, y: 538 },
+                            { type: "Image", src: RES[30], x: 103, y: 402 },
                         ]],
-                    [UI[4], { src: RES[29] }, , , , , "10%", 237, 34, "50%"],
-                    [UI[5], , "help", 80, , , "15%", 218, 85, , , , , , , , , , , { bk: { src: RES[30] } }],
-                    [UI[5], , "start", , , 80, "15%", 218, 85, , , , , , , , , , , { bk: { src: RES[31] } }],
+                    [UI[4], { src: RES[31] }, , , , , "10%", 237, 34, "50%"],
+                    [UI[5], , "help", 80, , , "15%", 218, 85, , , , , , , , , , , { bk: { src: RES[32] } }],
+                    [UI[5], , "start", , , 80, "15%", 218, 85, , , , , , , , , , , { bk: { src: RES[33] } }],
                     [UI[5], { style: "yellow", label: "排行榜" }, "rank", 44, 92, , , 146, 54],
                 ]],
-            [UI[7], , "sound", 570, 92, , , 56, 59, , , , , , , , , , , { icon: { src: RES[7] }, checkImg: { src: RES[8] } }],
+            [UI[7], , "sound", 520, 92, , , 56, 59, , , , , , , , , , , { icon: { src: RES[7] }, checkImg: { src: RES[8] } }],
             [UI[2], , "helpPage", , , , , "100%", "100%", , , , false, , , , , , , , , [
                     [UI[4], { src: RES[4] }, , , 160, , , , , "50%"],
                     [UI[2], , , , 900, , 0, "100%", , , , , , , , , , , , , , [
                             [UI[5], { label: "已知晓" }, "okBtn", , "30%", , , 195, 70, "50%"],
                         ]],
                 ]],
-            [UI[9], , "rankPage", , , , , , , , , , false]
+            [UI[9], , "rankPage", , , , , , , , , , false],
+            [UI[5], , "toShare", 600, 92, , , 56, 56, , , , , , , , , , , { bk: { src: RES[34] } }],
+            [UI[2], , "share", , , , , "100%", "100%", , , , false, , , , , , , , , [
+                    [UI[3], { color: "#000" }, , , , , , "100%", "100%", , , 0.3],
+                    [UI[4], { src: RES[16] }, , , 160, , , , , "50%"],
+                    [UI[2], , , , 900, , 0, "100%", , , , , , , , , , , , , , [
+                            [UI[5], { label: "已知晓" }, "okBtnShare", , "30%", , , 195, 70, "50%"],
+                        ]],
+                ]]
         ];
         return _StartPage;
     }(ui.Container));
@@ -11243,6 +11260,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var url_online = "https://xwfintech.qingke.io/_api/5f172e0de25bdc002d9a5abf";
 var url_debug = "http://127.0.0.1:7000";
+var static_url = "https://xwfintech.qingke.io/5f172e0de25bdc002d9a5abf";
 var url = url_debug;
 function ajax(url, cb) {
     var x = new XMLHttpRequest();
@@ -11269,11 +11287,19 @@ function isWechat() {
     var ua = navigator.userAgent.toLowerCase();
     return /micromessenger/i.test(ua) || /windows phone/i.test(ua);
 }
+function makeString(str, size) {
+    var outString = str;
+    var inOptions = 'abcdefghijklmnopqrstuvwxyz0123456789';
+    for (var i = 0; i < size; i++) {
+        outString += inOptions.charAt(Math.floor(Math.random() * inOptions.length));
+    }
+    return outString;
+}
 function createPlayerInfo() {
-    PlayerInfo.openid = "A" + parseInt(Math.random().toString());
-    PlayerInfo.nickname = "Tom";
-    PlayerInfo.sex = "whoMan";
-    PlayerInfo.headimgurl = "image/111222";
+    PlayerInfo.openid = makeString('ogIOb0', 22);
+    PlayerInfo.nickname = makeString("", 5);
+    PlayerInfo.sex = "1";
+    PlayerInfo.headimgurl = static_url + "/icon/" + getRandomNumInt(1, 20) + ".png";
 }
 var EnemyType;
 (function (EnemyType) {
@@ -11392,9 +11418,9 @@ function shulffle(arr) {
     }
 }
 function createXY() {
-    var border = 25;
-    var x = Math.floor(Math.random() * (700 - border)) + border;
-    var y = Math.floor(Math.random() * (1280 - border)) + border;
+    var border = 30;
+    var x = getRandomNumInt(border, 710 - border);
+    var y = getRandomNumInt(70, 1280 - border);
     return [x, y];
 }
 function createEnemyData() {
@@ -11645,6 +11671,26 @@ var game;
                                         }
                                     });
                                     break;
+                                case "toShare":
+                                    n.myButton.visible = false;
+                                    n.helpPage.visible = true;
+                                    if (isSuccessful()) {
+                                        n.picSucc.visible = false;
+                                    }
+                                    else {
+                                        n.picFail.visible = false;
+                                    }
+                                    break;
+                                case "okBtn":
+                                    n.myButton.visible = true;
+                                    n.helpPage.visible = false;
+                                    if (isSuccessful()) {
+                                        n.picSucc.visible = true;
+                                    }
+                                    else {
+                                        n.picFail.visible = true;
+                                    }
+                                    break;
                             }
                         });
                         ctx.dispose();
@@ -11699,23 +11745,25 @@ var game;
                         for (i = 0; i < enemiesData.length; i++) {
                             enemies[i] = createEnemy(enemiesData[i], stage);
                         }
-                        hole1 = createHoleData();
-                        createHole(hole1[0], stage);
-                        hole = [hole1[0].x, hole1[0].y];
+                        if (holeData > 0) {
+                            hole1 = createHoleData();
+                            createHole(hole1[0], stage);
+                            hole = [hole1[0].x, hole1[0].y];
+                        }
                         player = createPlayer(stage);
-                        player.x = 104;
-                        player.y = 144;
+                        player.x = 350;
+                        player.y = 600;
                         player.scale = 1.2;
                         circle = new ez.ImageSprite(stage);
                         circle.src = "game/circle";
                         circle.anchorX = circle.anchorY = 0.5;
-                        circle.x = 104;
-                        circle.y = 144;
+                        circle.x = player.x;
+                        circle.y = player.y;
                         new ez.Tween(circle)
                             .move({ scale: [0.4, 1.2], opacity: [0.1, 0.6] }, 800)
                             .config({ loop: true })
                             .play();
-                        lastPos = [104, 144];
+                        lastPos = [player.x, player.y];
                         chance = chanceMax;
                         _a.label = 1;
                     case 1:
@@ -11786,11 +11834,9 @@ var game;
                                     chance += 1;
                                     n.chance.text = "\u673A\u4F1A " + chance;
                                 }
-                                ez.Tween.add(s)
-                                    .move({ y: [e.y, e.y - 30], opacity: [0.5, 1] }, 300, ez.Ease.bounceOut)
+                                ez.Tween.add(s).move({ y: [e.y, e.y - 30], opacity: [0.5, 1] }, 300, ez.Ease.bounceOut)
                                     .move({ opacity: [1, 0] }, 2000)
-                                    .disposeTarget()
-                                    .play();
+                                    .disposeTarget().play();
                                 addScore(score_1, n);
                                 ez.playSFX(score_1 > 0 ? "sound/add" : "sound/lose");
                                 e.dispose();
@@ -11828,6 +11874,7 @@ var game;
                             player.x = kk[0];
                             player.y = kk[1];
                         }
+                        if (!(holeData > 0)) return [3, 13];
                         hx = hole[0] - player.x;
                         hy = hole[1] - player.y;
                         dr = hx * hx + hy * hy;
@@ -12025,6 +12072,7 @@ var enemyData = [
     { type: EnemyType.Logo, num: 0.05 },
     { type: EnemyType.clone, num: 0.02 }
 ];
+var holeData = 0;
 var enemyNum = 50 + 30 * (level - 1);
 var target = 9 * enemyNum;
 function initEverTime() {
@@ -12033,6 +12081,12 @@ function initEverTime() {
     var temp = level <= 6 ? level : 6;
     rate += 0.01 * temp;
     alpha -= 0.01 * (temp - 1);
+    if (level >= 2) {
+        holeData = 1;
+    }
+    else {
+        holeData = 0;
+    }
 }
 function getTarget(level) {
     var c = [420, 800, 1200, 2000, 3890, 6010, 9999];
@@ -12398,7 +12452,7 @@ var md5;
 })(md5 || (md5 = {}));
 var game;
 (function (game) {
-    game.resData = "4LVSPIK3B203|p|2JS362HMIVJ6|EZ,A,FU,FU||||||;HA8GLOB3BT28|p|2JS362HMIVJ6|KO,CM,HW,DX||||||;1EF948RMIQRD|p|2JS362HMIVJ6|CA,Ha,VD,BG||||||;56UQPADE1Q3L|p|2JS362HMIVJ6|SS,A,FD,DZ|Bb|BM||||;CD2USR5HDCIB|p|2JS362HMIVJ6|KO,A,ID,CL|Ce|c||||;ER7C5K9MCR91|p|2JS362HMIVJ6|SF,Da,FJ,DG|CW|BU||||;674HLN92PH6C|p|2JS362HMIVJ6|A,Cb,EV,DQ|CE|BT||||;STU2ANJ65A4I|p|2JS362HMIVJ6|A,A,EY,Ca|Ba|BC||||;B0LVRU4VENJS|p|2JS362HMIVJ6|JU,GE,HU,BF||||||;U3D0VPUF90K5|p|2JS362HMIVJ6|EW,FV,Ca,CE|EP|De||||;LAO8Q29LE1TO|p|2JS362HMIVJ6|HR,FV,CC,CC||||||;384C1JUD8MIS|p|2JS362HMIVJ6|A,GM,Bf,Bf|CA|CA||A,A,B,B||;Q3IOEMMM9HV3|p|2JS362HMIVJ6|CA,GM,BW,BI||||||;2JS362HMIVJ6|w|BEI5ATEOKD8IRL3K|XW|JB||||;4TR3NPOOD9FC|w|SJZTVNDSHTCSEN0K|CK|CK||||;RGDNTIFOJEJ1|p|3430TB8UBRS5|A,A,JM,KL||KM||A,B,A,A||;85GD560O0A62|p|3430TB8UBRS5|A,KL,Od,BZ||||||;307B8VJHSQ38|p|3430TB8UBRS5|A,ME,KD,BO||||||;O18PU18DTSMO|p|3430TB8UBRS5|JM,A,CF,Bf|||W,Y,X,X|||;3430TB8UBRS5|w|YAR4IF5QCFBT3P0Y|Od|NS||||;F45FD2M7NRMS|p|M33L9BH2LKJ4|A,A,Ja,Kd||||||;EN6PH70VD7LV|p|M33L9BH2LKJ4|Ja,A,MB,HZ||||||;MFP4S2F9MF7F|p|M33L9BH2LKJ4|Vb,A,KF,IM||||||;M3F90V7UJL03|p|M33L9BH2LKJ4|QU,IM,NQ,FI||||||;LMIPDLENLMJG|p|M33L9BH2LKJ4|Ja,HZ,Ga,CV||||||;VCP8LGVCL71S|p|M33L9BH2LKJ4|Ja,KO,Ga,CV||||||;EJRRQ2IU0JS0|p|M33L9BH2LKJ4|A,Kd,HN,BC||||||;M33L9BH2LKJ4|w|33A5CZI9WIQLPWC5|BAA|NU||||;U7VJ9SGIHTNO|p|EB50KH7ATNKU|A,A,KQ,KC||||||;S9IQLHG3U700|p|EB50KH7ATNKU|KR,GF,BY,Bb||||||;52OMU7AEFJE8|p|EB50KH7ATNKU|KR,A,BM,BR||||||;5A1F5RDNRR3D|p|EB50KH7ATNKU|KR,EU,BM,BQ||||||;PI6ME5HEHD40|p|EB50KH7ATNKU|KR,DD,BM,BQ||||||;MR7EA6RAGT5R|p|EB50KH7ATNKU|KR,BS,BM,BQ||||||;UFGMTQLP3H5J|p|EB50KH7ATNKU|KR,IB,BH,BG||||||;CTDCID13AB9F|p|EB50KH7ATNKU|KR,JI,BS,Z|||J,J,K,N|||;G503ILGF8S28|p|EB50KH7ATNKU|Le,BE,e,BD|||I,N,J,P|||;O123T11GLFK9|p|EB50KH7ATNKU|Le,A,e,BD|||I,N,J,P|||;DQ8AU90MGHMI|p|EB50KH7ATNKU|Le,CI,e,e||||||;P637DGG88RRB|p|EB50KH7ATNKU|A,KD,LI,C||||||;SPMG8J9324MB|p|EB50KH7ATNKU|Le,DH,V,Z|||F,G,F,G|||;6VBE1JLANTMV|p|EB50KH7ATNKU|Le,EB,V,Z|||F,G,F,G|||;INH1T34JAHE4|p|EB50KH7ATNKU|MU,DH,I,f|BY|Bb||BE,M,M,Q||;EB50KH7ATNKU|w|CCUH93QNYUMF4OQ7|Md|KG||||;FOTVN4BTL6M7|i|232MAT6ON9HE0IXW.0|KQ|KC||||;JCF2OQOGMT7O|w|DCXNROQW5H6N4QVK|WG|BIA||||;QJ204MMAGROF|i|QJMT8BJ3L8J327XN.0|RB|ZX||||;JCUPEPU1E9EG|i|GN5K3X6THHX5LTIZ.0|BS|BS||||;QVIBRGFQPTT2|i|GZDU6T2E16POLB7A.0|BS|BS||||;4PGJIM7IPCOV|w|GKBV7HI7HJNVC69E|QW|MF||||;1QO2CBOCQIBD|s|JA0G81AQV8EXMINP;UVOHVF14P3C8|s|NK0L2XPG4EDO1XAQ;JS4KKPVSP9K1|s|QMN8L7P4QXAI5M47";
+    game.resData = "4LVSPIK3B203|p|2JS362HMIVJ6|EZ,A,FU,FU||||||;HA8GLOB3BT28|p|2JS362HMIVJ6|KO,CM,HW,DX||||||;1EF948RMIQRD|p|2JS362HMIVJ6|CA,Ha,VD,BG||||||;56UQPADE1Q3L|p|2JS362HMIVJ6|SS,A,FD,DZ|Bb|BM||||;CD2USR5HDCIB|p|2JS362HMIVJ6|KO,A,ID,CL|Ce|c||||;ER7C5K9MCR91|p|2JS362HMIVJ6|SF,Da,FJ,DG|CW|BU||||;674HLN92PH6C|p|2JS362HMIVJ6|A,Cb,EV,DQ|CE|BT||||;STU2ANJ65A4I|p|2JS362HMIVJ6|A,A,EY,Ca|Ba|BC||||;B0LVRU4VENJS|p|2JS362HMIVJ6|JU,GE,HU,BF||||||;U3D0VPUF90K5|p|2JS362HMIVJ6|EW,FV,Ca,CE|EP|De||||;LAO8Q29LE1TO|p|2JS362HMIVJ6|HR,FV,CC,CC||||||;384C1JUD8MIS|p|2JS362HMIVJ6|A,GM,Bf,Bf|CA|CA||A,A,B,B||;Q3IOEMMM9HV3|p|2JS362HMIVJ6|CA,GM,BW,BI||||||;2JS362HMIVJ6|w|BEI5ATEOKD8IRL3K|XW|JB||||;4TR3NPOOD9FC|w|SJZTVNDSHTCSEN0K|CK|CK||||;85GD560O0A62|p|3430TB8UBRS5|A,KL,Od,BZ||||||;307B8VJHSQ38|p|3430TB8UBRS5|A,ME,KD,BO||||||;O18PU18DTSMO|p|3430TB8UBRS5|JM,A,CF,Bf|||W,Y,X,X|||;3430TB8UBRS5|w|YAR4IF5QCFBT3P0Y|Od|NS||||;F45FD2M7NRMS|p|M33L9BH2LKJ4|A,A,Ja,Kd||||||;EN6PH70VD7LV|p|M33L9BH2LKJ4|Ja,A,MB,HZ||||||;MFP4S2F9MF7F|p|M33L9BH2LKJ4|Vb,A,KF,IM||||||;M3F90V7UJL03|p|M33L9BH2LKJ4|QU,IM,NQ,FI||||||;LMIPDLENLMJG|p|M33L9BH2LKJ4|Ja,HZ,Ga,CV||||||;VCP8LGVCL71S|p|M33L9BH2LKJ4|Ja,KO,Ga,CV||||||;EJRRQ2IU0JS0|p|M33L9BH2LKJ4|A,Kd,HN,BC||||||;M33L9BH2LKJ4|w|33A5CZI9WIQLPWC5|BAA|NU||||;U7VJ9SGIHTNO|p|EB50KH7ATNKU|A,A,KQ,KC||||||;S9IQLHG3U700|p|EB50KH7ATNKU|KR,GF,BY,Bb||||||;52OMU7AEFJE8|p|EB50KH7ATNKU|KR,A,BM,BR||||||;5A1F5RDNRR3D|p|EB50KH7ATNKU|KR,EU,BM,BQ||||||;PI6ME5HEHD40|p|EB50KH7ATNKU|KR,DD,BM,BQ||||||;MR7EA6RAGT5R|p|EB50KH7ATNKU|KR,BS,BM,BQ||||||;UFGMTQLP3H5J|p|EB50KH7ATNKU|KR,IB,BH,BG||||||;CTDCID13AB9F|p|EB50KH7ATNKU|KR,JI,BS,Z|||J,J,K,N|||;G503ILGF8S28|p|EB50KH7ATNKU|Le,BE,e,BD|||I,N,J,P|||;O123T11GLFK9|p|EB50KH7ATNKU|Le,A,e,BD|||I,N,J,P|||;DQ8AU90MGHMI|p|EB50KH7ATNKU|Le,CI,e,e||||||;P637DGG88RRB|p|EB50KH7ATNKU|A,KD,LI,C||||||;SPMG8J9324MB|p|EB50KH7ATNKU|Le,DH,V,Z|||F,G,F,G|||;6VBE1JLANTMV|p|EB50KH7ATNKU|Le,EB,V,Z|||F,G,F,G|||;INH1T34JAHE4|p|EB50KH7ATNKU|MU,DH,I,f|BY|Bb||BE,M,M,Q||;EB50KH7ATNKU|w|CCUH93QNYUMF4OQ7|Md|KG||||;FOTVN4BTL6M7|i|232MAT6ON9HE0IXW.0|KQ|KC||||;JCF2OQOGMT7O|w|DCXNROQW5H6N4QVK|WG|BIA||||;QJ204MMAGROF|i|XRU3E7EIKAXWDIET.0|RB|ZX||||;BKT6ND6EQ09I|i|30V4I7ZSP4WABPQW.0|BS|BS||||;SHLFJPR832V8|i|QFO3SJQJ5EBT2C31.0|BS|BS||||;RGDNTIFOJEJ1|i|10WM3ICX2WRRZG0P.0|JM|KM||||;R4P29IGTV40N|i|J2QYEQWL5DDEL1VM.0|RB|ZX||||;QVIBRGFQPTT2|i|GZDU6T2E16POLB7A.0|BS|BS||||;4PGJIM7IPCOV|w|GKBV7HI7HJNVC69E|QW|MF||||;1QO2CBOCQIBD|s|JA0G81AQV8EXMINP;UVOHVF14P3C8|s|NK0L2XPG4EDO1XAQ;JS4KKPVSP9K1|s|QMN8L7P4QXAI5M47";
     game.resGroups = [];
 })(game || (game = {}));
 var __extends = (this && this.__extends) || (function () {
@@ -12496,6 +12550,22 @@ var game;
                     case "sound":
                         var state = e.sender.state;
                         soundEnable(state == "check");
+                        break;
+                    case "toShare":
+                        n.share.visible = true;
+                        n.help.visible = false;
+                        n.start.visible = false;
+                        n.rank.visible = false;
+                        n.toShare.visible = false;
+                        n.sound.visible = false;
+                        break;
+                    case "okBtnShare":
+                        n.share.visible = false;
+                        n.help.visible = true;
+                        n.start.visible = true;
+                        n.rank.visible = true;
+                        n.toShare.visible = true;
+                        n.sound.visible = true;
                         break;
                 }
             });

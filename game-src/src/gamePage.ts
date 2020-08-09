@@ -13,10 +13,8 @@ namespace game {
 		var page = ctx.parent.createChild(game.ResultPage);
 		var n = page.namedChilds;
 		if(isSuccessful()){
-			// console.log("成功")
 			n.replay.label = "下一局";
 		}else{
-			// console.log("失败")
 			n.picFailTxt.visible = true;
 			n.picSucc.visible = false;
 			n.picFail.visible = true;
@@ -37,8 +35,6 @@ namespace game {
 					n.rankPage.visible = false;
 					break;
 				case "replay": // 达成目标则下一关，未达成目标则重回主界面
-
-					// console.log("选择下一步");
 					if(isSuccessful() && level <= maxLevel){
 						score = 0;
 						level += 1;
@@ -98,8 +94,33 @@ namespace game {
 								share.dispose();
 								page.visible = true;
 								break;
+							// case "toshare":
+							// 	n1.toShare2.visible = true;
+							// 	break;
+							// case "okBtn2":
+							// 	n1.toShare2.visible = false;
+							// 	break;
+								// n1.helpPage.okBtn.vi = false;
 						}
 					});
+					break;
+				case "toShare":
+					n.myButton.visible = false;
+					n.helpPage.visible = true;
+					if(isSuccessful()){
+						n.picSucc.visible = false;
+					}else{
+						n.picFail.visible = false;
+					}
+					break;
+				case "okBtn":
+					n.myButton.visible = true;
+					n.helpPage.visible = false;
+					if(isSuccessful()){
+						n.picSucc.visible = true;
+					}else{
+						n.picFail.visible = true;
+					}
 					break;
 			}
 
@@ -149,29 +170,35 @@ namespace game {
 		for (let i = 0; i < enemiesData.length; i++) {
 			enemies[i] = createEnemy(enemiesData[i], stage);
 		}
-		var hole1 = createHoleData();
-		createHole(hole1[0], stage);
 
-		let hole: number[] = [hole1[0].x, hole1[0].y];
+		// 黑洞数据
+		var hole1;
+		let hole: number[] ;
+		if(holeData > 0){
+			hole1 = createHoleData();
+			createHole(hole1[0], stage);
+			hole= [hole1[0].x, hole1[0].y];
+		}
 
 		// 创建玩家
 		player = createPlayer(stage);
-		player.x = 104;
-		player.y = 144;
+		player.x = 350;
+		player.y = 600;
 		player.scale = 1.2;
 
 		// 玩家光环
 		var circle = new ez.ImageSprite(stage);
 		circle.src = "game/circle";
 		circle.anchorX = circle.anchorY = 0.5;
-		circle.x = 104;
-		circle.y = 144;
+		circle.x = player.x;
+		circle.y = player.y;
 		new ez.Tween(circle)
 			.move({scale:[0.4, 1.2], opacity:[0.1, 0.6]}, 800)
 			.config({loop:true})
 			.play();
 
-		var lastPos = [104, 144];
+		var lastPos = [player.x, player.y];
+
 		var chance = chanceMax;
 
 		while(true) {
@@ -224,7 +251,6 @@ namespace game {
 
 						// 随机产生新的物品
 						if(data.type == EnemyType.clone){
-							// TODO
 							for(var j = 0; j < level*2; j++){
 								var arrc = createXY();
 								var temp = { type: 0 + Math.round(Math.random()* 4), x: arrc[0], y: arrc[1] };
@@ -248,11 +274,9 @@ namespace game {
 							n.chance.text = `机会 ${chance}`;
 						}
 
-						ez.Tween.add(s)
-							.move({y:[e.y, e.y - 30], opacity: [0.5, 1]}, 300, ez.Ease.bounceOut)
+						ez.Tween.add(s).move({y:[e.y, e.y - 30], opacity: [0.5, 1]}, 300, ez.Ease.bounceOut)
 							.move({opacity:[1, 0]}, 2000)
-							.disposeTarget()
-							.play();
+							.disposeTarget().play();
 
 						addScore(score, n);
 
@@ -296,35 +320,39 @@ namespace game {
 					player.x = kk[0];
 					player.y = kk[1];
 				}
+				// 如果存在黑洞
+				if(holeData > 0){
+					let hx = hole[0] - player.x;
+					let hy = hole[1] - player.y;
+					let dr = hx * hx + hy * hy;
+					if(dr < 500){
+						//掉入黑洞
+						dx = 0;
+						dy = 0;
+						for(let i = 0; i < 30; i++){
+							player.opacity = 1 - i / 30;
+							await ez.nextFrame();
+						}
+						chance = Math.max(0, chance - 1);
+						player.x = lastPos[0];
+						player.y = lastPos[1];
+						for (let i = 0; i <= 30; i++) {
+							player.opacity = i / 30;
+							await ez.nextFrame();
+						}
+					}
+					else if(dr < 50000) {
+						// 黑洞引力
+						dr = 1 / dr;
+						hx = hx * Math.sqrt(dr);
+						hy = hy * Math.sqrt(dr);
+						dx += hx * 1000 * dr;
+						dy += hy * 1000 * dr;
+					}
+				}
 
-				let hx = hole[0] - player.x;
-				let hy = hole[1] - player.y;
-				let dr = hx * hx + hy * hy;
-				if(dr < 500){
-					//掉入黑洞
-					dx = 0;
-					dy = 0;
-					for(let i = 0; i < 30; i++){
-						player.opacity = 1 - i / 30;
-						await ez.nextFrame();
-					}
-					chance = Math.max(0, chance - 1);
-					player.x = lastPos[0];
-					player.y = lastPos[1];
-					for (let i = 0; i <= 30; i++) {
-						player.opacity = i / 30;
-						await ez.nextFrame();
-					}
-				}
-				else if(dr < 50000) {
-					// 黑洞引力
-					dr = 1 / dr;
-					hx = hx * Math.sqrt(dr);
-					hy = hy * Math.sqrt(dr);
-					dx += hx * 1000 * dr;
-					dy += hy * 1000 * dr;
-				}
-				if(dx > 0.15)	
+				// 减速
+				if(dx > 0.15)
 					dx -= 0.1;
 				else if(dx < 0.15)
 					dx += 0.1;
@@ -340,7 +368,6 @@ namespace game {
 		}
 		gameOver();
 	}
-
 
 	/**
 	 * 进入游戏界面
@@ -378,9 +405,8 @@ namespace game {
 			var ctx = this;
 			// 触摸点
 			var lastPt;
-			//ez.loadGroup("share/二维码");
+
 			if (PlayerInfo){
-				// n.name.text = PlayerInfo.nickname;
 				n.avatar.src = PlayerInfo.headimgurl;
 			}
 			n.chance.text = "机会 " + chanceMax.toString();
